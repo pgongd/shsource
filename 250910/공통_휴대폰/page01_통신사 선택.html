@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통신사 선택 팝업</title>
+<style>
+  body { font-family: sans-serif; padding: 40px; background: #f0f2f5; }
+
+  .popup {
+    width: 300px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .popup h2 {
+    margin: 0 0 16px;
+    font-size: 18px;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .options label {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  /* 선택된 라디오 스타일 */
+  .options input[type="radio"]:checked + label {
+    border-color: #007bff;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .options input[type="radio"] {
+    display: none; /* 숨김 */
+  }
+
+  .options label:focus-visible {
+    outline: 2px solid #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="popup" role="dialog" aria-labelledby="popup-title">
+  <h2 id="popup-title">통신사 선택</h2>
+  <button class="close-btn" aria-label="닫기">×</button>
+  <div class="options" role="radiogroup" aria-label="통신사 선택">
+    <input type="radio" id="skt" name="carrier" value="SKT" checked>
+    <label for="skt">SKT</label>
+
+    <input type="radio" id="skt-lite" name="carrier" value="SKT 알뜰폰">
+    <label for="skt-lite">SKT 알뜰폰</label>
+
+    <input type="radio" id="kt" name="carrier" value="KT">
+    <label for="kt">KT</label>
+
+    <input type="radio" id="kt-lite" name="carrier" value="KT 알뜰폰">
+    <label for="kt-lite">KT 알뜰폰</label>
+
+    <input type="radio" id="lg" name="carrier" value="LG U+">
+    <label for="lg">LG U+</label>
+
+    <input type="radio" id="lg-lite" name="carrier" value="LG U+ 알뜰폰">
+    <label for="lg-lite">LG U+ 알뜰폰</label>
+  </div>
+</div>
+
+<script>
+  // 닫기 버튼 기능
+  document.querySelector('.close-btn').addEventListener('click', () => {
+    alert('팝업 닫기 처리');
+  });
+
+  // 라디오 버튼 선택 시 콘솔 출력
+  document.querySelectorAll('.options input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      console.log('선택된 통신사:', e.target.value);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>다른 본인인증 방법 선택</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #4a5568;
+    margin: 0;
+    padding: 40px;
+  }
+
+  .popup {
+    max-width: 360px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    position: relative;
+  }
+
+  .popup h2 {
+    font-size: 18px;
+    margin: 0 0 20px;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .auth-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .auth-option {
+    border-radius: 12px;
+    background: #f5f7fa;
+    text-align: center;
+    padding: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .auth-option:focus-visible {
+    outline: 3px solid #0056b3;
+    outline-offset: 2px;
+  }
+
+  .auth-option:hover {
+    background: #eaf0ff;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 12px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  .owned {
+    background: #e0f0ff;
+    color: #007bff;
+  }
+
+  .not-owned {
+    background: #eee;
+    color: #666;
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    margin: 4px 0;
+    font-weight: bold;
+  }
+
+  .desc {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+<div class="popup" role="dialog" aria-labelledby="popup-title">
+  <h2 id="popup-title">다른 본인인증 방법 선택</h2>
+  <button class="close-btn" aria-label="닫기">×</button>
+
+  <div class="auth-options" role="list">
+    <!-- 공동인증서 인증 -->
+    <button class="auth-option" role="listitem" aria-label="공동인증서 인증, 보유중">
+      <span class="badge owned">보유중</span>
+      <img src="https://via.placeholder.com/48x48.png?text=IC" alt="" class="icon">
+      <p class="title">공동인증서 인증</p>
+    </button>
+
+    <!-- 영상통화 인증 -->
+    <button class="auth-option" role="listitem" aria-label="영상통화 인증, 미보유, 신분증 필요">
+      <span class="badge not-owned">미보유</span>
+      <img src="https://via.placeholder.com/48x48.png?text=VC" alt="" class="icon">
+      <p class="title">영상통화 인증</p>
+      <p class="desc">(신분증 필요)</p>
+    </button>
+  </div>
+</div>
+
+<script>
+  // 닫기 버튼 동작
+  document.querySelector('.close-btn').addEventListener('click', () => {
+    alert('팝업 닫기 처리');
+  });
+
+  // 인증 방법 선택 동작
+  document.querySelectorAll('.auth-option').forEach(option => {
+    option.addEventListener('click', () => {
+      alert(option.innerText.trim() + ' 선택됨');
+    });
+  });
+</script>
+
+</body>
+</html>

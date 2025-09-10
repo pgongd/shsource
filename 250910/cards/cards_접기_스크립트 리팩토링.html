@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>범용 카드 토글</title>
+<style>
+  .card { border: 1px solid #ccc; margin-bottom: 10px; }
+  .card-header { cursor: pointer; padding: 10px; background: #f0f0f0; }
+  .card-content { display: none; padding: 10px; }
+  .card.open .card-content { display: block; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header" tabindex="0" aria-expanded="false">카드 1</div>
+  <div class="card-content">내용 1</div>
+</div>
+
+<div class="card">
+  <div class="card-header" tabindex="0" aria-expanded="false">카드 2</div>
+  <div class="card-content">내용 2</div>
+</div>
+
+<script>
+/**
+ * Namespace: OyaUI
+ * 범용 카드 토글 기능
+ */
+const OyaUI = (() => {
+  const toggleCard = (header) => {
+    const card = header.parentElement;
+    const expanded = header.getAttribute('aria-expanded') === 'true';
+    card.classList.toggle('open', !expanded);
+    header.setAttribute('aria-expanded', String(!expanded));
+  };
+
+  const initCards = (selector = '.card-header') => {
+    const headers = document.querySelectorAll(selector);
+    headers.forEach(header => {
+      // 클릭 토글
+      header.addEventListener('click', () => toggleCard(header));
+
+      // 키보드 접근성: Enter, Space
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        }
+      });
+
+      // 초기 aria-expanded 세팅
+      if (!header.hasAttribute('aria-expanded')) {
+        header.setAttribute('aria-expanded', 'false');
+      }
+
+      // tabindex 설정
+      if (!header.hasAttribute('tabindex')) {
+        header.setAttribute('tabindex', '0');
+      }
+    });
+  };
+
+  // 퍼블릭 메서드
+  return {
+    initCards
+  };
+})();
+
+// 페이지 로드 후 자동 초기화
+document.addEventListener('DOMContentLoaded', () => {
+  OyaUI.initCards(); // 기본 .card-header 적용
+});
+</script>
+
+</body>
+</html>
