@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>커스텀 셀렉트 박스</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 40px;
+  }
+
+  /* 셀렉트 박스 */
+  .custom-select {
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: 240px;
+    transition: border-color 0.3s;
+  }
+  .custom-select:hover {
+    border-color: #999;
+  }
+
+  /* 바텀시트 dim */
+  .dim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+  }
+  .dim.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* 바텀시트 */
+  .bottom-sheet {
+    position: fixed;
+    left: 0;
+    bottom: -100%;
+    width: 100%;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    transition: bottom 0.3s ease-in-out;
+  }
+  .bottom-sheet.active {
+    bottom: 0;
+  }
+  .sheet-header {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+  }
+  .sheet-options button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .sheet-options button:hover {
+    background: #f5f5f5;
+  }
+</style>
+</head>
+<body>
+
+<div class="custom-select" id="selectBox">
+  <span id="selectedText">통신사 선택</span>
+  <span>▼</span>
+</div>
+
+<div class="dim"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="sheet-header">통신사 선택</div>
+  <div class="sheet-options">
+    <button data-value="SKT">SKT</button>
+    <button data-value="KT">KT</button>
+    <button data-value="LG U+">LG U+</button>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+  // 열기
+  $("#selectBox").on("click", function(){
+    $(".dim").addClass("active");
+    $("#bottomSheet").addClass("active");
+  });
+
+  // 닫기 (dim 클릭 시)
+  $(".dim").on("click", function(){
+    $(".dim").removeClass("active");
+    $("#bottomSheet").removeClass("active");
+  });
+
+  // 옵션 선택
+  $(".sheet-options button").on("click", function(){
+    var value = $(this).data("value");
+    $("#selectedText").text(value);
+
+    // 바텀시트 닫기
+    $(".dim").removeClass("active");
+    $("#bottomSheet").removeClass("active");
+  });
+});
+</script>
+
+</body>
+</html>

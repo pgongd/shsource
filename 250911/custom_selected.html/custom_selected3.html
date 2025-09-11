@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>플로팅 라벨 커스텀 셀렉트</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 40px;
+  }
+
+  /* 셀렉트 박스 컨테이너 */
+  .select-container {
+    position: relative;
+    width: 240px;
+  }
+
+  /* 라벨 */
+  .select-label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 16px;
+    pointer-events: none;
+    transition: all 0.2s ease;
+  }
+
+  /* 값이 선택되면 라벨 플로팅 */
+  .select-container.active .select-label {
+    top: 8px;
+    font-size: 12px;
+    color: #555;
+    transform: none;
+  }
+
+  /* 셀렉트 박스 */
+  .custom-select {
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 18px 16px 6px 16px; /* 위쪽 패딩 크게 → 라벨 자리 확보 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  /* dim */
+  .dim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+  }
+  .dim.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* 바텀시트 */
+  .bottom-sheet {
+    position: fixed;
+    left: 0;
+    bottom: -100%;
+    width: 100%;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    transition: bottom 0.3s ease-in-out;
+  }
+  .bottom-sheet.active {
+    bottom: 0;
+  }
+  .sheet-header {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+  }
+  .sheet-options button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .sheet-options button:hover,
+  .sheet-options button:focus {
+    background: #f5f5f5;
+    outline: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="select-container" id="selectContainer">
+  <label for="selectBox" class="select-label">통신사</label>
+  <div class="custom-select" id="selectBox" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
+    <span id="selectedText">선택</span>
+    <span aria-hidden="true">▼</span>
+  </div>
+</div>
+
+<div class="dim" role="presentation"></div>
+<div class="bottom-sheet" id="bottomSheet" role="listbox" aria-label="통신사 선택">
+  <div class="sheet-header">통신사 선택</div>
+  <div class="sheet-options">
+    <button role="option" data-value="SKT">SKT</button>
+    <button role="option" data-value="KT">KT</button>
+    <button role="option" data-value="LG U+">LG U+</button>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+  const $container = $("#selectContainer");
+  const $selectBox = $("#selectBox");
+  const $selectedText = $("#selectedText");
+  const $dim = $(".dim");
+  const $sheet = $("#bottomSheet");
+
+  // 열기
+  $selectBox.on("click keydown", function(e){
+    if(e.type === "click" || e.key === "Enter" || e.key === " "){
+      $dim.addClass("active");
+      $sheet.addClass("active");
+      $selectBox.attr("aria-expanded", "true");
+    }
+  });
+
+  // 닫기
+  $dim.on("click", function(){
+    $dim.removeClass("active");
+    $sheet.removeClass("active");
+    $selectBox.attr("aria-expanded", "false");
+  });
+
+  // 옵션 선택
+  $(".sheet-options button").on("click", function(){
+    const value = $(this).data("value");
+    $selectedText.text(value);
+
+    // 라벨 활성화
+    $container.addClass("active");
+
+    // 바텀시트 닫기
+    $dim.removeClass("active");
+    $sheet.removeClass("active");
+    $selectBox.attr("aria-expanded", "false");
+  });
+});
+</script>
+
+</body>
+</html>

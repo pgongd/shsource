@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로딩 버튼 접근성 예제</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 40px;
+    background: #f5f5f5;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #0056e6;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover:not(:disabled) {
+    background: #0041b3;
+  }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<h1>인증 버튼 테스트</h1>
+
+<!-- aria-live: 상태 변화를 스크린리더에 전달 -->
+<div aria-live="polite" aria-atomic="true">
+  <button id="authBtn" aria-busy="false">인증하기</button>
+</div>
+
+<script>
+  const btn = document.getElementById("authBtn");
+
+  btn.addEventListener("click", () => {
+    // 이미 로딩 상태면 무시
+    if (btn.disabled) return;
+
+    btn.disabled = true;
+    btn.setAttribute("aria-busy", "true");
+    btn.textContent = "인증 진행중";
+
+    // 스피너 추가
+    const spinner = document.createElement("span");
+    spinner.classList.add("spinner");
+    spinner.setAttribute("role", "status");
+    spinner.setAttribute("aria-label", "로딩 중");
+    btn.appendChild(spinner);
+
+    // 테스트용: 5초 후 완료 처리
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.setAttribute("aria-busy", "false");
+      btn.textContent = "인증 완료";
+    }, 5000);
+  });
+</script>
+
+</body>
+</html>

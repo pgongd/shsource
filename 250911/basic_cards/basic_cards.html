@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>카드 컴포넌트 테스트</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 40px;
+    display: flex;
+    gap: 20px;
+    background: #f5f5f5;
+  }
+
+  .card {
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fff;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  .card:focus {
+    box-shadow: 0 0 0 3px #007aff;
+  }
+
+  .card-content {
+    flex: 1;
+    border: 1px dashed #f90;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #d35400;
+  }
+
+  .card-label {
+    margin-top: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+
+  /* 상태별 */
+  .card[data-state="default"] {}
+
+  .card[data-state="selected"] {
+    border: 2px solid #007aff;
+  }
+
+  .card[data-state="dragging"] {
+    opacity: 0.6;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  }
+
+  .card[data-state="disabled"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- 기본 -->
+<div class="card" role="button" tabindex="0" aria-pressed="false" data-state="default">
+  <div class="card-content">기본 상태</div>
+  <div class="card-label">레이블</div>
+</div>
+
+<!-- 선택됨 -->
+<div class="card" role="button" tabindex="0" aria-pressed="true" data-state="selected">
+  <div class="card-content">선택된 상태</div>
+  <div class="card-label">레이블</div>
+</div>
+
+<!-- 드래그 중 -->
+<div class="card" role="button" tabindex="0" aria-grabbed="true" data-state="dragging">
+  <div class="card-content">드래그 중</div>
+  <div class="card-label">레이블</div>
+</div>
+
+<!-- 비활성화 -->
+<div class="card" role="button" aria-disabled="true" data-state="disabled">
+  <div class="card-content">비활성화</div>
+  <div class="card-label">레이블</div>
+</div>
+
+<script>
+  // 키보드 접근성 - Space/Enter로 선택 상태 토글
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('keydown', e => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        if (card.dataset.state !== "disabled" && card.dataset.state !== "dragging") {
+          const isSelected = card.dataset.state === "selected";
+          card.dataset.state = isSelected ? "default" : "selected";
+          card.setAttribute("aria-pressed", !isSelected);
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

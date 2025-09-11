@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>접근성 카드 토글</title>
+<style>
+  .card { border: 1px solid #ccc; margin: 16px; padding: 16px; }
+  .extra-content { display: none; margin-top: 12px; }
+  .extra-content.show { display: block; }
+  .card-footer button { cursor: pointer; padding: 8px 16px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-body">
+    <p>여기는 카드 내용입니다.</p>
+  </div>
+  <div class="extra-content">
+    <p>추가 내용이 여기에 표시됩니다.</p>
+  </div>
+  <div class="card-footer">
+    <button data-open-label="접기 ^" data-close-label="더보기" aria-expanded="false">더보기</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <p>두 번째 카드입니다.</p>
+  </div>
+  <div class="extra-content">
+    <p>두 번째 카드 추가 내용</p>
+  </div>
+  <div class="card-footer">
+    <button data-open-label="접기 ^" data-close-label="더보기" aria-expanded="false">더보기</button>
+  </div>
+</div>
+
+<script>
+// IIFE로 네임스페이스 캡슐화
+const CardToggle = (() => {
+  const initCard = (card) => {
+    const footerBtn = card.querySelector('.card-footer button');
+    const extraContent = card.querySelector('.extra-content');
+
+    if (!footerBtn || !extraContent) return;
+
+    // 초기 상태
+    footerBtn.setAttribute('aria-expanded', 'false');
+    extraContent.setAttribute('aria-hidden', 'true');
+
+    // 토글 함수
+    const toggleContent = () => {
+      const isOpen = extraContent.classList.toggle('show');
+      const openLabel = footerBtn.dataset.openLabel || '접기 ^';
+      const closeLabel = footerBtn.dataset.closeLabel || '더보기';
+      footerBtn.textContent = isOpen ? openLabel : closeLabel;
+
+      // ARIA 속성 업데이트
+      footerBtn.setAttribute('aria-expanded', isOpen);
+      extraContent.setAttribute('aria-hidden', !isOpen);
+    };
+
+    // 클릭 이벤트
+    footerBtn.addEventListener('click', toggleContent);
+
+    // 키보드 이벤트 (Enter / Space)
+    footerBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleContent();
+      }
+    });
+  };
+
+  const initAll = (selector = '.card') => {
+    const cards = document.querySelectorAll(selector);
+    if (!cards.length) return;
+    cards.forEach(initCard);
+  };
+
+  return { initCard, initAll };
+})();
+
+// DOM 로딩 후 초기화
+document.addEventListener('DOMContentLoaded', () => {
+  CardToggle.initAll();
+});
+</script>
+
+</body>
+</html>
