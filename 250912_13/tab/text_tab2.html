@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>텍스트 탭</title>
+<style>
+  :root {
+    --color-active: #0066ff;
+    --color-inactive: #666;
+    --color-divider: #ccc;
+  }
+
+  body {
+    font-family: sans-serif;
+    padding: 40px;
+  }
+
+  .tabs-container {
+    width: 100%;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0; /* 구분선 때문에 간격은 0으로 */
+  }
+
+  .tab {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 12px;
+    color: var(--color-inactive);
+    position: relative;
+  }
+
+  .tab[aria-selected="true"] {
+    color: var(--color-active);
+    font-weight: 600;
+  }
+
+  /* 구분선 */
+  .tab:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1em;
+    width: 1px;
+    background: var(--color-divider);
+  }
+
+  /* 포커스 접근성 */
+  .tab:focus-visible {
+    outline: 2px solid var(--color-active);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="tabs-container">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true">항목명</button>
+      <button class="tab" role="tab" aria-selected="false">항목명</button>
+      <button class="tab" role="tab" aria-selected="false">항목명</button>
+      <button class="tab" role="tab" aria-selected="false">항목명</button>
+    </div>
+  </div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+    });
+  });
+</script>
+</body>
+</html>

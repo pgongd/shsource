@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>커스텀 페이저 + Swiper (디버그 수정판)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f5f7fa; margin:32px; }
+    .wrap { max-width:620px; margin:0 auto; }
+
+    .swiper { border-radius:10px; overflow:hidden; box-shadow:0 6px 20px rgba(20,30,40,0.08); background:#fff; }
+    .swiper-slide { height:280px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#fff; }
+    .slide1{background:#6a7ba2} .slide2{background:#4d9f8f} .slide3{background:#d98282} .slide4{background:#b589d6} .slide5{background:#e3b662}
+
+    /* Custom pagination layout */
+    .custom-pagination { display:flex; gap:10px; align-items:center; justify-content:center; margin-top:14px; }
+    .progress-bar { width:44px; height:12px; background:#d6dbe2; border-radius:7px; overflow:hidden; }
+    .progress-bar-fill { width:0%; height:100%; background:#69758a; transition:width 320ms ease; }
+
+    .custom-bullet {
+      width:12px; height:12px; border-radius:50%; border:2px solid #d6dbe2;
+      background:#fff; display:inline-block; cursor:pointer; padding:0; margin:0;
+    }
+    .custom-bullet[aria-current="true"] {
+      background:#69758a; border-color:#69758a;
+    }
+
+    .play-toggle {
+      width:34px; height:34px; border-radius:50%; background:#69758a; display:inline-flex; align-items:center; justify-content:center;
+      color:#fff; border:0; cursor:pointer;
+    }
+    .play-toggle:focus, .custom-bullet:focus { outline:3px solid rgba(105,117,138,0.2); outline-offset:3px; }
+
+    /* screen reader only */
+    .sr-only {
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="swiper" aria-label="이미지 슬라이더">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide slide1" data-title="첫 번째 이미지">슬라이드 1</div>
+        <div class="swiper-slide slide2" data-title="두 번째 이미지">슬라이드 2</div>
+        <div class="swiper-slide slide3" data-title="세 번째 이미지">슬라이드 3</div>
+        <div class="swiper-slide slide4" data-title="네 번째 이미지">슬라이드 4</div>
+        <div class="swiper-slide slide5" data-title="다섯 번째 이미지">슬라이드 5</div>
+      </div>
+    </div>
+
+    <!-- 빈 컨테이너: JS가 동적으로 페이징 요소를 생성합니다 -->
+    <nav id="custom-pagination" class="custom-pagination" aria-label="슬라이드 페이지네이션"></nav>
+
+    <!-- 라이브 상태 (스크린리더용) -->
+    <div id="slider-status" class="sr-only" aria-live="polite"></div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const wrapper = document.querySelector('.swiper .swiper-wrapper');
+      // original slides (loop 전 원본 갯수 계산)
+      const originalSlides = wrapper ? Array.from(wrapper.querySelectorAll(':scope > .swiper-slide')) : [];
+      const slideCount = originalSlides.length || 0;
+
+      const paginationRoot = document.getElementById('custom-pagination');
+      // 동적으로 progress bar, bullets, play 버튼 생성
+      const progress = document.createElement('div');
+      progress.className = 'progress-bar';
+      progress.innerHTML = '<div class="progress-bar-fill" aria-hidden="true"></div>';
+      paginationRoot.appendChild(progress);
+      const bullets = [];
+      for (let i = 0; i < slideCount; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'custom-bullet';
+        btn.setAttribute('aria-label', `${i+1}번 슬라이드로 이동`);
+        btn.setAttribute('data-index', String(i));
+        btn.setAttribute('aria-current', 'false');
+        // 키보드 접근성: focusable button이므로 기본 동작 OK
+        paginationRoot.appendChild(btn);
+        bullets.push(btn);
+      }
+
+      const playBtn = document.createElement('button');
+      playBtn.type = 'button';
+      playBtn.className = 'play-toggle';
+      playBtn.setAttribute('aria-pressed', 'true');
+      playBtn.setAttribute('aria-label', '자동재생 정지');
+      // 기본: pause 아이콘 (두 막대)
+      playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+      paginationRoot.appendChild(playBtn);
+
+      const progressFill = progress.querySelector('.progress-bar-fill');
+      const liveStatus = document.getElementById('slider-status');
+
+      // Swiper 초기화
+      const swiper = new Swiper('.swiper', {
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false
+        },
+        // a11y 모듈이 포함되어 있지만 추가 제어는 여기서 직접 함
+        keyboard: {
+          enabled: true,
+          onlyInViewport: true
+        }
+      });
+
+      // 상태 업데이트 함수
+      function updatePagination() {
+        // realIndex는 0..(slideCount-1)
+        const idx = swiper.realIndex ?? 0;
+        bullets.forEach((b, i) => {
+          const active = i === idx;
+          b.setAttribute('aria-current', active ? 'true' : 'false');
+        });
+        // 진행 바
+        const width = ((idx + 1) / Math.max(1, slideCount)) * 100;
+        progressFill.style.width = width + '%';
+
+        // 라이브 상태 업데이트 (스크린리더용)
+        const title = originalSlides[idx] ? originalSlides[idx].dataset.title || originalSlides[idx].textContent.trim() : `${idx+1}번째`;
+        if (liveStatus) liveStatus.textContent = `${idx+1} / ${slideCount} — ${title}`;
+      }
+
+      // 초기 상태 반영
+      updatePagination();
+
+      // 이벤트 바인딩: 슬라이드 변경 시 업데이트
+      swiper.on('slideChange', updatePagination);
+
+      // bullets click / keyboard
+      bullets.forEach((btn) => {
+        const targetIndex = Number(btn.dataset.index);
+        btn.addEventListener('click', () => {
+          swiper.slideToLoop(targetIndex);
+        });
+        btn.addEventListener('keydown', (e) => {
+          // Enter 또는 Space로 작동 (Space는 기본 스크롤 방지)
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            swiper.slideToLoop(targetIndex);
+          }
+        });
+      });
+
+      // play / pause
+      let isPlaying = !!(swiper.autoplay && swiper.autoplay.running);
+      playBtn.addEventListener('click', () => {
+        if (isPlaying) {
+          swiper.autoplay.stop();
+          playBtn.setAttribute('aria-pressed', 'false');
+          playBtn.setAttribute('aria-label', '자동재생 시작');
+          // 재생 아이콘 (▶)
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>';
+        } else {
+          swiper.autoplay.start();
+          playBtn.setAttribute('aria-pressed', 'true');
+          playBtn.setAttribute('aria-label', '자동재생 정지');
+          // 정지 아이콘 (⏸)
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+        }
+        isPlaying = !isPlaying;
+      });
+
+      // 초기 재생 상태 반영 (만약 autoplay가 중지된 상태라면 버튼 수정)
+      if (!isPlaying) {
+        playBtn.setAttribute('aria-pressed', 'false');
+        playBtn.setAttribute('aria-label', '자동재생 시작');
+        playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>';
+      }
+    }); // DOMContentLoaded end
+  </script>
+</body>
+</html>

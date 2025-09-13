@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>공과금 납부 안내</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.5;
+      margin: 0;
+      padding: 1rem;
+      background: #f7f9fc;
+    }
+    .banner {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .banner h1 {
+      font-size: 1.2rem;
+      margin: 0 0 1rem;
+    }
+    .cards {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .card {
+      flex: 1 1 calc(50% - 1rem);
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card img {
+      width: 48px;
+      height: auto;
+      margin-bottom: 0.75rem;
+    }
+    .card h2 {
+      font-size: 1rem;
+      margin: 0 0 0.5rem;
+    }
+    .card p {
+      margin: 0 0 1rem;
+      font-size: 0.875rem;
+      color: #555;
+    }
+    .card a {
+      margin-top: auto;
+      display: inline-block;
+      padding: 0.5rem 0.75rem;
+      background: #0078ff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+    }
+    .notice {
+      background: #fff3cd;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 1.5rem;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="banner">
+    <h1>공과금 이제 더 쉽고 빠르게 납부해보세요</h1>
+  </header>
+
+  <main>
+    <section aria-labelledby="pay-options">
+      <h2 id="pay-options" class="sr-only">납부 방법 선택</h2>
+      <ul class="cards">
+        <li>
+          <article class="card">
+            <img src="icon-bill.png" alt="" aria-hidden="true">
+            <h2>고지서 납부</h2>
+            <p>스캔·지로로 편하게 납부하세요!</p>
+            <a href="#">자주쓰는 지로번호</a>
+          </article>
+        </li>
+        <li>
+          <article class="card">
+            <img src="icon-ebook.png" alt="" aria-hidden="true">
+            <h2>전자고지서</h2>
+            <p>종이 대신 앱으로 편리하게 확인하세요!</p>
+            <a href="#">3건 확인하기</a>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="notice" aria-labelledby="notice-title">
+      <h2 id="notice-title">알림</h2>
+      <p><strong>9월 재산세 납부의 달</strong> - 늦지 않게 납부해주세요!</p>
+    </section>
+  </main>
+</body>
+</html>

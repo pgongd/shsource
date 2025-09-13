@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>커스텀 페이지네이션 슬라이더</title>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .swiper {
+      width: 100%;
+      max-width: 600px;
+      margin: 40px auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+      height: 300px;
+    }
+    .slide1 { background: #6a7ba2; }
+    .slide2 { background: #4d9f8f; }
+    .slide3 { background: #d98282; }
+    .slide4 { background: #b589d6; }
+    .slide5 { background: #e3b662; }
+
+    /* 커스텀 페이지네이션 */
+    .custom-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .progress-bar {
+      width: 40px;
+      height: 12px;
+      background: #c0c6cf;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: #606b80;
+      transition: width 0.3s ease;
+    }
+
+    .custom-bullet {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #c0c6cf;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+    }
+    .custom-bullet.active {
+      border-color: #606b80;
+      background: #606b80;
+    }
+
+    .play-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #606b80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .play-toggle svg {
+      fill: #fff;
+      width: 14px;
+      height: 14px;
+    }
+
+    /* 접근성 숨김 텍스트 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      clip: rect(0,0,0,0);
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <!-- Slider -->
+  <div class="swiper" aria-label="이미지 슬라이더">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide slide1" role="group" aria-label="1 / 5">슬라이드 1</div>
+      <div class="swiper-slide slide2" role="group" aria-label="2 / 5">슬라이드 2</div>
+      <div class="swiper-slide slide3" role="group" aria-label="3 / 5">슬라이드 3</div>
+      <div class="swiper-slide slide4" role="group" aria-label="4 / 5">슬라이드 4</div>
+      <div class="swiper-slide slide5" role="group" aria-label="5 / 5">슬라이드 5</div>
+    </div>
+  </div>
+
+  <!-- Custom Pagination -->
+  <div class="custom-pagination" aria-label="슬라이드 페이지네이션">
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar-fill"></div>
+    </div>
+    <div class="custom-bullet" role="button" tabindex="0" aria-label="1번 슬라이드로 이동"></div>
+    <div class="custom-bullet" role="button" tabindex="0" aria-label="2번 슬라이드로 이동"></div>
+    <div class="custom-bullet" role="button" tabindex="0" aria-label="3번 슬라이드로 이동"></div>
+    <div class="custom-bullet" role="button" tabindex="0" aria-label="4번 슬라이드로 이동"></div>
+    <div class="custom-bullet" role="button" tabindex="0" aria-label="5번 슬라이드로 이동"></div>
+    <div class="play-toggle" role="button" aria-pressed="true" aria-label="자동재생 정지">
+      <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper('.swiper', {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      on: {
+        slideChange: updatePagination
+      }
+    });
+
+    const bullets = document.querySelectorAll('.custom-bullet');
+    const progressFill = document.querySelector('.progress-bar-fill');
+    const playToggle = document.querySelector('.play-toggle');
+
+    function updatePagination() {
+      bullets.forEach((b, i) => {
+        b.classList.toggle('active', i === swiper.realIndex);
+      });
+      progressFill.style.width = ((swiper.realIndex + 1) / bullets.length) * 100 + '%';
+    }
+    updatePagination();
+
+    bullets.forEach((b, i) => {
+      b.addEventListener('click', () => swiper.slideToLoop(i));
+      b.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') swiper.slideToLoop(i);
+      });
+    });
+
+    let isPlaying = true;
+    playToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        swiper.autoplay.stop();
+        playToggle.setAttribute('aria-label', '자동재생 시작');
+        playToggle.setAttribute('aria-pressed', 'false');
+        playToggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'; // ▶
+      } else {
+        swiper.autoplay.start();
+        playToggle.setAttribute('aria-label', '자동재생 정지');
+        playToggle.setAttribute('aria-pressed', 'true');
+        playToggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'; // ⏸
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
+</body>
+</html>

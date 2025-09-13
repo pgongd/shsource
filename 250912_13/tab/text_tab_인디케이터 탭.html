@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>텍스트 탭 예제</title>
+<style>
+  :root {
+    --color-active: #0066ff;
+    --color-inactive: #666;
+    --color-border: #ccc;
+  }
+
+  body {
+    font-family: sans-serif;
+    padding: 40px;
+  }
+
+  .tabs-container {
+    width: 100%;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .tab {
+    background: none;
+    border: none;
+    padding: 8px 0;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--color-inactive);
+    position: relative;
+  }
+
+  .tab[aria-selected="true"] {
+    color: var(--color-active);
+    font-weight: 600;
+  }
+
+  /* 하단 인디케이터 */
+  .tab-indicator {
+    position: absolute;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-active);
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+
+  /* 키보드 포커스 */
+  .tab:focus-visible {
+    outline: 2px solid var(--color-active);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="tabs-container">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true">항목명</button>
+      <button class="tab" role="tab" aria-selected="false">항목명</button>
+      <button class="tab" role="tab" aria-selected="false">항목명</button>
+      <button class="tab" role="tab" aria-selected="false">항목명</button>
+      <span class="tab-indicator"></span>
+    </div>
+  </div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const indicator = document.querySelector('.tab-indicator');
+
+  function updateIndicator(tab) {
+    const rect = tab.getBoundingClientRect();
+    const parentRect = tab.parentElement.getBoundingClientRect();
+    indicator.style.left = (rect.left - parentRect.left) + "px";
+    indicator.style.width = rect.width + "px";
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      updateIndicator(tab);
+    });
+  });
+
+  // 초기 인디케이터 위치
+  const activeTab = document.querySelector('.tab[aria-selected="true"]');
+  if (activeTab) {
+    updateIndicator(activeTab);
+  }
+</script>
+</body>
+</html>

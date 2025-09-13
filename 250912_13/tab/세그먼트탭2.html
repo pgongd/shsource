@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>세그먼트 탭 (슬라이드 인디케이터)</title>
+<style>
+  :root {
+    --color-bg: #f3f6fa;
+    --color-active-border: #0066ff;
+    --color-inactive: #333;
+    --indicator-bg: #fff;
+  }
+
+  body {
+    font-family: sans-serif;
+    padding: 40px;
+    background: #fff;
+  }
+
+  .tabs-container {
+    display: inline-block;
+    background: var(--color-bg);
+    border-radius: 999px;
+    padding: 4px;
+    position: relative;
+  }
+
+  .tabs {
+    display: flex;
+    position: relative;
+  }
+
+  /* 인디케이터 */
+  .tab-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    height: auto;
+    background: var(--indicator-bg);
+    border-radius: 999px;
+    border: 1px solid var(--color-active-border);
+    transition: all 0.3s ease;
+    z-index: 0;
+  }
+
+  .tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--color-inactive);
+    z-index: 1;
+  }
+
+  .tab[aria-selected="true"] {
+    color: var(--color-active-border);
+    font-weight: 600;
+  }
+
+  .tab:focus-visible {
+    outline: 2px solid var(--color-active-border);
+    outline-offset: 2px;
+  }
+
+  /* 임시 아이콘 */
+  .icon {
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    border-radius: 2px;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+  <div class="tabs-container">
+    <div class="tabs" role="tablist">
+      <span class="tab-indicator"></span>
+      <button class="tab" role="tab" aria-selected="true">
+        <span class="icon"></span>
+        <span>텍스트</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <span>텍스트</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <span>텍스트</span>
+      </button>
+    </div>
+  </div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const indicator = document.querySelector('.tab-indicator');
+
+  function moveIndicator(tab) {
+    const rect = tab.getBoundingClientRect();
+    const parentRect = tab.parentElement.getBoundingClientRect();
+    indicator.style.left = (rect.left - parentRect.left) + "px";
+    indicator.style.width = rect.width + "px";
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      moveIndicator(tab);
+    });
+  });
+
+  // 초기 위치
+  const activeTab = document.querySelector('.tab[aria-selected="true"]');
+  if (activeTab) moveIndicator(activeTab);
+</script>
+</body>
+</html>

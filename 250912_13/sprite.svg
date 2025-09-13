@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- 집 아이콘 -->
+  <symbol id="icon-home" viewBox="0 0 24 24">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  </symbol>
+
+  <!-- 검색 아이콘 -->
+  <symbol id="icon-search" viewBox="0 0 24 24">
+    <path d="M21 20l-5.2-5.2a7 7 0 1 0-1.4 1.4L20 21z"/>
+  </symbol>
+
+  <symbol id="icon-checkbox" class="icon-check" viewBox="0 0 25 24">
+    <path d="M0.136719 8C0.136719 3.58172 3.71844 0 8.13672 0H16.1367C20.555 0 24.1367 3.58172 24.1367 8V16C24.1367 20.4183 20.555 24 16.1367 24H8.13672C3.71844 24 0.136719 20.4183 0.136719 16V8Z" fill="#005DF9"/>
+    <path d="M6.51172 11.625L10.2617 15.375L17.7617 7.875" stroke="white" stroke-width="2.8125"/>
+</symbol>
+
+<symbol id="icon-checkmark" class="icon-check" viewBox="0 0 25 24">
+  <path d="M8.63672 0.5H16.6367C20.7789 0.5 24.1367 3.85786 24.1367 8V16C24.1367 20.1421 20.7789 23.5 16.6367 23.5H8.63672C4.49458 23.5 1.13672 20.1421 1.13672 16V8C1.13672 3.85786 4.49458 0.5 8.63672 0.5Z" stroke="#818DA2"/>
+  <path d="M7.01172 11.625L10.7617 15.375L18.2617 7.875" stroke="#E4E7EC" stroke-width="1.6875"/>
+</symbol>
+
+
+</svg>

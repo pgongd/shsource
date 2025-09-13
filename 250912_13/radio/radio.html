@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>커스텀 라디오 버튼</title>
+<style>
+  /* CSS 변수: 색상 테마 */
+  :root {
+    --color-primary: #0066ff;
+    --color-border: #888;
+    --color-disabled: #ccc;
+    --color-text: #333;
+    --color-bg: #f9f9f9;
+  }
+
+  /* 다크모드 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-primary: #4d9dff;
+      --color-border: #aaa;
+      --color-disabled: #555;
+      --color-text: #eee;
+      --color-bg: #1c1c1c;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    font-family: sans-serif;
+    padding: 20px;
+    font-size: 16px; /* 고령자 모드에서 시스템 글자 크기 변경 시 반영 */
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+  }
+
+  /* 숨겨진 기본 라디오 */
+  .radio-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* 커스텀 라벨 */
+  .radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 1em;
+  }
+
+  /* 원형 커스텀 UI */
+  .radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+
+  /* 선택된 상태 */
+  .radio-input:checked + .radio-custom {
+    border-color: var(--color-primary);
+  }
+  .radio-input:checked + .radio-custom::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+
+  /* 포커스 (키보드 접근성) */
+  .radio-input:focus-visible + .radio-custom {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* 비활성화 상태 */
+  .radio-input:disabled + .radio-custom {
+    border-color: var(--color-disabled);
+    background: transparent;
+  }
+  .radio-input:disabled ~ span {
+    color: var(--color-disabled);
+    cursor: not-allowed;
+  }
+</style>
+</head>
+<body>
+  <div class="radio-group">
+    <label class="radio-label">
+      <input type="radio" name="option" class="radio-input" checked>
+      <span class="radio-custom"></span>
+      <span>텍스트</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="option" class="radio-input">
+      <span class="radio-custom"></span>
+      <span>텍스트</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="option" class="radio-input" checked disabled>
+      <span class="radio-custom"></span>
+      <span>텍스트</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="option" class="radio-input" disabled>
+      <span class="radio-custom"></span>
+      <span>텍스트</span>
+    </label>
+  </div>
+</body>
+</html>

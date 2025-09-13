@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>세그먼트 탭</title>
+<style>
+  :root {
+    --color-active-bg: #fff;
+    --color-active-border: #0066ff;
+    --color-inactive: #333;
+    --color-bg: #f3f6fa;
+  }
+
+  body {
+    font-family: sans-serif;
+    padding: 40px;
+    background: #fff;
+  }
+
+  .tabs-container {
+    display: inline-block;
+    background: var(--color-bg);
+    border-radius: 999px;
+    padding: 4px;
+  }
+
+  .tabs {
+    display: flex;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* 아이콘과 텍스트 사이 간격 */
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--color-inactive);
+    transition: all 0.2s ease;
+  }
+
+  .tab[aria-selected="true"] {
+    background: var(--color-active-bg);
+    border: 1px solid var(--color-active-border);
+    color: var(--color-active-border);
+    font-weight: 600;
+  }
+
+  /* 포커스 접근성 */
+  .tab:focus-visible {
+    outline: 2px solid var(--color-active-border);
+    outline-offset: 2px;
+  }
+
+  /* 임시 아이콘 스타일 (실제 프로젝트에서는 svg 사용 권장) */
+  .icon {
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    border-radius: 2px;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+  <div class="tabs-container">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true">
+        <span class="icon"></span>
+        <span>텍스트</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <span>텍스트</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <span>텍스트</span>
+      </button>
+    </div>
+  </div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+    });
+  });
+</script>
+</body>
+</html>
