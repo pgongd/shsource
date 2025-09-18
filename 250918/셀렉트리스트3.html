@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>SelectList with Checkbox</title>
+<style>
+  .list-item {
+    display: flex;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .list-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* 체크된 상태에서 부모 라벨 스타일 변경 */
+  .list-item:has(input[type="checkbox"]:checked) {
+    border-color: #2563eb;
+  }
+</style>
+</head>
+<body>
+<h2>SelectList(multiSelect)</h2>
+
+<label class="list-item">
+  <input type="checkbox" aria-label="메인텍스트 선택">
+  <span class="icon">ICON</span>
+  <span class="main">메인텍스트</span>
+</label>
+
+<label class="list-item">
+  <input type="checkbox" aria-label="메인텍스트와 서브텍스트 선택">
+  <span class="icon">ICON</span>
+  <div class="texts">
+    <div class="main">메인텍스트</div>
+    <div class="sub">서브텍스트</div>
+  </div>
+</label>
+
+</body>
+</html>

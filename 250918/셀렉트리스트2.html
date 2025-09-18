@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Custom SelectList</title>
+<style>
+  .list-box {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .list-box.active {
+    border-color: #2563eb;
+  }
+  /* 체크박스는 숨김 */
+  .hidden-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<h2>SelectList(multiSelect)</h2>
+
+<div class="list-box" role="checkbox" aria-checked="false" tabindex="0">
+  <input type="checkbox" id="chk1" class="hidden-checkbox">
+  <label for="chk1">메인텍스트</label>
+</div>
+
+<div class="list-box" role="checkbox" aria-checked="false" tabindex="0">
+  <input type="checkbox" id="chk2" class="hidden-checkbox">
+  <label for="chk2">메인텍스트 + 서브텍스트</label>
+</div>
+
+<script>
+  document.querySelectorAll('.list-box').forEach(box => {
+    const checkbox = box.querySelector('input[type="checkbox"]');
+
+    function toggle() {
+      checkbox.checked = !checkbox.checked;
+      box.classList.toggle('active', checkbox.checked);
+      box.setAttribute('aria-checked', checkbox.checked);
+    }
+
+    // 마우스 클릭
+    box.addEventListener('click', (e) => {
+      // label 클릭이면 기본 동작 유지
+      if (e.target.tagName.toLowerCase() !== 'label') {
+        toggle();
+      }
+    });
+
+    // 키보드 스페이스, 엔터 접근성 대응
+    box.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+</script>
+</body>
+</html>

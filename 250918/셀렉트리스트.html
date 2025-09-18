@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>SelectList (multiSelect)</title>
+  <style>
+    body { font-family: sans-serif; }
+
+    .select-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .list-item input[type="checkbox"] {
+      display: none;
+    }
+
+    .list-item .icon {
+      margin-right: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .list-item .texts {
+      flex: 1;
+    }
+
+    .list-item .main {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .list-item .sub {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* 체크된 상태 */
+    .list-item input[type="checkbox"]:checked + .box {
+      border-color: #2563eb;
+    }
+
+    .list-item .box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* 체크박스 표시 커스텀 */
+    .list-item .checkmark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+    }
+
+    .list-item input[type="checkbox"]:checked + .box .checkmark {
+      border-color: #2563eb;
+      background-color: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>SelectList(multiSelect)</h2>
+
+  <div class="select-list" role="listbox" aria-multiselectable="true">
+    <label class="list-item">
+      <input type="checkbox" aria-label="메인텍스트 선택">
+      <div class="box">
+        <span class="icon">ICON</span>
+        <div class="texts">
+          <div class="main">메인텍스트</div>
+        </div>
+        <span class="checkmark">✔</span>
+      </div>
+    </label>
+
+    <label class="list-item">
+      <input type="checkbox" aria-label="메인텍스트와 서브텍스트 선택">
+      <div class="box">
+        <span class="icon">ICON</span>
+        <div class="texts">
+          <div class="main">메인텍스트</div>
+          <div class="sub">서브텍스트</div>
+        </div>
+        <span class="checkmark">✔</span>
+      </div>
+    </label>
+  </div>
+
+  <script>
+    // 보더 색상 동작 제어 (선택 상태 반영)
+    document.querySelectorAll('.list-item input[type="checkbox"]').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const item = chk.closest('.list-item');
+        if (chk.checked) {
+          item.style.borderColor = '#2563eb';
+        } else {
+          item.style.borderColor = '#ddd';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

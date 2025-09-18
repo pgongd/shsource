@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>드롭다운 접근성 예제</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 280px;
+    margin-bottom: 40px;
+  }
+
+  .dropdown-toggle {
+    width: 100%;
+    padding: 16px 12px 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    text-align: left;
+    font-size: 14px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .dropdown-toggle:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25,118,210,0.2);
+  }
+
+  /* 라벨 */
+  .dropdown-toggle .label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    font-size: 14px;
+    color: #888;
+    transition: all 0.2s;
+    pointer-events: none;
+  }
+
+  /* 값 */
+  .dropdown-toggle .value {
+    display: block;
+    color: #333;
+  }
+
+  /* 라벨 떠오름 */
+  .dropdown.active .label,
+  .dropdown.has-value .label {
+    top: 4px;
+    font-size: 12px;
+    color: #1976d2;
+    background: #fff;
+    padding: 0 4px;
+  }
+
+  /* 비활성화 */
+  .dropdown.disabled .dropdown-toggle {
+    background: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+
+  /* 에러 상태 */
+  .dropdown.error .dropdown-toggle {
+    border-color: #d32f2f;
+  }
+  .dropdown.error .error-msg {
+    font-size: 12px;
+    color: #d32f2f;
+    margin-top: 4px;
+  }
+
+  /* 바텀시트 */
+  .bottom-sheet {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    padding: 16px;
+    max-height: 40%;
+    overflow-y: auto;
+    z-index: 1001;
+  }
+  .bottom-sheet.active { display: block; }
+  .bottom-sheet ul { list-style: none; margin: 0; padding: 0; }
+  .bottom-sheet li {
+    padding: 12px;
+    cursor: pointer;
+  }
+  .bottom-sheet li:hover,
+  .bottom-sheet li:focus {
+    background: #f0f0f0;
+    outline: none;
+  }
+
+  /* 딤 */
+  .dim {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+  }
+  .dim.active { display: block; }
+</style>
+</head>
+<body>
+
+<h2>드롭다운 테스트</h2>
+
+<!-- 기본 -->
+<div class="dropdown" id="dropdown1">
+  <button type="button" class="dropdown-toggle" aria-haspopup="listbox" aria-expanded="false">
+    <span class="label">옵션 선택</span>
+    <span class="value">선택하세요</span>
+  </button>
+  <div class="error-msg" hidden>에러 메시지</div>
+</div>
+
+<!-- 에러 상태 -->
+<div class="dropdown error" id="dropdown2">
+  <button type="button" class="dropdown-toggle" aria-haspopup="listbox" aria-expanded="false">
+    <span class="label">옵션 선택</span>
+    <span class="value">선택하세요</span>
+  </button>
+  <div class="error-msg">필수 항목입니다</div>
+</div>
+
+<!-- 비활성화 -->
+<div class="dropdown disabled" id="dropdown3">
+  <button type="button" class="dropdown-toggle" aria-haspopup="listbox" aria-expanded="false" disabled>
+    <span class="label">옵션 선택</span>
+    <span class="value">선택 불가</span>
+  </button>
+</div>
+
+<div class="dim"></div>
+<div class="bottom-sheet" role="listbox">
+  <ul>
+    <li role="option" tabindex="0">옵션 1</li>
+    <li role="option" tabindex="0">옵션 2</li>
+    <li role="option" tabindex="0">옵션 3</li>
+  </ul>
+</div>
+
+<script>
+  const dropdowns = document.querySelectorAll('.dropdown');
+  const sheet = document.querySelector('.bottom-sheet');
+  const dim = document.querySelector('.dim');
+  const options = sheet.querySelectorAll('li');
+  let activeDropdown = null;
+
+  dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.dropdown-toggle');
+    const valueSpan = dropdown.querySelector('.value');
+
+    if (!toggle) return;
+
+    toggle.addEventListener('click', () => {
+      if (dropdown.classList.contains('disabled')) return;
+      activeDropdown = dropdown;
+      sheet.classList.add('active');
+      dim.classList.add('active');
+      toggle.setAttribute('aria-expanded', 'true');
+      dropdown.classList.add('active');
+    });
+
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (!activeDropdown) return;
+        const valueSpan = activeDropdown.querySelector('.value');
+        const toggle = activeDropdown.querySelector('.dropdown-toggle');
+        valueSpan.textContent = opt.textContent;
+        activeDropdown.classList.add('has-value');
+        sheet.classList.remove('active');
+        dim.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+        activeDropdown.classList.remove('active');
+        activeDropdown = null;
+      });
+    });
+  });
+
+  dim.addEventListener('click', () => {
+    sheet.classList.remove('active');
+    dim.classList.remove('active');
+    if (activeDropdown) {
+      const toggle = activeDropdown.querySelector('.dropdown-toggle');
+      toggle.setAttribute('aria-expanded', 'false');
+      activeDropdown.classList.remove('active');
+      activeDropdown = null;
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>접근성 버튼 테스트</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn:hover,
+    .btn:focus {
+      background-color: #0056b3;
+      outline: 2px solid #333;
+      outline-offset: 2px;
+    }
+    .btn span {
+      display: inline-block;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>접근성 버튼 테스트</h1>
+  <p>아래 버튼은 <code>span</code> 안에 라벨을 넣은 구조입니다.</p>
+  
+  <button type="button" class="btn">
+    <span>확인하기</span>
+  </button>
+  
+  <button type="button" class="btn">
+    <span>취소</span>
+  </button>
+
+  <p>✅ 스크린리더는 <code>span</code> 안 텍스트 그대로 읽어줍니다.</p>
+</body>
+</html>

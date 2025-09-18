@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>웹 접근성 BEM 다중/이중 다이얼로그</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>BEM 기반 웹 접근성 다중/이중 다이얼로그 예제</h1>
+<div class="button-container">
+  <h2>다이얼로그 컨트롤 버튼</h2>
+  <button type="button" id="openTermsDialogBtn" class="btn btn--primary"><span>약관 보이기</span></button>
+  <button type="button" id="openInfoDialogBtn" class="btn btn--secondary"><span>정보 알림</span></button>
+</div>
+
+<p>아래에 다른 컨텐츠들이 있다. 스크롤을 내려보세요 모달이 열리면서 스크롤이 잠김</p>
+<div style="height: 1500px; background-color: #e6f7ff; padding: 20px; border-radius: 8px; margin-top: 20px;">
+  <h3>여기는 뒷 배경 컨텐츠입니다.</h3>
+  <p>모달이 열리면 이 영역의 스크롤은 비활성화됩니다.</p>
+  <p>스크롤을 테스트하기 위해 충분히 긴 내용을 추가했습니다.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam perferendis eligendi, recusandae sapiente quae fugit non error, ducimus illum quos debitis rerum laudantium vero vel, ab consectetur distinctio obcaecati reiciendis!</p>
+  <p>Voluptate, eveniet! Provident, dolorum illum! Minus perferendis consectetur, ducimus dignissimos animi sequi. Ipsa, non! Provident fuga perferendis temporibus! Facere totam architecto dignissimos. Quo, reiciendis. Dolorum, eaque. Doloremque, rerum fuga?</p>
+  <p>Tempora ipsam vero quas obcaecati laboriosam iste voluptatibus. Numquam, officia? Aliquam, voluptatem! Voluptatum, recusandae nisi. Laudantium, molestiae! Repudiandae reiciendis doloremque ea voluptatibus quam cumque est non, veritatis sint!</p>
+  <p>Quidem perferendis, eum dolor error cumque voluptatibus distinctio in consectetur odit unde quas ipsam, dolores officiis aut! Voluptatem sint, reiciendis quia voluptatum nulla omnis ab cumque magnam eveniet. Accusantium, quod.</p>
+  <p>Earum, iste culpa maiores nemo aliquid animi commodi distinctio! Quae modi quos alias sint sequi, eum, minus rerum ducimus iste tempora id vero laboriosam excepturi. Dolorum iusto at animi. Fugit?</p>
+  <p>... 스크롤 테스트용 컨텐츠 계속 ...</p>
+</div>
+
+
+
+<!-- 다이얼로그(모달) 마크업 1: 약관 동의 다이얼로그 -->
+<div id="termsDialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="termsDialogTitle">
+  <div class="dialog__content">
+    <div class="dialog__header">
+      <h2 id="termsDialogTitle" class="dialog__title">개인정보 수집 및 이용동의</h2>
+    </div>
+    <div class="dialog__body">
+      <p class="dialog__body-text">본 약관에 동의하지 않으시면 서비스 이용이 제한될 수 있습니다. 중요한 약관 내용이므로 신중히 검토해 주시기 바랍니다.</p>
+      <p>..약관 상세 내용..</p>
+      <p><strong>제 1조(목적)</strong> 이 약관은 어쩌군</p>
+      <button id="openNestedDialogBtn" class="btn btn--secondary">상세 보기</button>
+    </div>
+    <div class="dialog__footer">
+      <button id="termsConfirmBtn" class="btn btn--primary"><span>동의</span></button>
+      <button class="dialog__close-btn" aria-label="닫기"><span>X</span></button>
+    </div>
+  </div>
+</div>
+<!-- //다이얼로그(모달) 마크업 1: 약관 동의 다이얼로그 -->
+
+<!-- 다이얼로그(모달) : 독립적인 정보 알림 다이얼로그 -->
+ <div id="infoDialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="infoDialogTitle">
+  <div class="dialog__content">
+    <div class="dialog__header">
+      <h2 id="infoDialogTitle" class="dialog__title">공지사항</h2>
+    </div>
+    <div class="dialog__body">
+      <p class="dialog__body-text">새로은 정보와 내용</p>
+      <p>..공지사항 상세 내용..</p>
+    </div>
+    <div class="dialog__footer">
+      <div class="btn__group">
+        <button class="btn btn--primary"><span>동의</span></button>
+        <button class="btn btn--secondary"><span>취소</span></button>
+      </div>
+      <button class="dialog__close-btn" aria-label="닫기"><span>X</span></button>
+    </div>
+  </div>
+</div>
+<!--// 다이얼로그(모달) : 독립적인 정보 알림 다이얼로그 -->
+
+<!-- 다이얼로그(모달) : 중첩 다이얼로그 -->
+ <div id="nestedDialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="nestedDialogTitle">
+  <div class="dialog__content">
+    <div class="dialog__header">
+      <h2 id="nestedDialogTitle" class="dialog__title">추가 약관 상세</h2>
+    </div>
+    <div class="dialog__body">
+      <p class="dialog__body-text">메인약관에 대한 깊이 있는 내용</p>
+      <p>..추가 약관 상세 내용..</p>
+    </div>
+    <div class="dialog__footer">
+      <button class="btn btn--primary"><span>이해했습니다.</span></button>
+      <button class="dialog__close-btn" aria-label="닫기"><span>X</span></button>
+    </div>
+  </div>
+</div>
+<!--// 다이얼로그(모달) : 중첩 다이얼로그 -->
+
+<script>
+ /**
+  * btn 컴포넌트 클래스
+  * BEM 명명 규칙 및 웹 접근성을 준수 합니다.
+  **/
+
+ class Button{
+  constructor(element, options = {}){
+    this.btnElement = element;
+    this.options = {
+      type: options.type || 'default', //'primary', 'secondary', 'default'
+      state:options.state || {}, // {disabled:true, active:false}
+      onClick:options.onClick || (() => {})
+    };
+
+    this._init();
+    this._addEventListeners();
+  }
+
+  _init(){
+    if(this.options.type === 'primary'){
+      this.btnElement.classList.add('btn--primary');
+    } else if(this.options.type === 'secondary'){
+      this.btnElement.classList.add('btn--secondary');
+    }
+
+    if(this.options.state.disabled) {
+      this.disabled();
+    }
+    if(this.options.state.active){
+      this.activate();
+    }
+  }
+
+  _addEventListeners() {
+    this.btnElement.addEventListener('click', this.options.onClick);
+  }
+
+  enable(){
+    this.btnElement.disabled = false;
+    this.btnElement.classList.remove('btn--disabled');
+  }
+
+  disable(){
+    this.btnElement.disabled = true;
+    this.btnElement.classList.add('btn--disabled');
+  }
+
+  activate(){
+    this.btnElement.classList.add('btn--active');
+  }
+
+  deactivate(){
+    this.btnElement.classList.remove('btn--active');
+  }
+
+  /**
+   * 버튼 클릭 시 콜백 함수를 변경한다.
+   * @param {function} newCallback 
+   * 
+   */
+
+   setOnClickListener(newCallback){
+    this.btnElement.removeEventListener('click', this.option.onClick);
+    this.options.onClick = newCallback;
+    this.btnElement.addEventListener('click', this.options.onClick);
+   }
+ }
+
+/**
+ * Dialog (Modal) 컴포넌트 클래스
+ * 여러 다이얼로그가 열려도 body 스크롤이 유지되다가
+ * 모든 다이얼로그가 닫혀야만 body 스크롤이 다시 활성화됨
+ */
+ 
+ class Dialog {
+  constructor(element, options = {}){
+    this.dialogElement = element;
+    this.openButton = options.openBtn; //다이얼로그 여는 버튼
+    this.closeButton = this.dialogElement.querySelector('.dialog__close-btn');
+    this.confirmButton = this.dialogElement.querySelector('.dialog__footer .button--primary');
+
+    this.previouslyFocusedElement = null; //다이얼로그 열기 전 포커스 요소
+    this.focusableElements = []; //다이얼로그 내부에서 포커스 가능한 요소들
+    
+    this._addEventListeners();
+  }
+
+  _addEventListeners(){
+    if(this.openButton) {
+      this.openButton.addEventListener('click', this.open.bind(this));
+    }
+    this.closeButton.addEventListener('click', this.close.bind(this));
+
+    if(this.confirmButton){
+      this.confirmButton.addEventListener('click', this.close.bind(this));
+    }
+    document.addEventListener('keydown', this._handleKeyDown.bind(this));
+  }
+
+   /**
+  * dialog를 연다
+  * - dialog--is--open 클래그 추가
+  * - body--no-scroll 클래스 추가
+  * - 포커스 트랩 설정 및 첫 포커스 요소로 이동
+  */
+  open(){
+    this.previouslyFocusedElement = document.activeElement;
+    this.dialogElement.classList.add('dialog--is-open');
+
+    if(document.querySelectorAll('.dialog--is-open').length === 1){
+      document.body.classList.add('body--no-scroll');
+    }
+
+    this._trapFocus();
+    this.closeButton.focus(); //닫기 버튼으로 초기 포커스 이동
+  }
+
+  /**
+   * dialog를 닫는다.
+   * - dialog--is-open 클래스 제거
+   * - body--no-scroll 클래스 제거
+   * - 원래 포커스 위치로 복원
+   */
+   
+   close(){
+    this.dialogElement.classList.remove('dialog--is-open');
+
+    if(document.querySelectorAll('.dialog--is-open').length === 0){
+      document.body.classList.remove('body--no-scroll');
+    }
+
+    if(this.previouslyFocusedElement) {
+      this.previouslyFocusedElement.focus();
+    }
+   }
+
+   /**
+    * 다이얼로그 내부에서 포커스 가능한 요소들을 찾아 배열에 저장
+    */
+    
+    _trapFocus(){
+      const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+      this.focusableElements = Array.from(this.dialogElement.querySelectorAll(focusableSelectors))
+                                  .filter(el => !el.disabled && el.offsetParent !== null);
+      //포커스 가능한 요소가 없는 경우를 대비
+      if(this.focusableElements.length === 0 && this.closeButton) {
+        this.focusableElements.push(this.closeButton);
+      }
+
+      this.firstFocusableElement = this.focusableElements[0];
+      this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1];
+    }
+
+    /**
+     * 키보드 이벤트 (ESC, Tab) 처리 핸들러
+     * - ESC 키로 다이얼로그 닫기
+     * - Tab 키로 다이얼로그 내부에서 포커스 순환(Focus Trap)
+     * @param {keyboardEvent} event
+     */
+     
+     _handleKeyDown(event) {
+      if(!this.dialogElement.classList.contains('dialog--is-open')) return;
+
+      //ESC 키로 닫기
+      if(event.key === 'Escape' || event.key ==='Esc') {
+        this.close();
+        event.preventDefault();
+        return;
+      }
+
+      //TAB 키로 포커스 순환
+      if(event.key === 'Tab'){
+        const isFirstElementFocused = document.activeElement === this.firstFocusableElement;
+        const isLastElementFocused = document.activeElement === this.lastFocusableElement;
+
+        if(event.shiftKey) { //shift + Tab
+          if(isFirstElementFocused) {
+            this.lastFocusableElement.focus();
+            event.preventDefault();
+          }
+        } else {
+          if(isLastElementFocused) {
+            this.firstFocusableElement.focus();
+            event.preventDefault();
+          }
+        }
+      }
+
+     }
+
+ }
+
+ //DomcontentLoaded 이벤트 발생 시 컴포넌트 초기화
+ document.addEventListener('DOMContentLoaded', () =>{
+  //========================================================================
+  // dialog 컴포넌트 초기화
+  // =======================================================================
+
+  // 1. 메인 약관 다이얼로그 (termsDialog)
+  const termsDialogElement = document.getElementById('termsDialog');
+  const openTermsDialogBtn = document.getElementById('openTermsDialogBtn');
+  const termsDialog = new Dialog(termsDialogElement, {
+    openBtn: openTermsDialogBtn // 메인 약관 다이얼로그를 여는 버튼
+  });
+
+  // 2. 독립적인 정보 알림 다이얼로그 (infoDialog)
+  const infoDialogElement = document.getElementById('infoDialog');
+  const openInfoDialogBtn = document.getElementById('openInfoDialogBtn');
+  const infoDialog = new Dialog(infoDialogElement, {
+    openBtn: openInfoDialogBtn
+  });
+
+
+  // 3. 중첩 다이얼로그 (infoDialog)
+  const nestedDialogElement = document.getElementById('nestedDialog');
+  const openNestedDialogBtn = document.getElementById('opennestedDialogBtn');
+  const nestedDialog = new Dialog(nestedDialogElement, {
+    openBtn: openNestedDialogBtn
+  });
+
+
+  //============================================================
+  // Button 컴포넌트 초기화 및 테스트(다른 일반 버튼들)
+  //=============================================================
+
+  //일반 버튼(클래스 없음)
+  new Button(document.querySelector('.btn--primary'),{
+    type:'primary',
+    onClick: () => console.log('일반 primary 버튼 클릭')
+  });
+
+  // 활성 버튼(초기 상태가 활성)
+  const activePrimaryBtn = new Button(document.getElementById('activePrimaryBtn'),{
+    type:'primary',
+    state: {active: true},
+    onClick: () => console.log('활성 primary 버튼 클릭')
+  });
+
+  //비활성 버튼 (초기 상태가 비활성)
+  const disablePrimaryBtn = new Button(document.getElementById('disabledPrimaryBtn'),{
+    type:'primary',
+    state:{disabled:true},
+    onClick: () => console.log('비활성 primary 버튼 클릭')
+  });
+
+  const activeSecondaryBtn = new Button(document.getElementById('activeSecondaryBtn'),{
+    type:'secondary',
+    state: {active: true},
+    onClick: () => console.log('활성 secondary 버튼 클릭')
+  })
+
+  const disabledSecondaryBtn = new Button(document.getElementById('disabledSecondaryBtn'),{
+    type:'secondary',
+    state: {disabled: true},
+    onClick: () => console.log('비활성 secondary 버튼 클릭')
+  })
+
+  //활성/비활성 토글 버튼
+  const toggleActiveBtn = new Button(docmuent.getElementById('toggleActiveBtn'), {
+    type: 'secondary',
+    onClick:(envent) => {
+      if(evnent.currentTarget.classList.contains('button--ative')){
+        toggleActiveBtn.deactivate();
+      } else {
+        toggleActiveBtn.activate();
+      }
+    } 
+  })
+
+
+  //비활성 토글 버튼
+  const toggleDisableBtn = new Button(document.getElementById('toggleDisableBtn'),{
+    type:'primary',
+    onClick:(event) => {
+      if(event.currentTarget.disabled){
+        toggleDisableBtn.enable();
+      } else {
+        toggleDisableBtn.disable();
+      }
+    }
+  })
+
+
+
+
+
+
+
+
+ })
+
+
+
+
+ 
+
+
+
+</script>
+
+</body>
+</html>
