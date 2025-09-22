@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>접근성 툴팁 예제</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background-color: #f9f9f9;
+  }
+
+  .form-group {
+    position: relative;
+    max-width: 300px;
+    margin-bottom: 40px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  /* 툴팁 아이콘 */
+  .tooltip-icon {
+    display: inline-block;
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* 툴팁 내용 */
+  .tooltip-text {
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 220px;
+    display: none;
+    z-index: 10;
+  }
+
+  /* 툴팁 화살표 */
+  .tooltip-text::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -6px;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent #333 transparent transparent;
+  }
+
+  /* 툴팁 활성화 */
+  .tooltip-icon:focus + .tooltip-text,
+  .tooltip-icon:hover + .tooltip-text {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<h1>휴대폰 번호 입력 예제</h1>
+
+<form>
+  <div class="form-group">
+    <label for="phone">휴대폰번호
+      <span 
+        class="tooltip-icon" 
+        tabindex="0" 
+        aria-describedby="phone-tooltip"
+        role="button"
+      >i</span>
+    </label>
+    <input type="text" id="phone" name="phone" value="010-1234-5678" />
+    <div class="tooltip-text" id="phone-tooltip" role="tooltip">
+      휴대폰번호를 변경하려면 고객정보에서 변경해주세요. 현재 화면에서는 입력 변경만 가능합니다.
+    </div>
+  </div>
+</form>
+
+</body>
+</html>

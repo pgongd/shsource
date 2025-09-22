@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>납부 항목 선택</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #111111;
+      --color-border: #e5e5e5;
+      --color-primary: #2563eb;
+      --color-primary-text: #ffffff;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e1e1e;
+      --color-text: #f5f5f5;
+      --color-border: #444;
+      --color-primary: #3b82f6;
+      --color-primary-text: #ffffff;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    header h1 {
+      font-size: 1rem;
+      margin: 0;
+    }
+    main {
+      padding: 1rem;
+    }
+    .result-info {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .bill-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .bill-item {
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .bill-label {
+      display: flex;
+      align-items: flex-start;
+      cursor: pointer;
+    }
+    .bill-label input {
+      margin-right: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    .bill-content strong {
+      font-size: 1.1rem;
+      display: block;
+    }
+    .bill-meta {
+      font-size: 0.85rem;
+      color: gray;
+      margin-top: 0.25rem;
+    }
+    .more {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .pay-btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--color-primary-text);
+      background: var(--color-primary);
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    .pay-btn:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+    .theme-toggle {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>납부할 항목을 선택해주세요</h1>
+    <p>선택 납부는 1회 최대 1건까지 가능합니다.</p>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 다크모드 전환</button>
+  </header>
+
+  <main>
+    <section>
+      <h2 class="sr-only">조회 결과</h2>
+      <p class="result-info">조회결과 <strong>3건</strong></p>
+      <ul class="bill-list">
+        <li class="bill-item">
+          <label class="bill-label">
+            <input type="radio" name="bill" value="1" checked>
+            <div class="bill-content">
+              <strong>347,410원</strong>
+              <div class="bill-meta">납부기한: 2025.11.20</div>
+              <div class="bill-meta">고지구분: 정상</div>
+              <div class="bill-meta">지자체명: 서울특별시</div>
+              <div class="bill-meta">세목: 자동차</div>
+            </div>
+          </label>
+        </li>
+        <li class="bill-item">
+          <label class="bill-label">
+            <input type="radio" name="bill" value="2">
+            <div class="bill-content">
+              <strong>347,410원</strong>
+              <div class="bill-meta">납부기한: 2025.11.20</div>
+              <div class="bill-meta">고지구분: 정상</div>
+              <div class="bill-meta">지자체명: 서울특별시</div>
+              <div class="bill-meta">세목: 자동차</div>
+            </div>
+          </label>
+        </li>
+        <li class="bill-item">
+          <label class="bill-label">
+            <input type="radio" name="bill" value="3">
+            <div class="bill-content">
+              <strong>347,410원</strong>
+              <div class="bill-meta">납부기한: 2025.11.20</div>
+              <div class="bill-meta">고지구분: 정상</div>
+              <div class="bill-meta">지자체명: 서울특별시</div>
+              <div class="bill-meta">세목: 자동차</div>
+            </div>
+          </label>
+        </li>
+      </ul>
+      <div class="more">
+        <button type="button">더보기</button>
+      </div>
+      <button class="pay-btn">N건 납부하기</button>
+    </section>
+  </main>
+
+  <script>
+    // 다크모드 토글
+    function toggleTheme() {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    }
+  </script>
+</body>
+</html>

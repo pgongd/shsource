@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>SVG Sprite 테스트</title>
+<link rel="stylesheet" href="common.css">
+</head>
+<body data-theme="light" data-font="normal">
+
+<h1>SVG Sprite + CSS 변수 테스트</h1>
+
+<button id="toggle-theme">🌙 라이트/다크 전환</button>
+<button id="toggle-font">🔠 글씨 크기 전환</button>
+
+<p>
+  <svg class="icon icon--primary"><use href="#icon-check"></use></svg> 체크 아이콘
+</p>
+<p>
+  <svg class="icon icon--danger"><use href="#icon-close"></use></svg> 닫기 아이콘
+</p>
+<p>
+  <svg class="icon icon--success"><use href="#icon-custom"></use></svg> 커스텀 아이콘
+</p>
+
+<script src="common.js"></script>
+</body>
+</html>

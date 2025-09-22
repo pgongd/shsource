@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지방세 조회 테스트</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin:0; padding:1rem; background:#fff; color:#111; }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  h1,h2 { margin:0 0 0.5rem 0; }
+  h2 { font-size:1rem; }
+  .card { border:1px solid #e5e5e5; border-radius:8px; padding:1rem; margin:1rem 0; background:#f7f9fc; }
+  .bill-list { list-style:none; padding:0; margin:0; }
+  .bill-item { border:1px solid #ccc; border-radius:8px; padding:1rem; margin-bottom:1rem; }
+  .bill-label { display:flex; align-items:center; cursor:pointer; }
+  .bill-label input { margin-right:0.5rem; }
+  .bill-summary { display:flex; justify-content:space-between; width:100%; }
+  .bill-summary .unit { font-size:0.85rem; margin-left:2px; }
+  .info-list { margin-top:0.5rem; padding-left:1rem; }
+  .info-list li { display:flex; justify-content:space-between; margin-bottom:0.25rem; }
+  .detail-btn { display:block; margin-top:0.5rem; padding:0.5rem 1rem; background:#2563eb; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+  button:focus { outline:2px solid #2563eb; outline-offset:2px; }
+  .toggle { display:flex; gap:1rem; margin-top:1rem; }
+  .divider { border:none; border-top:1px solid #e0e0e0; margin:1rem 0; }
+  small { display:block; color:#666; font-size:0.875rem; margin-top:0.25rem; }
+</style>
+</head>
+<body>
+
+<h1 class="sr-only">지방세 조회 페이지</h1>
+
+<section aria-labelledby="tax-form-title">
+  <h2 id="tax-form-title">납부할 항목을 선택해주세요</h2>
+  <p>선택 납부는 1회 최대 1건까지 가능합니다.</p>
+
+  <ul class="bill-list">
+    <li class="bill-item">
+      <label class="bill-label">
+        <input type="radio" name="bill" value="1" checked>
+        <div class="bill-summary">
+          <span class="value">347,410<span class="unit">원</span></span>
+          <span class="date">2025.11.20</span>
+        </div>
+      </label>
+      <ul class="info-list">
+        <li><span class="title">고지구분</span><span class="value">정상</span></li>
+        <li><span class="title">지자체명</span><span class="value">서울특별시</span></li>
+        <li><span class="title">세목</span><span class="value">자동차</span></li>
+      </ul>
+      <button class="detail-btn">자세히 보기 &gt;</button>
+    </li>
+
+    <li class="bill-item">
+      <label class="bill-label">
+        <input type="radio" name="bill" value="2">
+        <div class="bill-summary">
+          <span class="value">347,410<span class="unit">원</span></span>
+          <span class="date">2025.11.20</span>
+        </div>
+      </label>
+      <ul class="info-list">
+        <li><span class="title">고지구분</span><span class="value">정상</span></li>
+        <li><span class="title">지자체명</span><span class="value">서울특별시</span></li>
+        <li><span class="title">세목</span><span class="value">자동차</span></li>
+      </ul>
+      <button class="detail-btn">자세히 보기 &gt;</button>
+    </li>
+  </ul>
+
+  <button class="detail-btn">N건 납부하기</button>
+</section>
+
+<hr class="divider" aria-hidden="true">
+
+<section aria-labelledby="info-title">
+  <h2 id="info-title">
+    <button aria-expanded="false" aria-controls="info-detail">
+      꼭! 알아두세요 <span class="icon-arrow">▼</span>
+    </button>
+  </h2>
+  <div id="info-detail" hidden>
+    <p>본인명의 납부내역은 주민등록번호, 타인명의 납부내역은 간편납부번호로 조회할 수 있습니다.</p>
+  </div>
+</section>
+
+<div class="toggle">
+  <button id="themeToggle" aria-pressed="false">다크모드 전환</button>
+  <button id="fontToggle" aria-pressed="false">큰 글씨 모드</button>
+</div>
+
+<script>
+  // 다크모드 토글
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', () => {
+    const current = document.body.getAttribute('data-theme');
+    if (current === 'dark') {
+      document.body.removeAttribute('data-theme');
+      themeBtn.setAttribute('aria-pressed', 'false');
+      themeBtn.textContent = '다크모드 전환';
+    } else {
+      document.body.setAttribute('data-theme', 'dark');
+      themeBtn.setAttribute('aria-pressed', 'true');
+      themeBtn.textContent = '라이트모드 전환';
+    }
+  });
+
+  // 큰 글씨 모드 토글
+  const fontBtn = document.getElementById('fontToggle');
+  fontBtn.addEventListener('click', () => {
+    const current = document.body.getAttribute('data-font');
+    if (current === 'large') {
+      document.body.removeAttribute('data-font');
+      fontBtn.setAttribute('aria-pressed', 'false');
+      fontBtn.textContent = '큰 글씨 모드';
+      document.documentElement.style.setProperty('--font-size-base', '1rem');
+    } else {
+      document.body.setAttribute('data-font', 'large');
+      fontBtn.setAttribute('aria-pressed', 'true');
+      fontBtn.textContent = '기본 글씨 모드';
+      document.documentElement.style.setProperty('--font-size-base', '1.25rem');
+    }
+  });
+
+  // "꼭 알아두세요" 토글
+  const toggleBtn = document.querySelector('#info-title button');
+  const detail = document.getElementById('info-detail');
+  toggleBtn.addEventListener('click', () => {
+    const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+    toggleBtn.setAttribute('aria-expanded', String(!expanded));
+    detail.hidden = expanded;
+  });
+</script>
+</body>
+</html>

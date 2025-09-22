@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Sprite + Theme Toggle</title>
+  <style>
+    /* 아이콘 공통 스타일 */
+    .icon {
+      width: 40px;
+      height: 40px;
+      fill: currentColor; /* 부모 color 따라감 */
+      vertical-align: middle;
+    }
+
+    /* 라이트 모드 */
+    body[data-theme="light"] {
+      background: #fff;
+      color: #222;
+      font-size: 16px;
+    }
+
+    /* 다크 모드 */
+    body[data-theme="dark"] {
+      background: #222;
+      color: #eee;
+      font-size: 16px;
+    }
+
+    /* 큰 글씨 모드 */
+    body[data-font="large"] {
+      font-size: 20px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: inherit;
+    }
+  </style>
+</head>
+<body data-theme="light" data-font="normal">
+  <h1>SVG 스프라이트 + 모드 토글 테스트</h1>
+
+  <!-- 토글 버튼 -->
+  <button id="toggle-theme">🌙 라이트/다크 전환</button>
+  <button id="toggle-font">🔠 글씨 크기 전환</button>
+
+  <p>
+    기본 아이콘:
+    <svg class="icon">
+      <use href="#icon-check"></use>
+    </svg>
+    <svg class="icon">
+      <use href="#icon-close"></use>
+    </svg>
+    <svg class="icon">
+      <use href="#icon-custom"></use>
+    </svg>
+  </p>
+
+  <!-- SVG Sprite (숨겨진 심볼 정의) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" fill="none"/>
+    </symbol>
+
+    <symbol id="icon-close" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" fill="none"/>
+    </symbol>
+
+    <symbol id="icon-custom" viewBox="0 0 24 24">
+      <path d="M19.4963 18.5048L18.5061 19.495L4.50618 5.49511L5.49641 4.50488L19.4963 18.5048Z" fill="currentColor"/>
+      <path d="M18.5038 4.505L19.494 5.49522L5.49413 19.4951L4.50391 18.5049L18.5038 4.505Z" fill="currentColor"/>
+    </symbol>
+  </svg>
+
+  <script>
+    const body = document.body;
+
+    // 테마 토글
+    document.getElementById("toggle-theme").addEventListener("click", () => {
+      const current = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", current === "light" ? "dark" : "light");
+    });
+
+    // 글씨 크기 토글
+    document.getElementById("toggle-font").addEventListener("click", () => {
+      const current = body.getAttribute("data-font");
+      body.setAttribute("data-font", current === "normal" ? "large" : "normal");
+    });
+  </script>
+</body>
+</html>

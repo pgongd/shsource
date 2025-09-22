@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>SVG Sprite 외부 파일 테스트</title>
+<style>
+  :root {
+    --icon-size: 32px;
+    --font-size: 16px;
+
+    --color-primary: #007bff;
+    --color-danger: #dc3545;
+    --color-success: #28a745;
+  }
+
+  /* 다크 모드 */
+  body[data-theme="dark"] {
+    background: #222;
+    color: #eee;
+
+    --color-primary: #66aaff;
+    --color-danger: #ff8888;
+    --color-success: #66dd99;
+  }
+
+  /* 큰 글씨 모드 */
+  body[data-font="large"] {
+    --font-size: 20px;
+    --icon-size: 40px;
+  }
+
+  body {
+    font-size: var(--font-size);
+    padding: 20px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  h1 { margin-bottom: 1em; }
+
+  .icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    fill: currentColor;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  /* 아이콘별 색상 */
+  .icon--primary { color: var(--color-primary); }
+  .icon--danger  { color: var(--color-danger); }
+  .icon--success { color: var(--color-success); }
+
+  button { margin: 5px; padding: 8px 12px; font-size: inherit; }
+</style>
+</head>
+<body data-theme="light" data-font="normal">
+<h1>SVG Sprite 외부 파일 + CSS 변수 테스트</h1>
+
+<!-- 버튼 -->
+<button id="toggle-theme">🌙 라이트/다크 전환</button>
+<button id="toggle-font">🔠 글씨 크기 전환</button>
+
+<p>
+  <svg class="icon icon--primary"><use href="#icon-check"></use></svg> 체크 아이콘
+</p>
+<p>
+  <svg class="icon icon--danger"><use href="#icon-close"></use></svg> 닫기 아이콘
+</p>
+<p>
+  <svg class="icon icon--success"><use href="#icon-custom"></use></svg> 커스텀 아이콘
+</p>
+
+<script>
+  const body = document.body;
+
+  // 모드 토글
+  document.getElementById("toggle-theme").addEventListener("click", () => {
+    body.setAttribute("data-theme", body.getAttribute("data-theme") === "light" ? "dark" : "light");
+  });
+  document.getElementById("toggle-font").addEventListener("click", () => {
+    body.setAttribute("data-font", body.getAttribute("data-font") === "normal" ? "large" : "normal");
+  });
+
+  // 외부 sprite.svg fetch 후 페이지에 인라인 삽입
+  fetch('sprite.svg')
+    .then(res => res.text())
+    .then(svgText => {
+      const div = document.createElement('div');
+      div.style.display = 'none';
+      div.innerHTML = svgText;
+      document.body.insertBefore(div, document.body.firstChild);
+    })
+    .catch(err => console.error('SVG 불러오기 실패', err));
+</script>
+</body>
+</html>

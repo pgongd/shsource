@@ -1,0 +1,47 @@
+:root {
+  --icon-size: 32px;
+  --font-size: 16px;
+
+  --color-primary: #007bff;
+  --color-danger: #dc3545;
+  --color-success: #28a745;
+}
+
+/* 다크 모드 */
+body[data-theme="dark"] {
+  background: #222;
+  color: #eee;
+
+  --color-primary: #66aaff;
+  --color-danger: #ff8888;
+  --color-success: #66dd99;
+}
+
+/* 큰 글씨 모드 */
+body[data-font="large"] {
+  --font-size: 20px;
+  --icon-size: 40px;
+}
+
+body {
+  font-size: var(--font-size);
+  padding: 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+h1 { margin-bottom: 1em; }
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  fill: currentColor;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* 아이콘별 색상 */
+.icon--primary { color: var(--color-primary); }
+.icon--danger  { color: var(--color-danger); }
+.icon--success { color: var(--color-success); }
+
+button { margin: 5px; padding: 8px 12px; font-size: inherit; }

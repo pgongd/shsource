@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Sprite + CSS 변수 테스트</title>
+  <style>
+    :root {
+      --icon-size: 32px;
+      --font-size: 16px;
+
+      --color-primary: #007bff;
+      --color-danger: #dc3545;
+      --color-success: #28a745;
+    }
+
+    /* 다크 모드 */
+    body[data-theme="dark"] {
+      background: #222;
+      color: #eee;
+
+      --color-primary: #66aaff;
+      --color-danger: #ff8888;
+      --color-success: #66dd99;
+    }
+
+    /* 큰 글씨 모드 */
+    body[data-font="large"] {
+      --font-size: 20px;
+      --icon-size: 40px;
+    }
+
+    body {
+      font-size: var(--font-size);
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    h1 {
+      margin-bottom: 1em;
+    }
+
+    .icon {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      fill: currentColor;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    /* 개별 색상 */
+    .icon--primary { color: var(--color-primary); }
+    .icon--danger  { color: var(--color-danger); }
+    .icon--success { color: var(--color-success); }
+
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: inherit;
+    }
+  </style>
+</head>
+<body data-theme="light" data-font="normal">
+  <h1>SVG 스프라이트 + CSS 변수 테스트</h1>
+
+  <!-- 토글 버튼 -->
+  <button id="toggle-theme">🌙 라이트/다크 전환</button>
+  <button id="toggle-font">🔠 글씨 크기 전환</button>
+
+  <p>
+    <svg class="icon icon--primary"><use href="#icon-check"></use></svg> 체크 아이콘
+  </p>
+  <p>
+    <svg class="icon icon--danger"><use href="#icon-close"></use></svg> 닫기 아이콘
+  </p>
+  <p>
+    <svg class="icon icon--success"><use href="#icon-custom"></use></svg> 커스텀 아이콘
+  </p>
+
+  <!-- 스프라이트 정의 -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" fill="none"/>
+    </symbol>
+
+    <symbol id="icon-close" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" fill="none"/>
+    </symbol>
+
+    <symbol id="icon-custom" viewBox="0 0 24 24">
+      <path d="M19.4963 18.5048L18.5061 19.495L4.50618 5.49511L5.49641 4.50488L19.4963 18.5048Z" fill="currentColor"/>
+      <path d="M18.5038 4.505L19.494 5.49522L5.49413 19.4951L4.50391 18.5049L18.5038 4.505Z" fill="currentColor"/>
+    </symbol>
+  </svg>
+
+  <script>
+    const body = document.body;
+
+    document.getElementById("toggle-theme").addEventListener("click", () => {
+      const current = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", current === "light" ? "dark" : "light");
+    });
+
+    document.getElementById("toggle-font").addEventListener("click", () => {
+      const current = body.getAttribute("data-font");
+      body.setAttribute("data-font", current === "normal" ? "large" : "normal");
+    });
+  </script>
+</body>
+</html>

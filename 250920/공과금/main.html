@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공과금 납부</title>
+  <style>
+    /* ===== CSS 변수 (토큰) ===== */
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #111111;
+      --color-subtext: #666666;
+      --color-card-bg: #f7f9fc;
+      --color-border: #e0e0e0;
+      --color-primary: #2563eb;
+      --radius-lg: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.25rem;
+    }
+
+    /* 다크모드 */
+    [data-theme="dark"] {
+      --color-bg: #1e1e1e;
+      --color-text: #f5f5f5;
+      --color-subtext: #bbbbbb;
+      --color-card-bg: #2a2a2a;
+      --color-border: #444444;
+      --color-primary: #60a5fa;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: var(--space-lg);
+    }
+
+    header h1 {
+      font-size: var(--font-size-lg);
+      margin: 0 0 var(--space-md);
+    }
+
+    .card {
+      background: var(--color-card-bg);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      margin: var(--space-md);
+    }
+
+    .card-section {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .card-item {
+      flex: 1;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      padding: var(--space-md);
+      text-align: center;
+      background: var(--color-bg);
+    }
+
+    .card-item h2 {
+      font-size: var(--font-size-base);
+      margin: 0 0 8px;
+    }
+
+    .list {
+      margin: var(--space-md);
+    }
+
+    .list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .list li a {
+      color: var(--color-text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary);
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .toggle {
+      margin: var(--space-md);
+    }
+
+    button {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      font-size: var(--font-size-base);
+    }
+
+    button:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>공과금 이제 더 쉽고 빠르게 납부해보세요</h1>
+  </header>
+
+  <main>
+    <!-- 카드 영역 -->
+    <section class="card" aria-labelledby="card-title">
+      <h2 id="card-title" class="sr-only">납부 방법</h2>
+      <div class="card-section">
+        <div class="card-item">
+          <h2>고지서 납부</h2>
+          <p>스캔 · 지로로 편하게 납부하세요!</p>
+        </div>
+        <div class="card-item">
+          <h2>전자고지서</h2>
+          <p>종이 대신 앱으로 편하게 확인하세요!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 안내 -->
+    <section aria-labelledby="notice-title" class="list">
+      <h2 id="notice-title">재산세 안내</h2>
+      <p>9월 재산세 납부의 달<br><small>늦지 않게 납부해주세요</small></p>
+    </section>
+
+    <!-- 목록 -->
+    <nav aria-label="국고금 서비스" class="list">
+      <ul>
+        <li><a href="#"><span class="icon" aria-hidden="true"></span> 국세</a></li>
+        <li><a href="#"><span class="icon" aria-hidden="true"></span> 관세</a></li>
+        <li><a href="#"><span class="icon" aria-hidden="true"></span> 국고</a></li>
+        <li><a href="#"><span class="icon" aria-hidden="true"></span> 국세 환급금 조회</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <!-- 토글 버튼 -->
+  <div class="toggle">
+    <button id="themeToggle" aria-pressed="false">다크모드 전환</button>
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeToggle');
+    btn.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      if (current === 'dark') {
+        document.body.removeAttribute('data-theme');
+        btn.setAttribute('aria-pressed', 'false');
+        btn.textContent = '다크모드 전환';
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        btn.setAttribute('aria-pressed', 'true');
+        btn.textContent = '라이트모드 전환';
+      }
+    });
+  </script>
+</body>
+</html>

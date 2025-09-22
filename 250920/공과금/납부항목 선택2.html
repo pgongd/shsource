@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>납부 항목 선택</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #111111;
+    --color-border: #e5e5e5;
+    --color-primary: #2563eb;
+    --color-primary-text: #ffffff;
+  }
+  [data-theme="dark"] {
+    --color-bg: #1e1e1e;
+    --color-text: #f5f5f5;
+    --color-border: #444;
+    --color-primary: #3b82f6;
+    --color-primary-text: #ffffff;
+  }
+
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  /* Blind h1 (스크린리더용) */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .notice {
+    list-style: disc;
+    margin: 0.5rem 0;
+    padding-left: 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .theme-toggle {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--color-primary);
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-info {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  /* 범용 레이블-값 리스트 */
+  .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .info-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .info-list li:last-child {
+    border-bottom: none;
+  }
+  .info-list .value .unit {
+    margin-left: 0.25rem;
+  }
+
+  /* 카드 섹션 전용 CSS */
+  .bill-section .bill-item {
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .bill-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+  }
+
+  .bill-label input {
+    margin-right: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .bill-content strong {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-btn {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    float: right;
+  }
+
+  .more {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .pay-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-primary-text);
+    background: var(--color-primary);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  .pay-btn:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="sr-only">납부 페이지</h1>
+
+<header>
+  <ul class="notice">
+    <li>선택 납부는 1회 최대 1건까지 가능합니다.</li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 다크모드 전환</button>
+</header>
+
+<main>
+  <section class="bill-section">
+    <h2 class="section-title">납부할 항목을 선택해주세요</h2>
+    <p class="result-info">조회결과 <strong>3건</strong></p>
+
+    <ul class="bill-list">
+      <li class="bill-item">
+        <label class="bill-label">
+          <input type="radio" name="bill" value="1" checked>
+          <div class="bill-content">
+            <strong><span class="value">347,410<span class="unit">원</span></span></strong>
+            <ul class="info-list">
+              <li><span class="title">납부기한</span><span class="value">2025.11.20</span></li>
+              <li><span class="title">고지구분</span><span class="value">정상</span></li>
+              <li><span class="title">지자체명</span><span class="value">서울특별시</span></li>
+              <li><span class="title">세목</span><span class="value">자동차</span></li>
+            </ul>
+            <button class="detail-btn" aria-label="자동차 세목 상세 보기">자세히 보기 &gt;</button>
+          </div>
+        </label>
+      </li>
+
+      <li class="bill-item">
+        <label class="bill-label">
+          <input type="radio" name="bill" value="2">
+          <div class="bill-content">
+            <strong><span class="value">347,410<span class="unit">원</span></span></strong>
+            <ul class="info-list">
+              <li><span class="title">납부기한</span><span class="value">2025.11.20</span></li>
+              <li><span class="title">고지구분</span><span class="value">정상</span></li>
+              <li><span class="title">지자체명</span><span class="value">서울특별시</span></li>
+              <li><span class="title">세목</span><span class="value">자동차</span></li>
+            </ul>
+            <button class="detail-btn" aria-label="자동차 세목 상세 보기">자세히 보기 &gt;</button>
+          </div>
+        </label>
+      </li>
+
+      <li class="bill-item">
+        <label class="bill-label">
+          <input type="radio" name="bill" value="3">
+          <div class="bill-content">
+            <strong><span class="value">347,410<span class="unit">원</span></span></strong>
+            <ul class="info-list">
+              <li><span class="title">납부기한</span><span class="value">2025.11.20</span></li>
+              <li><span class="title">고지구분</span><span class="value">정상</span></li>
+              <li><span class="title">지자체명</span><span class="value">서울특별시</span></li>
+              <li><span class="title">세목</span><span class="value">자동차</span></li>
+            </ul>
+            <button class="detail-btn" aria-label="자동차 세목 상세 보기">자세히 보기 &gt;</button>
+          </div>
+        </label>
+      </li>
+    </ul>
+
+    <div class="more">
+      <button type="button">더보기</button>
+    </div>
+    <button class="pay-btn">N건 납부하기</button>
+  </section>
+</main>
+
+<script>
+function toggleTheme() {
+  if (document.documentElement.getAttribute('data-theme') === 'dark') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+}
+</script>
+
+</body>
+</html>

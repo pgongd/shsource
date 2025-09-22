@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>스캔 납부</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #111111;
+      --color-border: #e5e5e5;
+      --color-primary: #2563eb;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e1e1e;
+      --color-text: #f5f5f5;
+      --color-border: #444;
+      --color-primary: #3b82f6;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    header h1 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+    main {
+      padding: 1rem;
+    }
+    .upload-box {
+      border: 2px dashed var(--color-border);
+      border-radius: 0.5rem;
+      text-align: center;
+      padding: 2rem 1rem;
+      cursor: pointer;
+    }
+    .upload-box input {
+      display: none;
+    }
+    .preview {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .preview img {
+      max-width: 100%;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border);
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--color-bg);
+      color: var(--color-text);
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      max-width: 90%;
+      text-align: center;
+    }
+    .modal-content button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--color-primary);
+      border: none;
+      border-radius: 0.25rem;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>스캔 납부</h1>
+  </header>
+
+  <main>
+    <section>
+      <label for="fileInput" class="upload-box" role="button" tabindex="0" aria-label="고지서 이미지 업로드">
+        📷 고지서 이미지를 업로드하거나 촬영하세요
+        <input type="file" id="fileInput" accept="image/*" capture="environment">
+      </label>
+      <div id="preview" class="preview" aria-live="polite"></div>
+      <button id="processBtn" class="btn" style="display:none;">스캔하기</button>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <h2 id="modalTitle">스캔 결과</h2>
+      <p>고지서의 지로번호가 잘 보이도록 촬영해주세요.</p>
+      <button onclick="closeModal()">확인</button>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const processBtn = document.getElementById('processBtn');
+    const modal = document.getElementById('modal');
+
+    fileInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="업로드한 고지서 이미지 미리보기">`;
+          processBtn.style.display = 'inline-block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    processBtn.addEventListener('click', function() {
+      modal.classList.add('active');
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    // 접근성: 키보드로도 업로드 박스 활성화
+    document.querySelector('.upload-box').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        fileInput.click();
+      }
+    });
+  </script>
+</body>
+</html>

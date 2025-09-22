@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지방세 조회</title>
+  <style>
+    /* ===== CSS 토큰 ===== */
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #111111;
+      --color-subtext: #666666;
+      --color-border: #e0e0e0;
+      --color-card-bg: #f7f9fc;
+      --color-primary: #2563eb;
+      --color-primary-bg: #eef4ff;
+
+      --radius-lg: 12px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+    }
+
+    /* 다크모드 */
+    [data-theme="dark"] {
+      --color-bg: #1e1e1e;
+      --color-text: #f5f5f5;
+      --color-subtext: #bbbbbb;
+      --color-border: #444444;
+      --color-card-bg: #2a2a2a;
+      --color-primary: #60a5fa;
+      --color-primary-bg: #1e3a5f;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      font-size: var(--font-size-base);
+    }
+
+    main {
+      padding: var(--space-lg);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-md);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    small {
+      color: var(--color-subtext);
+      font-size: 0.875rem;
+    }
+
+    .card {
+      background: var(--color-card-bg);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+    }
+
+    .toggle {
+      margin-top: var(--space-lg);
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    button {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      font-size: var(--font-size-base);
+    }
+
+    button:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: var(--space-lg) 0;
+    }
+
+    /* 스크린리더 전용 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>지방세 조회를 위해<br>정보를 입력해주세요</h1>
+
+    <form aria-labelledby="tax-form-title">
+      <fieldset>
+        <legend id="tax-form-title" class="sr-only">지방세 조회 입력 폼</legend>
+
+        <label for="region">지역선택</label>
+        <select id="region" name="region">
+          <option value="">전국</option>
+          <option value="seoul">서울</option>
+          <option value="busan">부산</option>
+        </select>
+
+        <label for="type">조회구분</label>
+        <select id="type" name="type">
+          <option value="">선택하세요</option>
+          <option value="self">본인명의 지방세 입금</option>
+          <option value="other">타인명의 지방세 입금</option>
+        </select>
+
+        <label for="rrn">주민등록번호</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="rrn" name="rrn" aria-label="주민등록번호 앞자리" maxlength="6" inputmode="numeric">
+          <span aria-hidden="true">-</span>
+          <input type="password" aria-label="주민등록번호 뒷자리" maxlength="7" inputmode="numeric">
+        </div>
+        <small>지방세는 지방자치단체의 요청에 따라 납부취소를 할 수 없습니다.</small>
+      </fieldset>
+    </form>
+
+    <hr class="divider" aria-hidden="true">
+
+    <!-- 안내 카드 -->
+    <section class="card" aria-labelledby="notice-title">
+      <h2 id="notice-title">서울시 지방세 과오납 환급</h2>
+      <p>서울시 지방세 납부액 중 더 많이 납부하거나 잘못 납부한 금액을 고객님께 돌려드리는 서비스입니다.</p>
+      <a href="#" class="btn">서울시 지방세 과오납 환급</a>
+    </section>
+
+    <hr class="divider" aria-hidden="true">
+
+    <!-- 추가 안내 -->
+    <section aria-labelledby="info-title">
+      <h2 id="info-title">꼭! 알아두세요</h2>
+      <p>본인명의 납부내역은 주민등록번호, 타인명의 납부내역은 간편납부번호로 조회할 수 있습니다.</p>
+    </section>
+
+    <!-- 토글 버튼 -->
+    <div class="toggle">
+      <button id="themeToggle" aria-pressed="false">다크모드 전환</button>
+      <button id="fontToggle" aria-pressed="false">큰 글씨 모드</button>
+    </div>
+  </main>
+
+  <script>
+    // 다크모드 토글
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      if (current === 'dark') {
+        document.body.removeAttribute('data-theme');
+        themeBtn.setAttribute('aria-pressed', 'false');
+        themeBtn.textContent = '다크모드 전환';
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        themeBtn.setAttribute('aria-pressed', 'true');
+        themeBtn.textContent = '라이트모드 전환';
+      }
+    });
+
+    // 큰 글씨 모드 토글
+    const fontBtn = document.getElementById('fontToggle');
+    fontBtn.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-font');
+      if (current === 'large') {
+        document.body.removeAttribute('data-font');
+        fontBtn.setAttribute('aria-pressed', 'false');
+        fontBtn.textContent = '큰 글씨 모드';
+        document.documentElement.style.setProperty('--font-size-base', '1rem');
+        document.documentElement.style.setProperty('--font-size-lg', '1.125rem');
+      } else {
+        document.body.setAttribute('data-font', 'large');
+        fontBtn.setAttribute('aria-pressed', 'true');
+        fontBtn.textContent = '기본 글씨 모드';
+        document.documentElement.style.setProperty('--font-size-base', '1.25rem');
+        document.documentElement.style.setProperty('--font-size-lg', '1.5rem');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    :root {
+  --icon-color: #333;
+  --icon-size: 24px;
+}
+
+body[data-darkmode="true"] {
+  --icon-color: #f2f2f2;
+}
+
+body[data-large="true"] {
+  --icon-size: 40px;
+}
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  fill: var(--icon-color); /* 여기서 색상 제어 */
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button id="toggleDark">다크모드 토글</button>
+    <button id="toggleLarge">큰글씨모드 토글</button>
+  </div>
+
+
+  <!-- HTML에는 단일 구조만 -->
+<svg class="icon">
+  <use href="sprite.svg#icon-custom"></use>
+</svg>
+
+
+<script>
+    const body = document.body;
+
+    document.getElementById("toggleDark").addEventListener("click", () => {
+      body.dataset.darkmode = body.dataset.darkmode === "true" ? "false" : "true";
+    });
+
+    document.getElementById("toggleLarge").addEventListener("click", () => {
+      body.dataset.large = body.dataset.large === "true" ? "false" : "true";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+
+<!-- <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-check" viewBox="0 0 24 24">
+    <path d="M20 6L9 17l-5-5"/>
+  </symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <path d="M6 6l12 12M6 18L18 6"/>
+  </symbol>
+
+  <symbol id="icon-custom" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.4963 18.5048L18.5061 19.495L4.50618 5.49511L5.49641 4.50488L19.4963 18.5048Z" />
+  <path d="M18.5038 4.505L19.494 5.49522L5.49413 19.4951L4.50391 18.5049L18.5038 4.505Z" />
+  </symbol>
+</svg> -->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-custom" viewBox="0 0 24 24">
+    <path d="M19.4963 18.5048L18.5061 19.495L4.50618 5.49511L5.49641 4.50488L19.4963 18.5048Z" />
+    <path d="M18.5038 4.505L19.494 5.49522L5.49413 19.4951L4.50391 18.5049L18.5038 4.505Z" />
+  </symbol>
+</svg>
+
+
