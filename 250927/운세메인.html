@@ -1,0 +1,127 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>행운의 숫자 미션</title>
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .mission-header h2 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .mission-link {
+      font-size: 14px;
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+
+    .lucky-numbers {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 16px 0;
+    }
+
+    .action-card {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .action-card p {
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: #2563eb;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-secondary {
+      background: #3b82f6;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- 미션 헤더 -->
+    <header class="mission-header">
+      <h2>미션 캘린더</h2>
+      <a href="#" class="mission-link">연속 30일차<span class="sr-only"> 미션 달성 보기</span></a>
+    </header>
+
+    <section class="card" aria-labelledby="lucky-number-title">
+      <h2 id="lucky-number-title">행운을 담은 오늘의 숫자</h2>
+      <p>다양한 미션에 도전해보세요!</p>
+
+      <!-- 숫자 영역 -->
+      <div class="lucky-numbers" aria-label="오늘의 행운 숫자">
+        <span>2</span>
+        <span>7</span>
+      </div>
+
+      <!-- 액션 카드 -->
+      <div class="action-card">
+        <p>행운 포켓에 행운의 숫자 담기</p>
+        <button type="button" class="btn">바로 입금하기</button>
+        <button type="button" class="btn btn-secondary">랜덤포인트 받기</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+```

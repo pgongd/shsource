@@ -1,0 +1,138 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>접근성 퍼블리싱 테스트</title>
+  ```html
+<section class="sc-fortune" aria-labelledby="fortune-title">
+  <h2 id="fortune-title">행운을 담은 오늘의 숫자</h2>
+  <p class="fortune-subtitle">다양한 미션에 도전해보세요!</p>
+
+  <!-- 숫자 영역 -->
+  <div class="fortune-numbers" aria-label="오늘의 행운 숫자">
+    <!-- 짝수는 파란색, 홀수는 빨간색 → 개발단에서 숫자에 class 추가 필요 -->
+    <span class="fortune-number is-even">2</span>
+    <span class="fortune-number is-odd">7</span>
+  </div>
+
+  <!-- 회색 카드 1 -->
+  <div class="fortune-card">
+    <div class="card-info">
+      <p>행운 포켓에<br>행운의 숫자 담기</p>
+      <img src="icon-bag.svg" alt="" class="card-icon" aria-hidden="true">
+    </div>
+    <button type="button" class="btn-primary">바로 입금하기</button>
+    <a href="#" class="card-link">
+      마이산한포인트를 사용하고 싶으신가요?
+      <span class="sr-only">자세히 보기</span>
+    </a>
+  </div>
+
+  <!-- 회색 카드 2 -->
+  <div class="fortune-card">
+    <div class="card-info">
+      <p>행운의 숫자로<br>랜덤포인트 받기</p>
+      <img src="icon-point.svg" alt="" class="card-icon" aria-hidden="true">
+    </div>
+    <button type="button" class="btn-primary">랜덤포인트 받기</button>
+  </div>
+</section>
+
+<style>
+.sc-fortune {
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.sc-fortune h2 {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.fortune-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 16px;
+}
+
+.fortune-numbers {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.fortune-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid #d1d5db;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* 짝수/홀수 색상 → 개발단에서 class 추가 필요 */
+.fortune-number.is-even {
+  color: #2563eb; /* 파란색 */
+}
+.fortune-number.is-odd {
+  color: #dc2626; /* 빨간색 */
+}
+
+.fortune-card {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.card-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #374151;
+  text-decoration: none;
+  margin-top: 8px;
+}
+</style>
+
+</body>
+</html>
+

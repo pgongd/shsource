@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>행운 숫자 UI</title>
+  <style>
+    /* 전체 기본 스타일 */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      padding: 20px;
+      background-color: #f9f9f9;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* 타이틀과 서브타이틀 */
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #333;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    /* 외부 박스 */
+    .outer-box {
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 16px;
+      background-color: #f0f0f0;
+    }
+
+    /* 내부 박스 */
+    .inner-box {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+    }
+
+    /* 왼쪽 아이콘과 텍스트 */
+    .icon-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .icon-text img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 6px;
+    }
+
+    /* 숫자 스타일 */
+    .numbers {
+      font-size: 2rem;
+      font-weight: bold;
+      display: flex;
+      gap: 8px;
+    }
+
+    .numbers .odd {
+      color: #0066cc; /* 홀수: 파란색 */
+    }
+
+    .numbers .even {
+      color: #cc0000; /* 짝수: 빨간색 */
+    }
+
+    /* 반응형 예시 */
+    @media (max-width: 450px) {
+      .container {
+        padding: 0 12px;
+      }
+      .numbers {
+        font-size: 1.6rem;
+      }
+      .icon-text img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">행운포켓에 담을 금액을 확인해볼까요?</div>
+    <div class="subtitle">행운 금액은 하루에 한번만 입금할 수 있어요</div>
+
+    <!-- 외부 박스 -->
+    <div class="outer-box">
+      <!-- 내부 박스 -->
+      <div class="inner-box">
+        <!-- 왼쪽 아이콘과 텍스트 -->
+        <div class="icon-text">
+          <img src="https://via.placeholder.com/40" alt="행운 아이콘">
+          <span>행운의 숫자</span>
+        </div>
+
+        <!-- 오른쪽 숫자, 홀수/짝수 색상 표시 -->
+        <div class="numbers" aria-label="행운의 숫자 2와 7">
+          <span class="even">2</span> &amp; <span class="odd">7</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 스크립트 필요 시 여기에 추가 -->
+  <!--
+  <script>
+    // 랜덤 숫자 생성 예시
+    // const evenNumber = Math.floor(Math.random() * 5) * 2 + 2;
+    // const oddNumber = Math.floor(Math.random() * 5) * 2 + 1;
+  </script>
+  -->
+</body>
+</html>
