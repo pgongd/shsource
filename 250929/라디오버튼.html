@@ -1,0 +1,168 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보유 적금 선택</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #222;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .radio-card {
+      position: relative;
+      border: 1.5px solid #ddd;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .radio-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .radio-indicator {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radio-card input[type="radio"]:checked + .radio-indicator {
+      border-color: #0066ff;
+    }
+
+    .radio-card input[type="radio"]:checked + .radio-indicator::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #0066ff;
+    }
+
+    .radio-card-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .radio-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .radio-card-logo {
+      width: 28px;
+      height: 28px;
+      background: #0066ff;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .radio-card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .radio-card-sub {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .radio-card-info {
+      font-size: 13px;
+      color: #333;
+      text-align: right;
+    }
+
+    .radio-card input[type="radio"]:checked ~ .radio-card-content .radio-card-title {
+      color: #0066ff;
+    }
+
+    .radio-card input[type="radio"]:focus + .radio-indicator {
+      outline: 2px solid #222;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h2>보유 적금</h2>
+
+  <div class="radio-group">
+    <label class="radio-card">
+      <input type="radio" name="saving" checked>
+      <span class="radio-indicator"></span>
+      <div class="radio-card-content">
+        <div class="radio-card-header">
+          <div class="radio-card-logo">S</div>
+          <div class="radio-card-title">신한 알쏠 적금</div>
+        </div>
+        <p class="radio-card-sub">알뜰한 당신을 위한 쏠쏠한 적금</p>
+        <p class="radio-card-info">12개월 기준, 연 2.65% ~ 3.95%</p>
+      </div>
+    </label>
+
+    <label class="radio-card">
+      <input type="radio" name="saving">
+      <span class="radio-indicator"></span>
+      <div class="radio-card-content">
+        <div class="radio-card-header">
+          <div class="radio-card-logo">S</div>
+          <div class="radio-card-title">신한 스마트 적금</div>
+        </div>
+        <p class="radio-card-sub">복잡한 우대금리 조건없는 모바일전용 적금</p>
+        <p class="radio-card-info">12개월 기준, 연 2.9% ~ 3.5%</p>
+      </div>
+    </label>
+
+    <label class="radio-card">
+      <input type="radio" name="saving">
+      <span class="radio-indicator"></span>
+      <div class="radio-card-content">
+        <div class="radio-card-header">
+          <div class="radio-card-logo">S</div>
+          <div class="radio-card-title">아름다운 용기 적금</div>
+        </div>
+        <p class="radio-card-sub">환경보호 서약하고 실천하면 우대금리</p>
+        <p class="radio-card-info">12개월 기준, 연 2.65% ~ 3.95%</p>
+      </div>
+    </label>
+  </div>
+</body>
+</html>
+```
