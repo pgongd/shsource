@@ -1,0 +1,109 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>체크리스트 예시</title>
+<style>
+  .check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .check-item {
+    position: relative;
+
+    .check-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+
+      &:checked + .check-label {
+        background: #e6f0ff;
+        color: #005DF9;
+
+        .check-icon {
+          opacity: 1;
+          // V자 체크 애니메이션 넣고 싶으면 여기서 stroke-dashoffset 사용 가능
+        }
+      }
+
+      &:focus + .check-label {
+        outline: 2px solid #005DF9;
+        outline-offset: 2px;
+      }
+    }
+
+    .check-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #f7f7f7;
+      font-size: 16px;
+      color: #222;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+
+      .check-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+    }
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="check-list" role="group" aria-label="옵션 선택">
+  <div class="check-item">
+    <input type="checkbox" id="option1" class="check-input">
+    <label for="option1" class="check-label">
+      옵션 1
+      <span class="check-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6631 5.82935L7.91715 14.5753L3.33789 9.99601L4.16309 9.17082L7.91715 12.9249L15.8379 5.00415L16.6631 5.82935Z" 
+                fill="#005DF9"/>
+        </svg>
+      </span>
+    </label>
+  </div>
+
+  <div class="check-item">
+    <input type="checkbox" id="option2" class="check-input">
+    <label for="option2" class="check-label">
+      옵션 2
+      <span class="check-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6631 5.82935L7.91715 14.5753L3.33789 9.99601L4.16309 9.17082L7.91715 12.9249L15.8379 5.00415L16.6631 5.82935Z" 
+                fill="#005DF9"/>
+        </svg>
+      </span>
+    </label>
+  </div>
+
+  <div class="check-item">
+    <input type="checkbox" id="option3" class="check-input">
+    <label for="option3" class="check-label">
+      옵션 3
+      <span class="check-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6631 5.82935L7.91715 14.5753L3.33789 9.99601L4.16309 9.17082L7.91715 12.9249L15.8379 5.00415L16.6631 5.82935Z" 
+                fill="#005DF9"/>
+        </svg>
+      </span>
+    </label>
+  </div>
+</div>
+
+</body>
+</html>

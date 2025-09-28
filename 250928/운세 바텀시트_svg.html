@@ -1,0 +1,137 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>SVG 반보더 포함 4가지 원형 상태 UI</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: #fff;
+    color: #222;
+  }
+
+  .box-rounded {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .status-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .status-item {
+    flex: 1;
+  }
+
+  .status-circle {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    position: relative;
+  }
+
+  /* 1. 회색 배경 */
+  .status-gray {
+    background: #eee;
+    color: #666;
+  }
+
+  /* 2. 반은 회색/반은 파란 보더 (SVG로 구현) */
+  .status-half-border {
+    position: relative;
+  }
+  .status-half-border svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 56px; height: 56px;
+    transform: rotate(-90deg); /* 위쪽부터 시작해서 왼쪽 반만 채우기 */
+  }
+  .status-half-border span {
+    position: relative;
+    z-index: 1;
+    color: #000;
+  }
+
+  /* 3. 파란 보더 */
+  .status-blue-border {
+    border: 6px solid #005DF9;
+    color: #000;
+  }
+
+  /* 4. 파란 배경 */
+  .status-blue {
+    background: #005DF9;
+    color: #fff;
+  }
+
+  .status-text {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .status-blue + .status-text {
+    color: #999; /* 마지막 아이템은 회색 텍스트 */
+  }
+</style>
+</head>
+<body>
+
+<div class="box-rounded">둥근 보더 네모 박스</div>
+
+<div class="status-list" role="list">
+  <!-- 1. 회색 배경 -->
+  <div class="status-item" role="listitem">
+    <div class="status-circle status-gray">10</div>
+    <div class="status-text">회색 배경</div>
+  </div>
+
+  <!-- 2. 반은 회색/반은 파란 보더 -->
+  <div class="status-item" role="listitem">
+    <div class="status-circle status-half-border">
+      <svg viewBox="0 0 80 80">
+        <!-- 회색 전체 원 -->
+        <circle cx="40" cy="40" r="34" stroke="#ccc" stroke-width="6" fill="none"/>
+        <!-- 파란 반원 -->
+        <circle cx="40" cy="40" r="34"
+                stroke="#005DF9"
+                stroke-width="6"
+                fill="none"
+                stroke-dasharray="106.8 106.8"  <!-- 둘레 절반 -->
+                stroke-dashoffset="106.8"        <!-- 반만 표시 -->
+                stroke-linecap="round"/>
+      </svg>
+      <span>15</span>
+    </div>
+    <div class="status-text">반 보더</div>
+  </div>
+
+  <!-- 3. 파란 보더 -->
+  <div class="status-item" role="listitem">
+    <div class="status-circle status-blue-border">15</div>
+    <div class="status-text">파란 보더</div>
+  </div>
+
+  <!-- 4. 파란 배경 -->
+  <div class="status-item" role="listitem">
+    <div class="status-circle status-blue">15</div>
+    <div class="status-text">파란 배경</div>
+  </div>
+</div>
+
+</body>
+</html>
+```
