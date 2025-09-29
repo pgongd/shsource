@@ -1,0 +1,62 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>달력 원형 퍼블리싱 예시</title>
+  <style>
+    body {
+      font-family: "Digital One Shinhan", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #fff;
+    }
+
+    .circle-wrap {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circle-wrap svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .circle-number {
+      color: #101828;
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px; /* 166.667% */
+      letter-spacing: -0.26px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <figure class="circle-wrap" role="img" aria-label="15일, 15% 진행됨">
+    <!-- 회색 원 -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="37" height="36" viewBox="0 0 37 36" aria-hidden="true">
+      <path d="M18.5 1.5C16.3332 1.5 14.1876 1.92679 12.1857 2.75599C10.1839 3.58519 8.3649 4.80057 6.83274 6.33274C5.30057 7.86491 4.08519 9.68385 3.25599 11.6857C2.42678 13.6876 2 15.8332 2 18C2 20.1668 2.42679 22.3124 3.25599 24.3143C4.08519 26.3161 5.30057 28.1351 6.83274 29.6673C8.36491 31.1994 10.1839 32.4148 12.1857 33.244C14.1876 34.0732 16.3332 34.5 18.5 34.5C20.6668 34.5 22.8124 34.0732 24.8143 33.244C26.8162 32.4148 28.6351 31.1994 30.1673 29.6673C31.6994 28.1351 32.9148 26.3161 33.744 24.3143C34.5732 22.3124 35 20.1668 35 18C35 15.8332 34.5732 13.6876 33.744 11.6857C32.9148 9.68385 31.6994 7.8649 30.1673 6.33274C28.6351 4.80057 26.8161 3.58519 24.8143 2.75599C22.8124 1.92678 20.6668 1.5 18.5 1.5L18.5 1.5Z" stroke="#F0F4FA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <!-- 파란 원 -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="37" height="36" viewBox="0 0 37 36" aria-hidden="true">
+      <path d="M1.5 34.5C3.66681 34.5 5.8124 34.0732 7.81428 33.244C9.81615 32.4148 11.6351 31.1994 13.1673 29.6673C14.6994 28.1351 15.9148 26.3161 16.744 24.3143C17.5732 22.3124 18 20.1668 18 18C18 15.8332 17.5732 13.6876 16.744 11.6857C15.9148 9.68385 14.6994 7.86491 13.1673 6.33274C11.6351 4.80057 9.81615 3.58519 7.81428 2.75599C5.8124 1.92679 3.66681 1.5 1.5 1.5" stroke="#2974FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <!-- 숫자 -->
+    <span class="circle-number">15</span>
+  </figure>
+</body>
+</html>
+```

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>달력 원형(접근성) — 예시</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root{
+    --size: 36px;                 /* 전체 크기 */
+    --stroke: 3;                  /* 선 굵기 */
+    --bg-stroke: #F0F4FA;         /* 회색 외곽선 */
+    --active-stroke: #2974FF;     /* 파란색 호 */
+    --text-color: #101828;
+    --progress: 0.72;             /* 0..1, 호의 길이 (예: 0.72 = 72%) */
+    --font: "Digital One Shinhan", Arial, sans-serif;
+  }
+
+  /* 화면 중앙 정렬 (테스트용) */
+  html,body{height:100%;margin:0}
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#ffffff;
+    font-family:var(--font);
+  }
+
+  /* 캘린더용 원형 컴포넌트 */
+  .calendar-circle{
+    width:var(--size);
+    height:var(--size);
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  svg{ width:100%; height:100%; display:block; }
+
+  /* 숫자 스타일 (실제 텍스트) */
+  .circle-number{
+    position:relative;
+    z-index:2;
+    font-size:12px;
+    line-height:20px; /* 166.667% */
+    font-weight:500;
+    letter-spacing:-0.26px;
+    color:var(--text-color);
+    user-select:none;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* 화면에 보이지 않지만 스크린리더가 읽는 텍스트 */
+  .visually-hidden{
+    position:absolute !important;
+    width:1px;height:1px;
+    padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);
+    white-space:nowrap;border:0;
+  }
+</style>
+</head>
+<body>
+  <!--
+    role="img" + aria-labelledby 를 사용해 스크린리더에 숫자 정보를 제공합니다.
+    (나중에 숫자를 바꿀 때는 .circle-number 텍스트만 변경하면 됨)
+  -->
+  <figure class="calendar-circle" role="img" aria-labelledby="date-label-15">
+    <!-- 접근성 라벨(스크린리더용) -->
+    <figcaption id="date-label-15" class="visually-hidden">15일</figcaption>
+
+    <!-- SVG: 배경 원 + 진행 호 -->
+    <!-- r = (viewboxSize/2) - (stroke/2) 로 설정 (여기선 viewBox 0..36, stroke 3 이므로 r = 16.5) -->
+    <svg viewBox="0 0 36 36" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <!-- 배경 원 (회색) : fill="none" 로 내부 채우기 제거 -->
+      <circle cx="18" cy="18" r="16.5"
+              fill="none"
+              stroke="var(--bg-stroke)"
+              stroke-width="3" />
+
+      <!-- 파란 호 : pathLength를 100으로 정규화해서 CSS 변수(--progress)로 제어 -->
+      <!-- rotate(-90) 해서 시작점을 위(top)로 맞추고, stroke-linecap="round"로 끝을 둥글게 -->
+      <circle cx="18" cy="18" r="16.5"
+              fill="none"
+              stroke="var(--active-stroke)"
+              stroke-width="3"
+              stroke-linecap="round"
+              pathLength="100"
+              stroke-dasharray="100"
+              stroke-dashoffset="calc(100 * (1 - var(--progress)))"
+              transform="rotate(-90 18 18)"/>
+    </svg>
+
+    <!-- 실제 숫자 (스크린리더는 figcaption 읽음) -->
+    <span class="circle-number" aria-hidden="true">15</span>
+  </figure>
+
+  <!--
+    사용팁:
+    - 호의 길이(진행율)를 바꾸려면 .calendar-circle에 --progress 값을 넣거나 루트값 변경:
+        style="--progress:0.45"  (45%)
+    - 숫자를 바꾸려면 .circle-number의 텍스트를 변경하고 figcaption id의 텍스트도 바꿔야 접근성에 맞습니다.
+  -->
+
+  <script>
+    // 동적 사용 예시 (필요하면 사용)
+    // 아래는 샘플: 숫자와 진행율을 JS로 바꿔주는 방식
+    // (실제 달력에선 서버/데이터에 따라 값 넣으시면 됩니다)
+    (function(){
+      // 예시: 바뀐 값 적용 (여기서는 그대로 두지만, 필요하면 사용하세요)
+      // const el = document.querySelector('.calendar-circle');
+      // el.style.setProperty('--progress', '0.6'); // 60%
+      // el.querySelector('.circle-number').textContent = '7';
+      // el.querySelector('#date-label-15').textContent = '7일';
+    })();
+  </script>
+</body>
+</html>

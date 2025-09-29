@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>반원 차트 예시</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --size: 80px;                 /* 크기 */
+    --stroke: 8;                  /* 선 굵기 */
+    --bg-stroke: #F0F4FA;         /* 회색 */
+    --active-stroke: #2974FF;     /* 파랑 */
+    --text-color: #101828;
+    --font: "Digital One Shinhan", Arial, sans-serif;
+  }
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    margin:0;
+    background:#fff;
+  }
+  .circle-progress{
+    width:var(--size);
+    height:var(--size);
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  svg{width:100%;height:100%;}
+  .circle-number{
+    position:absolute;
+    font-size:20px;
+    font-weight:500;
+    font-family:var(--font);
+    color:var(--text-color);
+    user-select:none;
+  }
+  .visually-hidden{
+    position:absolute !important;
+    width:1px;height:1px;
+    padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);
+    white-space:nowrap;border:0;
+  }
+</style>
+</head>
+<body>
+  <figure class="circle-progress" role="img" aria-labelledby="day15-label">
+    <figcaption id="day15-label" class="visually-hidden">15일</figcaption>
+
+    <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- 회색 전체 원 -->
+      <circle cx="18" cy="18" r="16"
+              fill="none"
+              stroke="var(--bg-stroke)"
+              stroke-width="3"/>
+
+      <!-- 파란 반원 (stroke-dasharray: 전체의 절반=50 50) -->
+      <circle cx="18" cy="18" r="16"
+              fill="none"
+              stroke="var(--active-stroke)"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-dasharray="50 50"
+              transform="rotate(-90 18 18)" />
+    </svg>
+
+    <span class="circle-number" aria-hidden="true">15</span>
+  </figure>
+</body>
+</html>

@@ -1,0 +1,68 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>행운 카드 4박스</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fbfd;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 400px;
+    }
+
+    .card {
+      width: calc(50% - 6px); /* 2열 맞추기 + 12px 간격 보정 */
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+
+    /* 좌우 2열 간격 */
+    .card:nth-child(odd) {
+      margin-right: 12px;
+    }
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px; /* gap 대신 margin */
+    }
+
+    .content {
+      font-size: 14px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="list">
+    <div class="card" role="listitem">
+      <div class="title">행운색상</div>
+      <div class="content">적색 · 녹색</div>
+    </div>
+    <div class="card" role="listitem">
+      <div class="title">행운숫자</div>
+      <div class="content">2 · 7</div>
+    </div>
+    <div class="card" role="listitem">
+      <div class="title">행운방향</div>
+      <div class="content">정남 · 정서</div>
+    </div>
+    <div class="card" role="listitem">
+      <div class="title">행운성씨</div>
+      <div class="content">ㄴ · ㅁ</div>
+    </div>
+  </div>
+</body>
+</html>
+```
