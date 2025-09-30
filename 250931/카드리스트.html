@@ -1,0 +1,59 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>상품 카드</title>
+<style>
+  .card {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 360px;
+    font-family: sans-serif;
+  }
+  .card-logo {
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+  .card-logo img {
+    width: 32px;
+    height: 32px;
+  }
+  .card-body {
+    flex: 1;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #222;
+  }
+  .card-desc {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0 12px;
+  }
+  .card-rate {
+    font-size: 14px;
+    color: #333;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+  <article class="card" role="region" aria-labelledby="product-title">
+    <div class="card-logo">
+      <img src="logo.png" alt="신한은행 로고">
+    </div>
+    <div class="card-body">
+      <h2 id="product-title" class="card-title">신한 알쏠 적금</h2>
+      <p class="card-desc">알뜰한 당신을 위한 쏠쏠한 적금</p>
+      <p class="card-rate">12개월 기준, 연 2.65% ~ 3.95%</p>
+    </div>
+  </article>
+</body>
+</html>
+```

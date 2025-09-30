@@ -1,0 +1,140 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>라디오 카드 선택</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+
+  /* 라디오 숨김 */
+  .radio-hidden {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* 카드 공통 */
+  .radio-card {
+    display: flex;
+    align-items: flex-start;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .radio-card:hover {
+    border-color: #888;
+  }
+
+  /* 로고 */
+  .card-logo {
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+  .card-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* 본문 */
+  .card-body {
+    flex: 1;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #222;
+  }
+  .card-desc {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0 12px;
+  }
+  .card-rate {
+    font-size: 14px;
+    color: #333;
+    text-align: right;
+  }
+
+  /* 커스텀 라디오 표시 */
+  .card-radio {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  /* 선택 상태 */
+  .radio-hidden:checked + .radio-card {
+    border-color: #007bff;
+    background: #f0f8ff;
+  }
+  .radio-hidden:checked + .radio-card .card-radio {
+    border-color: #007bff;
+  }
+  .radio-hidden:checked + .radio-card .card-radio::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: #007bff;
+    border-radius: 50%;
+    margin: 3px auto;
+  }
+</style>
+</head>
+<body>
+
+<h1>상품 선택</h1>
+
+<!-- 카드 1 -->
+<label>
+  <input type="radio" name="product" value="shinhan" class="radio-hidden">
+  <div class="radio-card">
+    <div class="card-logo">
+      <img src="logo.png" alt="신한은행 로고">
+    </div>
+    <div class="card-body">
+      <h2 class="card-title">신한 알쏠 적금</h2>
+      <p class="card-desc">알뜰한 당신을 위한 쏠쏠한 적금</p>
+      <p class="card-rate">12개월 기준, 연 2.65% ~ 3.95%</p>
+    </div>
+    <span class="card-radio" aria-hidden="true"></span>
+  </div>
+</label>
+
+<!-- 카드 2 -->
+<label>
+  <input type="radio" name="product" value="hana" class="radio-hidden">
+  <div class="radio-card">
+    <div class="card-logo">
+      <img src="logo.png" alt="하나은행 로고">
+    </div>
+    <div class="card-body">
+      <h2 class="card-title">하나 YES 적금</h2>
+      <p class="card-desc">누구나 쉽게 가입 가능한 적금</p>
+      <p class="card-rate">12개월 기준, 연 2.8% ~ 4.0%</p>
+    </div>
+    <span class="card-radio" aria-hidden="true"></span>
+  </div>
+</label>
+
+</body>
+</html>
+```
