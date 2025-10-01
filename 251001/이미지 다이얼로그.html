@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Dialog Component Test</title>
+</head>
+<body>
+  <!-- 다이얼로그 -->
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
+    <div class="dialog-content">
+      <!-- 아이콘/이미지 (옵션) -->
+      <div class="dialog-icon" aria-hidden="true">
+        <img src="icon.png" alt="" />
+      </div>
+
+      <!-- 타이틀 -->
+      <h2 id="dialog-title" class="dialog-title">
+        오늘의 미션을 모두 완료하고 500P를 받았어요!
+      </h2>
+
+      <!-- 서브텍스트 (옵션) -->
+      <p id="dialog-desc" class="dialog-desc">
+        내일 또 만나요!
+      </p>
+
+      <!-- 버튼 영역 -->
+      <div class="dialog-actions">
+        <!-- 버튼이 1개일 경우 -->
+        <button type="button" class="btn-primary">확인</button>
+
+        <!-- 버튼이 2개일 경우 예시 -->
+        <!--
+        <button type="button" class="btn-secondary">취소</button>
+        <button type="button" class="btn-primary">확인</button>
+        -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
