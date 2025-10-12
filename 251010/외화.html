@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>환율우대 이벤트 안내</title>
+<style>
+  body {
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    margin: 0;
+  }
+  .event-card {
+    background-color: #f4f8ff; /* 옅은 하늘색/회색 톤 */
+    border-radius: 16px;
+    padding: 24px 20px;
+    width: 320px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .event-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0b214a;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .event-image img {
+    width: 48px;
+    height: auto;
+  }
+  .event-desc {
+    font-size: 14px;
+    color: #555;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+  .event-notice {
+    font-size: 13px;
+    color: #888;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .event-notice li {
+    list-style: none;
+    position: relative;
+    padding-left: 1em;
+  }
+  .event-notice li::before {
+    content: "*";
+    position: absolute;
+    left: 0;
+  }
+</style>
+</head>
+<body>
+  <section class="event-card" role="region" aria-labelledby="eventTitle">
+    <div class="event-header">
+      <h2 id="eventTitle" class="event-title">
+        신한 Value-up 글로벌주식<br />
+        외화예금 환율우대 이벤트
+      </h2>
+      <div class="event-image" aria-hidden="true">
+        <img src="https://cdn-icons-png.flaticon.com/512/3314/3314401.png" alt="" />
+      </div>
+    </div>
+    <p class="event-desc">
+      USD 입금 및 출금 거래 시 환율우대 100%가 자동으로 적용됩니다.<br />
+      현재 적용환율은 X,XXX.XX 입니다.
+    </p>
+    <ul class="event-notice">
+      <li>거래 시 실시간 환율이 적용되어, 위 환율과 달라질 수 있습니다.</li>
+      <li>자세한 내용은 이벤트 페이지를 확인해주세요.</li>
+    </ul>
+  </section>
+</body>
+</html>

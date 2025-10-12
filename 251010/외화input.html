@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>통화코드 입력</title>
+<style>
+  body { font-family: sans-serif; background:#f9fafc; padding:20px; color:#222; }
+
+  .section { background:#fff; border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+  .field { margin-bottom:16px; }
+  .field-title { font-weight:600; margin-bottom:8px; }
+
+  /* 회색 입력창 */
+  .input-box {
+    background:#f4f6f8;
+    border-radius:8px;
+    padding:12px;
+    font-size:15px;
+    color:#333;
+  }
+
+  /* 파란 버튼 */
+  .btn-add {
+    display:block;
+    width:100%;
+    text-align:center;
+    background:#e8f3ff;
+    color:#0078ff;
+    border-radius:8px;
+    padding:12px 0;
+    font-weight:600;
+    margin-top:8px;
+  }
+
+  /* 입력금액 섹션 */
+  .amount-input-wrap {
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .amount-input {
+    flex:1;
+    display:flex;
+    align-items:center;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:8px 10px;
+  }
+  .amount-input span {
+    color:#555;
+    font-weight:600;
+    margin-right:6px;
+  }
+  .amount-input input {
+    border:none;
+    outline:none;
+    flex:1;
+    font-size:15px;
+  }
+  .amount-input.small {
+    width:70px;
+    text-align:center;
+  }
+
+  /* 작은 안내문 */
+  .info-text {
+    margin-top:8px;
+    font-size:13px;
+    color:#666;
+  }
+
+  /* 구분선 */
+  .divider {
+    height:2px;
+    background:#e5e8eb;
+    border:0;
+    margin:20px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="section" role="region" aria-labelledby="currencyTitle">
+  <div class="field">
+    <h2 id="currencyTitle" class="field-title">통화코드</h2>
+    <div class="input-box" aria-readonly="true">USD(우대환율 : 1,273.00)</div>
+    <button type="button" class="btn-add">+ 다른 통화 추가 입금</button>
+  </div>
+
+  <div class="field">
+    <h2 class="field-title">입력금액</h2>
+    <div class="amount-input-wrap">
+      <label class="amount-input">
+        <span>USD</span>
+        <input type="text" placeholder="직접입력" aria-label="입력금액" />
+      </label>
+      <span>.</span>
+      <input type="text" class="amount-input small" aria-label="소수점 입력" />
+    </div>
+    <p class="info-text">이번 달 남은 환율우대 이벤트 한도 : USD 300,000.00</p>
+  </div>
+
+  <hr class="divider" />
+</div>
+
+</body>
+</html>

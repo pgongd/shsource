@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>통화별 우대환율 조회</title>
+<style>
+  body {
+    background: #f6f8fa;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+    margin: 0;
+  }
+  .accordion {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    max-width: 360px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #e2e6ec;
+  }
+  .accordion-header h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0b214a;
+    margin: 0;
+  }
+  .accordion-header button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .accordion-header button svg {
+    width: 20px;
+    height: 20px;
+    transform: rotate(180deg);
+    transition: transform 0.2s ease;
+  }
+  .accordion-header[aria-expanded="false"] button svg {
+    transform: rotate(0deg);
+  }
+
+  .accordion-content {
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .accordion-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .accordion-content li {
+    position: relative;
+    padding-left: 1em;
+    margin-bottom: 12px;
+  }
+  .accordion-content li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: #555;
+  }
+  .accordion-content .sub-text {
+    display: block;
+    color: #666;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .accordion-content .highlight {
+    color: #007aff;
+    font-weight: 600;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <section class="accordion" role="region" aria-labelledby="accTitle">
+    <div class="accordion-header" role="button" aria-expanded="true" aria-controls="accContent" id="accTitle" tabindex="0">
+      <h2>통화별 우대환율 조회</h2>
+      <button type="button" aria-label="접기">
+        <!-- 위쪽 화살표 아이콘 -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
+    </div>
+    <div class="accordion-content" id="accContent">
+      <ul>
+        <li>
+          매매기준율
+          <span class="sub-text">외화거래의 기준이 되는 환율</span>
+        </li>
+        <li>
+          전신환매입·매도율
+          <span class="sub-text">영업점에서 전신환으로 거래하실 때 적용되는 환율</span>
+        </li>
+        <li>
+          매입·매도우대율 <span class="highlight">event!</span>
+          <span class="sub-text">온라인뱅킹으로 거래하실 때 우대 적용되는 환율(환전수수료 50% 우대)</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+<script>
+  const header = document.querySelector('.accordion-header');
+  const content = document.querySelector('.accordion-content');
+  const button = header.querySelector('button');
+
+  function toggleAccordion() {
+    const expanded = header.getAttribute('aria-expanded') === 'true';
+    header.setAttribute('aria-expanded', !expanded);
+    content.classList.toggle('hidden', expanded);
+    button.setAttribute('aria-label', expanded ? '펼치기' : '접기');
+  }
+
+  header.addEventListener('click', toggleAccordion);
+  header.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleAccordion();
+    }
+  });
+</script>
+</body>
+</html>

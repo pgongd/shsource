@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Amount Input Example</title>
+<style>
+  .amount-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .amount-input {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .amount-input input {
+    width: 80px;
+    padding: 4px;
+  }
+
+  .amount-input.small {
+    width: 40px;
+  }
+
+  .dot {
+    font-size: 20px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+</head>
+<body>
+
+<h2>단일 인풋 예시</h2>
+<label>
+  금액 입력
+  <input type="text" placeholder="금액 입력" aria-label="금액 입력">
+</label>
+
+<h2>필드셋 예시 (USD 입력)</h2>
+<fieldset class="amount-input-wrap">
+  <legend class="sr-only">입력금액</legend>
+
+  <label class="amount-input">
+    <span>USD</span>
+    <input type="text" placeholder="직접입력" aria-label="정수 금액 입력">
+  </label>
+
+  <span class="dot">.</span>
+
+  <input type="text" class="amount-input small" aria-label="소수점 이하 입력">
+</fieldset>
+
+</body>
+</html>

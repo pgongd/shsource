@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>거래내역 리스트</title>
+<style>
+  body {
+    font-family: "Noto Sans KR", sans-serif;
+    background: #fff;
+    color: #111;
+    padding: 20px;
+  }
+  .month-header {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .month-header button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+
+  .day-section {
+    margin-left: 12px;
+  }
+  .day-title {
+    font-weight: 600;
+    margin: 16px 0 8px;
+  }
+
+  .transaction {
+    position: relative;
+    padding-left: 36px;
+    border-left: 2px solid #e0e0e0;
+    margin-bottom: 16px;
+  }
+  .transaction::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 10px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .t-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .t-meta {
+    font-size: 13px;
+    color: #888;
+  }
+  .t-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 2px 0;
+  }
+  .t-amount {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .t-amount.plus {
+    color: #007aff;
+  }
+  .t-amount.minus {
+    color: #d32f2f;
+  }
+  .toggle-arrow {
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+  .transaction.open .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  .t-detail {
+    display: none;
+    background: #f7f7f7;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+  }
+  .t-detail span {
+    display: inline-block;
+    margin-right: 8px;
+  }
+</style>
+</head>
+<body>
+  <section aria-label="9월 거래내역">
+    <h2 class="month-header">
+      9월
+      <button aria-label="9월 내역 접기/펼치기">▼</button>
+    </h2>
+
+    <div class="day-section">
+      <h3 class="day-title">09.07 일요일</h3>
+
+      <!-- 1 -->
+      <article class="transaction">
+        <button class="t-info" aria-expanded="false">
+          <div>
+            <div class="t-meta">19:01:00 · FBI이체</div>
+            <div class="t-title">카카오페이</div>
+          </div>
+          <div class="t-amount plus">+50,000원 <span class="toggle-arrow">▼</span></div>
+        </button>
+      </article>
+
+      <!-- 2 -->
+      <article class="transaction">
+        <button class="t-info" aria-expanded="false">
+          <div>
+            <div class="t-meta">19:01:00 · 유통CC</div>
+            <div class="t-title">저금통-월Swing</div>
+          </div>
+          <div class="t-amount minus">-50,000원 <span class="toggle-arrow">▼</span></div>
+        </button>
+        <div class="t-detail" role="region" aria-label="거래 상세정보">
+          <span>110-123-456789</span>
+          <span>잔액 1,677,000원</span>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="transaction">
+        <button class="t-info" aria-expanded="false">
+          <div>
+            <div class="t-meta">19:01:00 · 유통CC</div>
+            <div class="t-title">김신한</div>
+          </div>
+          <div class="t-amount plus">+50,000원 <span class="toggle-arrow">▼</span></div>
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(function(){
+      $(".t-info").on("click", function(){
+        const $parent = $(this).closest(".transaction");
+        const expanded = $(this).attr("aria-expanded") === "true";
+        $(".transaction").not($parent).removeClass("open").find(".t-detail").slideUp(150);
+        $(".t-info").attr("aria-expanded","false");
+        if(!expanded){
+          $parent.addClass("open");
+          $parent.find(".t-detail").slideDown(150);
+          $(this).attr("aria-expanded","true");
+        } else {
+          $parent.removeClass("open");
+          $parent.find(".t-detail").slideUp(150);
+          $(this).attr("aria-expanded","false");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

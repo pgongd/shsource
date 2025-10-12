@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통화 입력 예시</title>
+<style>
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9fbff;
+    padding: 24px;
+    line-height: 1.5;
+    color: #222;
+  }
+
+  .exchange-box {
+    background: #fff;
+    border: 1px solid #e5ebf4;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .exchange-box h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .exchange-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #d9e3f0;
+    background-color: #f3f7ff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+
+  .exchange-input span {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .add-btn {
+    display: block;
+    width: 100%;
+    background: #e9f2ff;
+    color: #1976d2;
+    border: 1px dashed #90caf9;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .amount-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .amount-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .amount-input {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: #fff;
+  }
+
+  .amount-input span {
+    font-weight: 600;
+    color: #555;
+    margin-right: 6px;
+  }
+
+  .amount-input input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    flex: 1;
+  }
+
+  .amount-input.small {
+    width: 70px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 6px;
+  }
+
+  .dot {
+    font-weight: 600;
+  }
+
+  .sub-text {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  hr.line {
+    border: 0;
+    border-top: 2px solid #e3e6eb;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<section class="exchange-box" aria-labelledby="exchangeTitle">
+  <h2 id="exchangeTitle">통화코드</h2>
+
+  <div class="exchange-input" role="group" aria-label="통화코드 선택">
+    <span>USD(우대환율 : 1,273.00)</span>
+  </div>
+
+  <button type="button" class="add-btn">+ 다른 통화 추가 입금</button>
+
+  <label for="mainAmount" class="amount-label">입력금액</label>
+
+  <div class="amount-input-wrap">
+    <label class="amount-input">
+      <span>USD</span>
+      <input id="mainAmount" type="text" placeholder="직접입력" aria-label="정수 금액 입력">
+    </label>
+    <span class="dot">.</span>
+    <input type="text" class="amount-input small" aria-label="소수점 이하 입력">
+  </div>
+
+  <p class="sub-text">이번 달 남은 환율우대 이벤트 한도 : USD 300,000.00</p>
+
+  <hr class="line">
+</section>
+
+</body>
+</html>

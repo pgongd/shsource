@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>단락 구분선 접근성 예시</title>
+<style>
+  body {
+    background: #f7f9fb;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 40px 16px;
+  }
+  .content-box {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    padding: 20px;
+    max-width: 360px;
+    width: 100%;
+    color: #333;
+    line-height: 1.6;
+  }
+  .content-box p {
+    margin: 0;
+    font-size: 14px;
+  }
+  .content-box hr {
+    border: 0;
+    border-top: 1px solid #d8e0ea;
+    margin: 20px 0;
+  }
+  .content-box h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #0b214a;
+  }
+  .sub-text {
+    color: #666;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+  <main class="content-box" role="region" aria-labelledby="sectionTitle">
+    <p>
+      · 비대면 채널을 이용한 21:00~22:30 사이의 외화예금과 원화예금 간 거래는 
+      1인당 USD3만불 상당만 가능합니다. (입금/출금 합산, 골드/실버리슈 거래 금액 포함)
+    </p>
+
+    <hr aria-hidden="true" />
+
+    <section aria-labelledby="rateTitle">
+      <h3 id="rateTitle">통화별 우대환율 조회</h3>
+      <p class="sub-text">
+        · 매매기준율<br />
+        외화거래의 기준이 되는 환율
+      </p>
+    </section>
+  </main>
+</body>
+</html>
