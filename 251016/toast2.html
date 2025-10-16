@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>토스트 컴포넌트 예제</title>
+<style>
+  body {
+    font-family: Pretendard, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f6f7fb;
+  }
+
+  button {
+    margin: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  /* ✅ 토스트 기본 스타일 */
+  .toast-wrap {
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: calc(100% - 40px);
+    text-align: center;
+  }
+
+  .toast-wrap.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .toast-wrap .inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #000;
+    color: #fff;
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-break: keep-all;
+    max-width: 100%;
+  }
+
+  /* ✅ 두 줄 허용 */
+  .toast-wrap .inner {
+    white-space: normal;
+  }
+
+  /* ✅ 아이콘 포함 케이스 */
+  .toast-wrap.icon .inner::before {
+    content: "🔔";
+    font-size: 16px;
+    margin-right: 4px;
+  }
+
+  /* ✅ 흰색 테마 */
+  .toast-wrap.white .inner {
+    background: #fff;
+    color: #000;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  /* ✅ 네모난 회색 박스 */
+  .toast-wrap.gray .inner {
+    background: #f1f3f5;
+    color: #111;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  /* 접근성용 숨김 텍스트 */
+  .sr-only {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px; width: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<h1>토스트 테스트</h1>
+<button onclick="showToast('기본 토스트입니다.')">기본</button>
+<button onclick="showToast('ICON이 포함된 토스트입니다.', 'icon')">아이콘</button>
+<button onclick="showToast('화이트 토스트 - 두 줄까지 사용할 수 있습니다. 문구를 길게 작성하면 자동으로 줄바꿈됩니다.', 'white')">화이트</button>
+<button onclick="showToast('회색 네모 토스트 - 문장이 길 경우 두 줄로 표시됩니다.', 'gray')">회색 네모</button>
+
+<div class="sr-only" aria-live="polite" id="live-region"></div>
+
+<script>
+  function showToast(message, type = '') {
+    // 기존 토스트 제거
+    const oldToast = document.querySelector('.toast-wrap');
+    if (oldToast) oldToast.remove();
+
+    // 토스트 생성
+    const toast = document.createElement('div');
+    toast.className = `toast-wrap ${type}`;
+    toast.innerHTML = `<div class="inner">${message}</div>`;
+    document.body.appendChild(toast);
+
+    // 접근성 라이브리전 업데이트
+    const live = document.getElementById('live-region');
+    live.textContent = message;
+
+    // 애니메이션 시작
+    setTimeout(() => toast.classList.add('show'), 50);
+
+    // 3초 뒤 사라짐
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 400);
+    }, 3000);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Toast 예제</title>
+<style>
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 50px;
+}
+
+/* 버튼 스타일 */
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* 토스트 기본 스타일 */
+.toast-wrap {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  background-color: #1e1e1e;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 20px;
+  max-width: calc(100% - 40px);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  word-break: break-word;
+  z-index: 1000;
+}
+
+.toast-wrap.white {
+  background-color: #fff;
+  color: #1e1e1e;
+  border: 1px solid #ccc;
+}
+
+/* 아이콘 있을 때 */
+.toast-wrap.icon .inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast-wrap.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 접근성용 숨김 텍스트 */
+/* .toast-wrap[role="status"] {
+  aria-live: polite;
+} */
+
+.inner {
+  display: inline-block;
+}
+
+/* 아이콘 예시 */
+.inner .icon {
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<h2>토스트 테스트</h2>
+<button onclick="showToast('기본 토스트입니다')">기본 토스트</button>
+<button onclick="showToast('아이콘 있는 토스트', 'icon')">아이콘 토스트</button>
+<button onclick="showToast('하얀 배경 토스트입니다', 'white')">하얀 토스트</button>
+<button onclick="showToast('아이콘+하얀 토스트입니다', 'white icon')">아이콘 + 하얀 토스트</button>
+<button onclick="showToast('길게 늘어나는 텍스트 예제, 화면 가로 길이에 맞춰 자연스럽게 두 줄로 떨어집니다.')">긴 텍스트 토스트</button>
+
+<div id="toast" class="toast-wrap" role="status" aria-live="polite">
+  <div class="inner"></div>
+</div>
+
+<script>
+let toastTimeout;
+
+function showToast(message, classes = '') {
+  const toast = document.getElementById('toast');
+  const inner = toast.querySelector('.inner');
+  
+  // 클래스 초기화
+  toast.className = 'toast-wrap ' + classes;
+  
+  // 아이콘 넣기
+  if (classes.includes('icon')) {
+    inner.innerHTML = '<span class="icon"></span>' + message;
+  } else {
+    inner.textContent = message;
+  }
+  
+  // 표시
+  toast.classList.add('show');
+  
+  // 기존 타이머 제거
+  if (toastTimeout) clearTimeout(toastTimeout);
+  
+  // 일정 시간 후 사라짐
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+</script>
+
+</body>
+</html>

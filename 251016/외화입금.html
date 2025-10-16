@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외화입금/마이신한포인트 예제</title>
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.5;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+hr.title-underline {
+    border: 0;
+    border-bottom: 2px solid #000;
+    margin-bottom: 20px;
+}
+
+.list-section {
+    margin-bottom: 20px;
+}
+
+.list-section dt {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.list-section dd {
+    margin: 0 0 8px 0;
+}
+
+hr.section-divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.point-input-wrapper {
+    display: none;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.point-input-wrapper.active {
+    display: flex;
+}
+
+.point-input-wrapper input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 4px;
+    width: 200px;
+}
+
+.point-input-wrapper button {
+    padding: 8px 12px;
+    margin-left: 4px;
+    border: none;
+    border-radius: 4px;
+    background: #0074d9;
+    color: #fff;
+    cursor: pointer;
+}
+
+.small-text {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.info-box {
+    display: flex;
+    justify-content: space-between;
+    background: #EBF0FF;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.gray-box {
+    background: #f2f2f2;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.link-button {
+    color: #0074d9;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #d93025;
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+}
+
+.account-amount {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>외화입금정보</h1>
+<hr class="title-underline">
+
+<dl class="list-section">
+    <dt>거래환율</dt>
+    <dd>1,404.40 (환율우대 100%)</dd>
+    <dt>외화금액</dt>
+    <dd>USD 100.00</dd>
+    <dt>원화환산금액</dt>
+    <dd>140,400원</dd>
+    <dt>외화입금계좌번호</dt>
+    <dd>180-006-12345</dd>
+    <dt>외화입금계좌 고객명</dt>
+    <dd>김신한</dd>
+</dl>
+
+<hr class="section-divider">
+
+<dl class="list-section">
+    <dt>원화출금계좌번호</dt>
+    <dd>110-123-456789</dd>
+    <dt>원화출금계좌 고객명</dt>
+    <dd>김신한</dd>
+</dl>
+
+<hr class="section-divider">
+
+<div class="checkbox-container">
+    <input type="checkbox" id="use-point" aria-controls="point-input" />
+    <label for="use-point">마이신한포인트 사용</label>
+</div>
+
+<div class="point-input-wrapper" id="point-input">
+    <input type="number" placeholder="사용할 포인트 입력" aria-label="사용할 마이신한포인트 입력" min="0" />
+    <button type="button">모두사용</button>
+    <div class="small-text">마이신한포인트 입금 시, 환율 우대 50%가 적용됩니다.</div>
+    <div class="info-box">
+        <span>보유 1,000P</span>
+        <span>1P=1원</span>
+    </div>
+    <div class="gray-box">
+        <div>계좌출금금액: 139,400원</div>
+    </div>
+    <a href="#" class="link-button">환전수수료 면제가기 &gt;</a>
+    <div class="error-message">포인트 사용가능 금액이 외화환산금액을 초과 했어요</div>
+</div>
+
+<div class="point-input-wrapper active">
+    <input type="number" value="1,000" aria-label="사용할 마이신한포인트 입력" />
+    <div class="account-amount">계좌출금금액: 139,400원</div>
+</div>
+
+<script>
+const checkbox = document.getElementById('use-point');
+const pointWrapper = document.getElementById('point-input');
+
+checkbox.addEventListener('change', () => {
+    pointWrapper.classList.toggle('active', checkbox.checked);
+});
+</script>
+
+</body>
+</html>

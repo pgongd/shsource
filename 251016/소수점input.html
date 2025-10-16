@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>입력금액 필드 예제</title>
+<style>
+  body {
+    font-family: Pretendard, Arial, sans-serif;
+    background: #f6f7fb;
+    padding: 40px;
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #d0d4dc;
+    border-radius: 8px;
+    background: #fff;
+    padding: 8px 12px;
+    position: relative;
+    width: fit-content;
+  }
+
+  .input-group:focus-within {
+    border-color: #3b82f6;
+  }
+
+  .currency {
+    font-weight: 600;
+    color: #333;
+    min-width: 36px;
+  }
+
+  .input-field {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 70px;
+    text-align: right;
+  }
+
+  .dot {
+    font-weight: bold;
+    color: #888;
+    margin: 0 4px;
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #aaa;
+    display: none;
+  }
+
+  .input-group:focus-within .clear-btn {
+    display: block;
+  }
+
+  .info-text {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  /* 접근성 숨김 텍스트 */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+</style>
+</head>
+<body>
+
+<h1>입력금액 예제</h1>
+
+<label for="integer" class="sr-only">입력금액 정수 부분</label>
+<label for="decimal" class="sr-only">입력금액 소수 부분</label>
+
+<div class="input-group">
+  <span class="currency">USD</span>
+  <input type="text" id="integer" class="input-field" inputmode="numeric" placeholder="직접입력" aria-label="입력금액 정수 부분" maxlength="6" />
+  <span class="dot">.</span>
+  <input type="text" id="decimal" class="input-field" inputmode="numeric" aria-label="입력금액 소수 부분" maxlength="2" />
+  <button type="button" class="clear-btn" aria-label="입력 내용 지우기">✕</button>
+</div>
+
+<p class="info-text">이번 달 남은 환율우대 이벤트 한도: USD 300,000.00</p>
+
+<script>
+  const integerInput = document.getElementById('integer');
+  const decimalInput = document.getElementById('decimal');
+  const clearBtn = document.querySelector('.clear-btn');
+
+  // 숫자만 입력
+  [integerInput, decimalInput].forEach(input => {
+    input.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      // 정수부 입력 완료 시 자동으로 소수부로 이동
+      if (e.target === integerInput && e.target.value.length >= e.target.maxLength) {
+        decimalInput.focus();
+      }
+    });
+  });
+
+  // X 버튼으로 전체 지우기
+  clearBtn.addEventListener('click', () => {
+    integerInput.value = '';
+    decimalInput.value = '';
+    integerInput.focus();
+  });
+</script>
+
+</body>
+</html>

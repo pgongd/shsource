@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessible Snackbar Test</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f0f0f0;
+  }
+  .toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+  }
+  .toast {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 90%;
+    padding: 12px 16px;
+    background: #333;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    font-size: 14px;
+    animation: slideUp 0.3s ease;
+  }
+  .toast button {
+    background: none;
+    border: none;
+    color: #fff;
+    margin-left: 12px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  button.trigger {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>Accessible Snackbar Example</h1>
+
+<div class="btn-group">
+  <button class="trigger" data-type="basic">기본 토스트</button>
+  <button class="trigger" data-type="long">긴 텍스트 토스트</button>
+  <button class="trigger" data-type="closable">닫기 버튼 토스트</button>
+</div>
+
+<div class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+  const container = document.querySelector('.toast-container');
+
+  function showToast(type) {
+    let message = '';
+    let closable = false;
+
+    if(type === 'basic') {
+      message = '텍스트';
+    } else if(type === 'long') {
+      message = '읽어삼사오육칠팔구십일이삼사오육칠팔구십';
+    } else if(type === 'closable') {
+      message = '읽어삼사오육칠팔구십일이삼사오육칠팔구십';
+      closable = true;
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.textContent = message;
+
+    if(closable) {
+      const btn = document.createElement('button');
+      btn.innerHTML = '×';
+      btn.setAttribute('aria-label', '닫기');
+      btn.onclick = () => toast.remove();
+      toast.appendChild(btn);
+    }
+
+    container.appendChild(toast);
+
+    if(!closable) {
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+  }
+
+  document.querySelectorAll('.trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showToast(btn.dataset.type);
+    });
+  });
+</script>
+
+</body>
+</html>

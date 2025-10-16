@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>외화입금정보</title>
+<style>
+  body { font-family: Pretendard, Arial, sans-serif; font-size: 15px; color: #222; line-height: 1.5; background: #fff; margin: 0; padding: 20px; }
+  h2 { font-size: 18px; font-weight: 700; border-bottom: 2px solid #000; padding-bottom: 6px; margin-top: 24px; }
+  dl { display: flex; flex-wrap: wrap; margin: 12px 0; }
+  dt, dd { width: 50%; margin: 0; padding: 4px 0; }
+  dt { color: #666; }
+  dd { text-align: right; font-weight: 500; }
+  hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
+
+  .checkbox-wrap { display: flex; align-items: center; margin-top: 24px; }
+  .checkbox-wrap input { margin-right: 8px; }
+  .checkbox-wrap label { font-weight: 600; }
+
+  .point-box { margin-top: 20px; border: 1px solid #ccc; border-radius: 12px; padding: 16px; background: #f8f9fc; }
+  .point-box label { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .input-row { display: flex; align-items: center; margin-top: 12px; }
+  .input-row input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
+  .input-row button { margin-left: 8px; padding: 10px 14px; border: none; background: #eee; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  .small-text { font-size: 13px; color: #666; margin-top: 6px; }
+
+  .info-blue { margin-top: 14px; background: #EBF0FF; border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+
+  .info-gray { margin-top: 14px; background: #f5f5f5; border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+  .info-gray ul { list-style: none; padding: 0; margin: 0; }
+  .info-gray li { display: flex; justify-content: space-between; padding: 4px 0; }
+
+  .link { display: inline-block; margin-top: 10px; color: #0044cc; text-decoration: underline; font-weight: 600; cursor: pointer; }
+
+  .error { border-color: #ff4d4f; background: #fff5f5; }
+  .error-text { color: #ff4d4f; font-size: 13px; margin-top: 4px; }
+
+  .result-box { margin-top: 16px; background: #f9f9f9; padding: 10px 14px; border-radius: 10px; text-align: right; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h2>외화입금정보</h2>
+<dl>
+  <dt>거래환율</dt><dd>1,404.40 (환율우대 100%)</dd>
+  <dt>외화금액</dt><dd>USD 100.00</dd>
+  <dt>원화환산금액</dt><dd>140,400원</dd>
+  <dt>외화입금계좌번호</dt><dd>180-006-12345</dd>
+  <dt>외화입금계좌 고객명</dt><dd>김신한</dd>
+</dl>
+
+<hr />
+
+<h2>원화출금정보</h2>
+<dl>
+  <dt>원화출금계좌번호</dt><dd>110-123-456789</dd>
+  <dt>원화출금계좌 고객명</dt><dd>김신한</dd>
+</dl>
+
+<div class="checkbox-wrap">
+  <input type="checkbox" id="chkPoint" aria-describedby="desc-point" />
+  <label for="chkPoint">마이신한포인트 사용</label>
+</div>
+
+<p id="desc-point" class="small-text">신한 Value-up 글로벌보너스 외화예금 환율우대 이벤트 기간 중 USD 통화 100% 환율우대가 자동으로 적용됩니다.</p>
+
+<!-- ✅ 마이신한포인트 사용 시 -->
+<div class="point-box">
+  <label><input type="checkbox" checked> 마이신한포인트 사용</label>
+
+  <div class="input-row">
+    <input type="text" placeholder="포인트 입력 (예: 1,000P)" aria-invalid="false">
+    <button type="button">모두사용</button>
+  </div>
+  <p class="small-text">포인트 사용 시 환율 외화입금금액을 초과 확인</p>
+
+  <div class="info-blue">
+    <span>보유 5,700P</span>
+    <span>1P = 1원</span>
+  </div>
+
+  <div class="info-gray">
+    <ul>
+      <li><span>계좌출금금액</span><span>139,400원</span></li>
+    </ul>
+  </div>
+
+  <a href="#" class="link">환전수수료 면제받기 &gt;</a>
+</div>
+
+<!-- ❌ 오류 표시 예시 -->
+<div class="point-box">
+  <label><input type="checkbox" checked> 마이신한포인트 사용</label>
+
+  <div class="input-row">
+    <input type="text" value="999,9999" class="error" aria-invalid="true">
+    <button type="button">모두사용</button>
+  </div>
+  <p class="error-text">포인트 사용가능 금액이 원화입금금액을 초과하였습니다.</p>
+
+  <div class="info-gray">
+    <ul><li><span>계좌출금금액</span><span>139,400원</span></li></ul>
+  </div>
+</div>
+
+<!-- ✅ 입력 완료 시 -->
+<div class="point-box">
+  <label><input type="checkbox" checked> 마이신한포인트 사용</label>
+
+  <div class="input-row">
+    <input type="text" value="1,000P">
+    <button type="button">모두사용</button>
+  </div>
+  <p class="small-text">1,000P (1P=1원)</p>
+
+  <div class="info-gray">
+    <ul><li><span>계좌출금금액</span><span>139,400원</span></li></ul>
+  </div>
+</div>
+
+</body>
+</html>
