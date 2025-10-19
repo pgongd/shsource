@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>조회 조건 설정</title>
+<style>
+  body {
+    font-family: "Pretendard", sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+  }
+
+  /* 바텀시트 배경 */
+  .dim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  /* 바텀시트 */
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    padding: 24px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+  }
+
+  .bottom-sheet header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .bottom-sheet header h2 {
+    font-size: 16px;
+    margin: 0;
+  }
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .section {
+    margin-bottom: 24px;
+  }
+
+  .section h3 {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  /* 버튼 그룹 스타일 */
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .radio-btn {
+    position: relative;
+  }
+
+  .radio-btn input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .radio-btn label {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .radio-btn input[type="radio"]:checked + label {
+    border-color: #0066ff;
+    background: #e8f0ff;
+    color: #0066ff;
+    font-weight: 600;
+  }
+
+  /* 날짜 입력 */
+  .date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .date-range input[type="date"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  /* 조회 버튼 */
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: #0066ff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .submit-btn:focus {
+    outline: 2px solid #003399;
+  }
+</style>
+</head>
+<body>
+
+<div class="dim" role="presentation"></div>
+
+<section class="bottom-sheet" role="dialog" aria-labelledby="sheetTitle" aria-modal="true">
+  <header>
+    <h2 id="sheetTitle">조회 조건 설정</h2>
+    <button class="close-btn" aria-label="닫기">×</button>
+  </header>
+
+  <div class="section" aria-labelledby="period-label">
+    <h3 id="period-label">조회기간</h3>
+    <div class="btn-group" role="radiogroup" aria-label="조회기간 방식">
+      <div class="radio-btn">
+        <input type="radio" id="direct" name="periodType" checked>
+        <label for="direct">직접입력</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="month" name="periodType">
+        <label for="month">월별</label>
+      </div>
+    </div>
+
+    <div class="btn-group" role="radiogroup" aria-label="조회 기간">
+      <div class="radio-btn">
+        <input type="radio" id="w1" name="periodRange" checked>
+        <label for="w1">1주일</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="m1" name="periodRange">
+        <label for="m1">1개월</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="m3" name="periodRange">
+        <label for="m3">3개월</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="m6" name="periodRange">
+        <label for="m6">6개월</label>
+      </div>
+    </div>
+
+    <div class="date-range">
+      <input type="date" aria-label="시작일">
+      <span>~</span>
+      <input type="date" aria-label="종료일">
+    </div>
+  </div>
+
+  <div class="section" aria-labelledby="type-label">
+    <h3 id="type-label">유형</h3>
+    <div class="btn-group" role="radiogroup" aria-label="유형 선택">
+      <div class="radio-btn">
+        <input type="radio" id="all" name="type" checked>
+        <label for="all">전체</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="in" name="type">
+        <label for="in">입금</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="out" name="type">
+        <label for="out">출금</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" aria-labelledby="sort-label">
+    <h3 id="sort-label">정렬</h3>
+    <div class="btn-group" role="radiogroup" aria-label="정렬 순서">
+      <div class="radio-btn">
+        <input type="radio" id="latest" name="sort" checked>
+        <label for="latest">최신순</label>
+      </div>
+      <div class="radio-btn">
+        <input type="radio" id="oldest" name="sort">
+        <label for="oldest">과거순</label>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="submit-btn">조회</button>
+</section>
+
+</body>
+</html>

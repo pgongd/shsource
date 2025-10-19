@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOL트래블 외화예금</title>
+<style>
+  body {
+    font-family: "Pretendard", sans-serif;
+    margin: 0;
+    background: #fff;
+    color: #111;
+  }
+  header {
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .account-info {
+    padding: 24px;
+  }
+  .account-name {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .account-num {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .balance {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 16px;
+  }
+  .sub-balance {
+    color: #888;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .btn-wrap {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .btn {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 8px;
+    background: #f2f4f6;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .btn:focus {
+    outline: 2px solid #0066ff;
+    outline-offset: 2px;
+  }
+  hr.divider {
+    border: none;
+    height: 10px;
+    background: #f5f5f5;
+    margin: 24px 0;
+  }
+  .link-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+  .link-section span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .link-section:focus,
+  .link-section:hover {
+    background: #f8f8f8;
+  }
+  .tx-list {
+    padding: 0 24px 60px;
+  }
+  .tx-date {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .tx-item {
+    margin-top: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+  }
+  .tx-title {
+    font-size: 14px;
+    color: #333;
+  }
+  .tx-amount {
+    color: #007aff;
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 4px;
+  }
+  .tx-info {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1 class="account-name">SOL트래블 외화예금</h1>
+    <p class="account-num" aria-label="계좌번호">신한 11012345678</p>
+  </header>
+
+  <section class="account-info" aria-label="계좌 정보">
+    <p class="balance" aria-label="잔액">USD 1,000.00</p>
+    <p class="sub-balance" aria-label="출금 가능 금액">출금 가능 금액 USD 999.00</p>
+
+    <div class="btn-wrap">
+      <button type="button" class="btn">입금(환전)</button>
+      <button type="button" class="btn">원화이체</button>
+      <button type="button" class="btn">선물하기</button>
+    </div>
+  </section>
+
+  <hr class="divider" aria-hidden="true">
+
+  <a href="#" class="link-section" aria-label="SOL 트래블 바로가기">
+    <span>✈️ SOL 트래블 바로가기</span>
+    <span aria-hidden="true">›</span>
+  </a>
+
+  <section class="tx-list" aria-label="거래 내역">
+    <div class="tx-date">9월 1일</div>
+    <div class="tx-item">
+      <div class="tx-title">%이율 및 입금내역%</div>
+      <div class="tx-amount" aria-label="입금 금액">+ USD 100.00</div>
+      <div class="tx-info">거래원화 1,376.60 / 거래외화 1,976.84 / 매매기준율 220원</div>
+    </div>
+
+    <div class="tx-date">9월 2일</div>
+    <div class="tx-item">
+      <div class="tx-title">%이율 및 입금내역%</div>
+      <div class="tx-amount" aria-label="입금 금액">+ USD 100.00</div>
+      <div class="tx-info">거래원화 1,376.60 / 거래외화 1,976.84 / 매매기준율 220원</div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>계좌내역조회 - 거래내역 없음</title>
+<style>
+  body { font-family: 'Apple SD Gothic Neo', sans-serif; margin: 0; padding: 20px; background: #fff; color: #111; }
+  header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .logo { width: 40px; height: 40px; background: #0051ff; border-radius: 50%; flex-shrink: 0; }
+  .account-info { flex: 1; }
+  .account-info strong { display: block; font-size: 16px; font-weight: 600; }
+  .account-info span { display: inline-block; font-size: 14px; color: #666; margin-right: 4px; }
+  .copy-btn { background: none; border: none; cursor: pointer; padding: 4px; }
+  .copy-btn .icon { width: 16px; height: 16px; display: inline-block; background: #ccc; border-radius: 3px; }
+
+  .balance { margin-bottom: 20px; }
+  .balance .amount { font-size: 28px; font-weight: 700; }
+  .balance .sub-info { font-size: 13px; color: #666; margin-top: 6px; line-height: 1.4; }
+
+  .btn-group { display: flex; gap: 8px; margin: 16px 0; }
+  .btn-group button { flex: 1; padding: 10px 0; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; font-size: 15px; cursor: pointer; }
+
+  .search-area { display: flex; align-items: center; gap: 8px; margin: 20px 0; }
+  .search-btn { background: none; border: none; cursor: pointer; padding: 4px; }
+  .search-btn .icon { width: 20px; height: 20px; background: #888; border-radius: 50%; display: inline-block; }
+  .sort-select { margin-left: auto; border: 1px solid #ccc; border-radius: 6px; padding: 4px 6px; font-size: 14px; }
+
+  .no-data { text-align: center; margin-top: 80px; color: #555; }
+  .no-data .empty-img { width: 100px; height: 100px; margin: 0 auto 20px; background: #e8ebf3; border-radius: 50%; }
+  .no-data p { font-size: 15px; color: #555; }
+
+  .btn-top { 
+    position: fixed; 
+    right: 20px; 
+    bottom: 20px; 
+    width: 48px; 
+    height: 48px; 
+    border-radius: 50%; 
+    background: #007aff; 
+    color: #fff; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 20px; 
+    line-height: 1; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  /* 접근성용 숨김 텍스트 */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" aria-hidden="true"></div>
+  <div class="account-info">
+    <strong>Tops외화적립예금</strong>
+    <span>신한 11012345678</span>
+  </div>
+  <button type="button" class="copy-btn" aria-label="계좌번호 복사">
+    <span class="icon" aria-hidden="true"></span>
+  </button>
+</header>
+
+<section class="balance">
+  <div class="amount" aria-label="계좌 잔액">USD 1,000.00</div>
+  <div class="sub-info">
+    출금가능금액 USD 999.00<br>
+    YYYY.MM.DD 만기
+  </div>
+</section>
+
+<div class="btn-group" role="group" aria-label="입출금 관련 메뉴">
+  <button type="button">입금</button>
+  <button type="button">원화이체</button>
+  <button type="button">외화이체</button>
+</div>
+
+<div class="search-area">
+  <button type="button" class="search-btn" aria-label="검색">
+    <span class="icon" aria-hidden="true"></span>
+  </button>
+  <select class="sort-select" aria-label="정렬 기준 선택">
+    <option>1개월 · 전체 · 최신순</option>
+  </select>
+</div>
+
+<div class="no-data" role="status" aria-live="polite">
+  <div class="empty-img" aria-hidden="true"></div>
+  <p>거래내역이 없습니다.</p>
+</div>
+
+<button type="button" class="btn-top" aria-label="위로 가기">↑</button>
+
+<script>
+  // 위로 가기 버튼 동작
+  document.querySelector('.btn-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>

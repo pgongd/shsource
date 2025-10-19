@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우대이자율 적용현황</title>
+<style>
+body {
+  font-family: Pretendard, system-ui, sans-serif;
+  background: #f6f8fb;
+  margin: 0;
+  padding: 30px;
+  color: #111;
+}
+
+/* 카드 */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 24px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.card h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 16px;
+}
+
+/* 그래프 */
+.gauge {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  margin: 0 auto 16px;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-180deg);
+}
+
+.bg-arc, .value-arc {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.bg-arc {
+  stroke: #e9eef5;
+}
+
+.value-arc {
+  stroke: #3c7dff;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1s ease;
+}
+
+/* 그래프 중앙 텍스트 */
+.gauge-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+  text-align: center;
+}
+.gauge-text .top {
+  font-size: 12px;
+  color: #777;
+}
+.gauge-text .main {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c5aff;
+  margin: 2px 0;
+}
+.gauge-text .bottom {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 범례 */
+.legend {
+  margin-top: 8px;
+}
+.legend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.legend-item span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot.basic { background: #3c7dff; }
+.dot.bonus { background: #9bb8ff; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>우대이자율이 적용되고 있어요.</h2>
+  <p>적용기간 YYYY.MM.DD ~ YYYY.MM.DD</p>
+
+  <div class="gauge" role="img" aria-label="현재 이자율 3.5%, 최고 이자율 5%">
+    <svg viewBox="0 0 200 100">
+      <path class="bg-arc" d="M10,100 A90,90 0 0 1 190,100"/>
+      <path class="value-arc" d="M10,100 A90,90 0 0 1 190,100"/>
+    </svg>
+    <div class="gauge-text">
+      <div class="top">최고 연 5.00%</div>
+      <div class="main">연 3.50%</div>
+      <div class="bottom">YYYY.MM.DD 기준 (세전)</div>
+    </div>
+  </div>
+
+  <div class="legend" aria-label="이자율 정보">
+    <div class="legend-item">
+      <span><span class="dot basic"></span>기본이자율</span>
+      <strong>연 2.50%</strong>
+    </div>
+    <div class="legend-item">
+      <span><span class="dot bonus"></span>우대이자율</span>
+      <strong>연 1.00%</strong>
+    </div>
+    <div class="legend-item" style="font-size:12px; color:#999;">
+      <span></span>
+      <span>/ 최고 연 5.00%</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const percent = 70; // 0~100 사이 값으로 변경 (3.5%가 5% 중 70%)
+const circleLength = 283;
+const offset = circleLength - (circleLength * percent / 100);
+document.querySelector('.value-arc').style.strokeDashoffset = offset;
+</script>
+
+</body>
+</html>

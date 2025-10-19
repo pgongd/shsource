@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이자율 적용현황</title>
+<style>
+body {
+  font-family: Pretendard, system-ui, sans-serif;
+  background: #f6f8fb;
+  margin: 0;
+  padding: 16px;
+  color: #111;
+  line-height: 1.5;
+}
+
+/* 헤더 */
+.header-labels {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.header-labels .label {
+  font-size: 13px;
+  color: #2975ff;
+  background: #eaf1ff;
+  border-radius: 12px;
+  padding: 4px 10px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* 카드 */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* 그래프 */
+.rate-graph {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  margin: 20px auto;
+}
+.rate-graph svg {
+  width: 100%;
+  height: 100%;
+}
+.rate-graph .bg {
+  stroke: #e9eef5;
+  stroke-width: 12;
+  fill: none;
+  stroke-linecap: round;
+}
+.rate-graph .progress {
+  stroke: #4a7efc;
+  stroke-width: 12;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  animation: draw 1.5s ease forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 70; } /* 값에 따라 조절 */
+}
+.rate-text {
+  text-align: center;
+  margin-top: 8px;
+}
+.rate-text strong {
+  font-size: 18px;
+  color: #2c5aff;
+}
+
+/* 범례 */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  font-size: 14px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend-item::before {
+  content: "";
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.legend-item.basic::before { background: #4a7efc; }
+.legend-item.special::before { background: #bbb; }
+
+/* 아코디언 */
+.accordion {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.accordion summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.accordion summary::-webkit-details-marker { display:none; }
+
+.accordion .badge {
+  font-size: 12px;
+  color: #fff;
+  background: #4a7efc;
+  border-radius: 10px;
+  padding: 2px 8px;
+  margin-right: 8px;
+}
+.accordion[open] summary {
+  background: #f6f8fb;
+}
+
+.accordion-content {
+  background: #f9fafc;
+  padding: 14px 16px;
+  border-top: 1px solid #e5e8ec;
+}
+.accordion-content .condition {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.accordion-content .condition span.status {
+  color: #2c5aff;
+}
+.accordion-content .desc {
+  color: #666;
+  font-size: 13px;
+}
+
+/* 미적용 상태 */
+.badge.off { background: #aaa; }
+.status.off { color: #999; }
+
+</style>
+</head>
+<body>
+
+<div class="header-labels">
+  <span class="label">모바일</span>
+  <span class="label">영업점</span>
+</div>
+
+<h1>%상품명%</h1>
+
+<section class="card" aria-labelledby="rateTitle">
+  <h2 id="rateTitle" class="visually-hidden">기본이자율 정보</h2>
+  <p>기본이자율이 적용되고 있어요.<br><small>적용기간 YYYY.MM.DD ~ YYYY.MM.DD</small></p>
+
+  <div class="rate-graph" aria-hidden="true">
+    <svg viewBox="0 0 200 100">
+      <path class="bg" d="M10,100 A90,90 0 0 1 190,100"/>
+      <path class="progress" d="M10,100 A90,90 0 0 1 190,100"/>
+    </svg>
+  </div>
+
+  <div class="rate-text">
+    <strong>연 2.50%</strong><br>
+    <small>YYYY.MM.DD 기준 (세전)</small>
+  </div>
+
+  <div class="legend" aria-label="이자율 종류">
+    <div class="legend-item basic">기본이자율 <span>연 2.50%</span></div>
+    <div class="legend-item special">우대이자율 <span>연 0.00%</span></div>
+  </div>
+</section>
+
+<!-- 아코디언 1 -->
+<details class="accordion">
+  <summary>
+    <div><span class="badge">적용중</span>우대이자율1</div>
+    <div style="color:#2c5aff;">연 %N.NN%</div>
+  </summary>
+  <div class="accordion-content">
+    <div class="condition">신한카드(신용) 결제 실적 <span class="status">충족</span></div>
+    <div class="desc">본인명의 신한은행 입출금통장을 결제계좌로 신한카드 결제 실적이 6개월 이상인 경우</div>
+    <hr>
+    <div class="condition">우대이자 조건 한줄 요약 타이틀 <span class="status off">미충족</span></div>
+    <div class="desc">우대이자 조건에 대한 기본 설명 (목표 횟수 달성 시 적용)</div>
+  </div>
+</details>
+
+<!-- 아코디언 2 (미적용 예시) -->
+<details class="accordion">
+  <summary>
+    <div><span class="badge off">미적용</span>우대이자율2</div>
+    <div style="color:#2c5aff;">연 %N.NN%</div>
+  </summary>
+  <div class="accordion-content">
+    <div class="condition">급여이체 실적 <span class="status off">미충족</span></div>
+    <div class="desc">월 1회 이상 급여이체 실적이 있는 경우</div>
+  </div>
+</details>
+
+</body>
+</html>

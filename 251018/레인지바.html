@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>입금 한도 현황</title>
+<style>
+  body {
+    font-family: "Pretendard", sans-serif;
+    background: #f8f9fc;
+    margin: 0;
+    padding: 40px;
+    color: #222;
+  }
+
+  .limit-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 320px;
+    margin: 0 auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .limit-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .limit-header strong {
+    font-weight: 600;
+  }
+
+  .progress-bar {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: #e9edf5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #4a79ff;
+    border-radius: 10px;
+    transition: width 0.3s;
+  }
+
+  .limit-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: #444;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .detail-row span:last-child {
+    font-weight: 600;
+  }
+
+  /* 접근성용 시각적 숨김 */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+
+<section class="limit-box" aria-labelledby="limitTitle">
+  <div class="limit-header">
+    <span id="limitTitle">%2025년% 입금한도</span>
+    <strong>99,999,999원</strong>
+  </div>
+
+  <!-- 접근성용 진행바 -->
+  <div class="progress-bar" role="progressbar"
+       aria-valuemin="0" aria-valuemax="99999999" aria-valuenow="90000000"
+       aria-label="입금 한도 사용률 90%">
+    <div class="progress-fill" style="width:90%;"></div>
+  </div>
+
+  <div class="limit-details">
+    <div class="detail-row">
+      <span>입금</span>
+      <span>90,000,000원</span>
+    </div>
+    <div class="detail-row">
+      <span>잔여한도</span>
+      <span>999,999원</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

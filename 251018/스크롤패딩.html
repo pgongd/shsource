@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>접근성 테스트 - 하단 버튼 가림 방지</title>
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+    color: #222;
+    background: #fafafa;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 16px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  main {
+    height: 100vh;
+    overflow-y: auto;
+
+    /* 스크롤 시 포커스 콘텐츠가 하단 버튼에 가려지지 않도록 */
+    scroll-padding-bottom: 100px;
+    padding: 16px;
+    padding-bottom: 120px; /* 시각적 여유 */
+  }
+
+  section {
+    margin-bottom: 32px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    padding: 16px;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+
+  .fixed-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .fixed-btn button {
+    background: #007aff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 24px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .fixed-btn button:focus {
+    outline: 3px solid #0056d8;
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>알림 설정</h1>
+  </header>
+
+  <main tabindex="0">
+    <section aria-labelledby="section1">
+      <h2 id="section1">이메일 알림</h2>
+      <label><input type="checkbox"> 프로모션 이메일 받기</label>
+      <label><input type="checkbox"> 계정 보안 알림 받기</label>
+    </section>
+
+    <section aria-labelledby="section2">
+      <h2 id="section2">문자 알림</h2>
+      <label><input type="checkbox"> 결제 알림</label>
+      <label><input type="checkbox"> 혜택 알림</label>
+    </section>
+
+    <section aria-labelledby="section3">
+      <h2 id="section3">앱 푸시 알림</h2>
+      <label><input type="checkbox"> 로그인 알림</label>
+      <label><input type="checkbox"> 주요 공지사항</label>
+    </section>
+
+    <section aria-labelledby="section4">
+      <h2 id="section4">기타 설정</h2>
+      <p>스크린리더 사용 시, 하단 버튼이 콘텐츠를 가리지 않도록 scroll-padding이 적용되어 있습니다.</p>
+      <p>마지막 콘텐츠 포커스가 버튼 뒤로 숨지 않고 안전하게 읽힙니다.</p>
+    </section>
+  </main>
+
+  <div class="fixed-btn" role="region" aria-label="화면 하단 고정 영역">
+    <button type="button">저장하기</button>
+  </div>
+</body>
+</html>

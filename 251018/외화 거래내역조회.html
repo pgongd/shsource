@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>계좌내역조회</title>
+<style>
+  body { font-family: 'Apple SD Gothic Neo', sans-serif; margin: 0; padding: 20px; background: #fff; color: #111; }
+  header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .logo { width: 40px; height: 40px; background: #0051ff; border-radius: 50%; flex-shrink: 0; }
+  .account-info { flex: 1; }
+  .account-info strong { display: block; font-size: 16px; font-weight: 600; }
+  .account-info span { display: inline-block; font-size: 14px; color: #666; margin-right: 4px; }
+  .copy-btn { background: none; border: none; cursor: pointer; padding: 4px; }
+  .copy-btn .icon { width: 16px; height: 16px; display: inline-block; background: #ccc; border-radius: 3px; }
+
+  .balance { margin-bottom: 20px; }
+  .balance .amount { font-size: 28px; font-weight: 700; }
+  .balance .sub-info { font-size: 13px; color: #666; margin-top: 6px; line-height: 1.4; }
+
+  .btn-group { display: flex; gap: 8px; margin: 16px 0; }
+  .btn-group button { flex: 1; padding: 10px 0; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; font-size: 15px; cursor: pointer; }
+
+  .search-area { display: flex; align-items: center; gap: 8px; margin: 20px 0; }
+  .search-btn { background: none; border: none; cursor: pointer; padding: 4px; }
+  .search-btn .icon { width: 20px; height: 20px; background: #888; border-radius: 50%; display: inline-block; }
+  .tag { display: flex; align-items: center; background: #f0f2f5; border-radius: 20px; padding: 6px 12px; font-size: 14px; }
+  .tag button { background: none; border: none; padding: 0 4px; cursor: pointer; font-size: 16px; line-height: 1; }
+  .sort-select { margin-left: auto; border: 1px solid #ccc; border-radius: 6px; padding: 4px 6px; font-size: 14px; }
+
+  .history { border-top: 1px solid #eee; }
+  .date-group { padding: 16px 0; border-bottom: 1px solid #eee; }
+  .date-group h3 { font-size: 14px; color: #666; margin-bottom: 10px; }
+  .item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .item-title { font-weight: 600; color: #111; }
+  .item-value { font-weight: 700; color: #0051ff; }
+  .detail { font-size: 13px; color: #666; line-height: 1.4; margin-left: 4px; }
+
+  /* 접근성용 숨김 텍스트 */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" aria-hidden="true"></div>
+  <div class="account-info">
+    <strong>Tops외화적립예금</strong>
+    <span>신한 11012345678</span>
+  </div>
+  <button type="button" class="copy-btn" aria-label="계좌번호 복사">
+    <span class="icon" aria-hidden="true"></span>
+  </button>
+</header>
+
+<section class="balance">
+  <div class="amount" aria-label="계좌 잔액">USD 1,000.00</div>
+  <div class="sub-info">
+    출금가능금액 USD 999.00<br>
+    YYYY.MM.DD 만기
+  </div>
+</section>
+
+<div class="btn-group" role="group" aria-label="입출금 관련 메뉴">
+  <button type="button">입금</button>
+  <button type="button">원화이체</button>
+  <button type="button">외화이체</button>
+</div>
+
+<div class="search-area">
+  <button type="button" class="search-btn" aria-label="검색">
+    <span class="icon" aria-hidden="true"></span>
+  </button>
+  <div class="tag" role="group" aria-label="검색 태그">
+    TIGER미국나스닥
+    <button type="button" aria-label="태그 삭제">×</button>
+  </div>
+  <select class="sort-select" aria-label="정렬 기준 선택">
+    <option>1개월 · 전체 · 최신순</option>
+  </select>
+</div>
+
+<section class="history">
+  <div class="date-group">
+    <h3>9월 1일</h3>
+    <div class="item">
+      <div>
+        <div class="item-title">%이름 및 입금내역%</div>
+        <div class="detail">10:14:12<br>거래환율 1376.60<br>거래원화금액 1,996원</div>
+      </div>
+      <div class="item-value">+ USD100.00</div>
+    </div>
+  </div>
+
+  <div class="date-group">
+    <h3>8월 2일</h3>
+    <div class="item">
+      <div>
+        <div class="item-title">%이름 및 입금내역%</div>
+        <div class="detail">10:14:12<br>거래환율 1376.60<br>거래원화금액 1,996원</div>
+      </div>
+      <div class="item-value">+ USD100.00</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

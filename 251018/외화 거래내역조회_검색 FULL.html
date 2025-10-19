@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>거래내역조회 - 검색</title>
+<style>
+  body { font-family: 'Apple SD Gothic Neo', sans-serif; margin: 0; padding: 20px; background: #fff; color: #111; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+
+  /* 검색 영역 */
+  .search-box { position: relative; display: flex; align-items: center; margin-bottom: 20px; }
+  .search-box input {
+    width: 100%;
+    padding: 10px 70px 10px 40px;
+    border: 1.5px solid #007aff;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  .search-box input:focus { outline: 2px solid #007aff; outline-offset: 2px; }
+
+  .btn-search, .btn-clear {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: none; border: none; padding: 6px; cursor: pointer;
+  }
+  .btn-search { right: 10px; }
+  .btn-clear { right: 40px; }
+  .icon { display: inline-block; width: 20px; height: 20px; background: #aaa; border-radius: 50%; }
+  .btn-search .icon::before { content: ''; display: block; width: 8px; height: 8px; border: 2px solid #fff; border-radius: 50%; margin: 4px auto; }
+  .btn-clear .icon::before { content: '×'; display: block; color: #fff; text-align: center; font-weight: 600; line-height: 20px; font-size: 14px; }
+
+  /* 태그 영역 */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: #f1f3f6; padding: 6px 12px; border-radius: 16px; font-size: 14px; color: #333; }
+  .tag button { background: none; border: none; cursor: pointer; padding: 0; font-size: 14px; color: #333; }
+
+  /* 접근성 숨김 */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+</style>
+</head>
+<body>
+
+<h1>거래내역조회</h1>
+
+<div class="search-box" role="search">
+  <label for="searchInput" class="sr-only">검색어 입력</label>
+  <input id="searchInput" type="text" placeholder="검색어를 입력하세요" value="생활비" />
+  <button type="button" class="btn-clear" aria-label="검색어 지우기">
+    <span class="icon" aria-hidden="true"></span>
+  </button>
+  <button type="button" class="btn-search" aria-label="검색">
+    <span class="icon" aria-hidden="true"></span>
+  </button>
+</div>
+
+<div class="tag-list" aria-label="추천 검색어">
+  <span class="tag"><button type="button">#급여</button></span>
+  <span class="tag"><button type="button">#입출금이자</button></span>
+  <span class="tag"><button type="button">#신용카드</button></span>
+  <span class="tag"><button type="button">#길어진텍스트</button></span>
+</div>
+
+</body>
+</html>
