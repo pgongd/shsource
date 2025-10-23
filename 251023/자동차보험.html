@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>보험 상세 정보</title>
+<style>
+  body { font-family: sans-serif; color: #222; margin: 0; background: #f8f9fb; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #fff; border-bottom: 1px solid #eee; }
+  header svg { width: 24px; height: 24px; }
+  main { padding: 16px; }
+  .badge-wrap { display: flex; gap: 8px; margin-bottom: 8px; }
+  .badge { padding: 4px 10px; border-radius: 16px; font-size: 13px; font-weight: 600; }
+  .badge.green { background: #20b46a; color: #fff; }
+  .badge.blue-outline { border: 1px solid #1877f2; color: #1877f2; background: #fff; }
+
+  .insurance-info { display: flex; align-items: center; background: #fff; padding: 16px; border-radius: 8px; }
+  .insurance-logo { width: 40px; height: 40px; margin-right: 12px; flex-shrink: 0; }
+  .insurance-text { flex: 1; }
+  .insurance-title { font-weight: 600; margin-bottom: 4px; }
+  .insurance-sub { font-size: 14px; color: #666; display: flex; align-items: center; gap: 4px; }
+  .btn-copy svg { width: 14px; height: 14px; }
+  
+  .status-msg { background: #fff; text-align: center; padding: 14px; margin-top: 8px; border-radius: 8px; color: #666; }
+
+  .link-list { margin-top: 16px; background: #fff; border-radius: 8px; overflow: hidden; }
+  .link-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #eee; text-decoration: none; color: #222; }
+  .link-item:last-child { border-bottom: 0; }
+  .link-left { display: flex; align-items: center; gap: 10px; }
+  .link-icon { width: 24px; height: 24px; }
+  .link-text { display: flex; flex-direction: column; }
+  .link-text small { font-size: 13px; color: #666; }
+  .link-item svg.arrow { width: 16px; height: 16px; }
+
+  .section-title { font-size: 15px; font-weight: 600; margin: 24px 0 8px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #eee; }
+  th { background: #f9fafb; color: #555; width: 40%; }
+  tr:last-child th, tr:last-child td { border-bottom: 0; }
+
+  footer { position: fixed; bottom: 16px; right: 16px; }
+  .btn-top { background: #fff; border: 1px solid #ddd; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer; }
+</style>
+</head>
+<body>
+  <header>
+    <button type="button" aria-label="이전 페이지로 이동">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="#333" stroke-width="2" fill="none"/></svg>
+    </button>
+    <button type="button" aria-label="홈으로 이동">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10l8-6 8 6v10H4z" fill="none" stroke="#333" stroke-width="2"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- 배지 영역 -->
+    <div class="badge-wrap" role="group" aria-label="보험 상태">
+      <span class="badge green">만기</span>
+      <span class="badge blue-outline">종신보험</span>
+    </div>
+
+    <!-- 보험 정보 -->
+    <section class="insurance-info" aria-label="보험 상품 정보">
+      <img src="https://via.placeholder.com/40" alt="AXA손해보험 로고" class="insurance-logo" />
+      <div class="insurance-text">
+        <p class="insurance-title">%보험중권 상품명%</p>
+        <p class="insurance-sub">AXA손해보험 123000456789
+          <button type="button" class="btn-copy" aria-label="계약번호 복사">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h12v12H8z" fill="#aaa"/><path d="M4 4h12v12H4z" fill="none" stroke="#aaa" stroke-width="2"/></svg>
+          </button>
+        </p>
+      </div>
+    </section>
+
+    <!-- 계약자 상태 -->
+    <p class="status-msg">보험계약자가 납부 중 입니다.</p>
+
+    <!-- 링크 리스트 -->
+    <nav class="link-list" aria-label="보험 관련 정보">
+      <a href="#" class="link-item" aria-label="특약현황 상세보기">
+        <div class="link-left">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="#4a90e2"/>
+          </svg>
+          <div class="link-text">
+            <span>특약현황</span>
+            <small>%N개의 특약에 가입 되어 있어요</small>
+          </div>
+        </div>
+        <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4l8 8-8 8" stroke="#333" stroke-width="2" fill="none"/></svg>
+      </a>
+
+      <a href="#" class="link-item" aria-label="보험담보별 보장 현황 보기">
+        <div class="link-left">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" fill="#ffb400" rx="3"/>
+          </svg>
+          <div class="link-text">
+            <span>보험담보별 보장 현황</span>
+            <small>%N개의 담보별 보장이 있어요</small>
+          </div>
+        </div>
+        <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4l8 8-8 8" stroke="#333" stroke-width="2" fill="none"/></svg>
+      </a>
+    </nav>
+
+    <!-- 상세정보 -->
+    <section aria-label="주계약 상세정보">
+      <h2 class="section-title">주계약 상세정보</h2>
+      <table>
+        <caption class="sr-only">보험 주계약 상세정보 표</caption>
+        <tbody>
+          <tr>
+            <th scope="row">보험종류</th>
+            <td>ex. 종신보험, 실손보험 등</td>
+          </tr>
+          <tr>
+            <th scope="row">계약자명</th>
+            <td>김OO</td>
+          </tr>
+          <tr>
+            <th scope="row">계약상태</th>
+            <td>ex. 정상납, 비정상납</td>
+          </tr>
+          <tr>
+            <th scope="row">계약체결일</th>
+            <td>YYYY.MM.DD</td>
+          </tr>
+          <tr>
+            <th scope="row">만기일</th>
+            <td>YYYY.MM.DD</td>
+          </tr>
+          <tr>
+            <th scope="row">피보험자 및 특약 목록</th>
+            <td>N</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- 맨 위로 이동 버튼 -->
+  <footer>
+    <button type="button" class="btn-top" aria-label="페이지 상단으로 이동">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" stroke="#333" stroke-width="2" fill="none"/></svg>
+    </button>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>특약정보목록 바텀시트</title>
+<style>
+  body {
+    font-family: "Pretendard", sans-serif;
+    background: #e5e8ef;
+    margin: 0;
+    padding: 0;
+  }
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+    padding: 20px 16px 40px;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .sheet-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .badge-blue {
+    font-size: 13px;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 12px;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .sheet-subtext {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+
+  /* 카드 리스트 */
+  .card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 4px 0;
+  }
+  .info-row span:first-child {
+    color: #555;
+  }
+  .info-row span:last-child {
+    color: #222;
+    font-weight: 500;
+  }
+
+  /* 스크롤 대비 */
+  .sheet-content {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  /* 포커스 시 테두리 강조 */
+  button:focus, a:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- 바텀시트 시작 -->
+<div class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-header">
+    <div>
+      <span id="sheetTitle" class="sheet-title">특약정보목록</span>
+      <span class="badge-blue">N건</span>
+    </div>
+    <button class="close-btn" aria-label="닫기">×</button>
+  </div>
+
+  <p class="sheet-subtext">%고객명%님의 피보험자별 특약정보입니다.</p>
+
+  <div class="sheet-content" tabindex="0">
+    <section class="card" aria-labelledby="cardTitle1">
+      <h2 id="cardTitle1" class="card-title">피보험자 및 특약</h2>
+      <div class="info-row"><span>주피보험자 여부</span><span>대상, 대상아님</span></div>
+      <div class="info-row"><span>특약명</span><span>ex. 암입원중독특약 등</span></div>
+      <div class="info-row"><span>특약상태</span><span>ex. 정상, 실효, 만기</span></div>
+      <div class="info-row"><span>특약만기일</span><span>YYYY.MM.DD</span></div>
+      <div class="info-row"><span>특약가입금액</span><span>NNN원 or 통화코드 N.NN</span></div>
+      <div class="info-row"><span>특약납입 여부</span><span>필수, 선택</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="cardTitle2">
+      <h2 id="cardTitle2" class="card-title">피보험자 및 특약</h2>
+      <div class="info-row"><span>피보험자명</span><span>ex. 김*환</span></div>
+      <div class="info-row"><span>특약명</span><span>ex. 암입원중독특약 등</span></div>
+      <div class="info-row"><span>특약상태</span><span>ex. 정상, 실효, 만기</span></div>
+      <div class="info-row"><span>특약만기일</span><span>YYYY.MM.DD</span></div>
+      <div class="info-row"><span>특약가입금액</span><span>NNN원 or 통화코드 N.NN</span></div>
+      <div class="info-row"><span>특약납입 여부</span><span>필수, 선택</span></div>
+    </section>
+  </div>
+</div>
+<!-- 바텀시트 끝 -->
+
+</body>
+</html>
+

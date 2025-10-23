@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOL 모임통장</title>
+  <style>
+    body {font-family: sans-serif; color: #222; margin: 0; padding: 20px; background: #f8f9fb;}
+    .account-header {display: flex; align-items: center; gap: 8px; margin-bottom: 8px;}
+    .account-header svg {width: 28px; height: 28px;}
+    .account-number {display: flex; align-items: center; gap: 4px; font-size: 14px; color: #666;}
+    .btn-copy svg {width: 14px; height: 14px;}
+    .info-list {border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 12px 0;}
+    .info-item {display: flex; justify-content: space-between; align-items: center; padding: 6px 0;}
+    .info-item strong {font-weight: 600;}
+    .accordion {border: 1px solid #e5e5e5; border-radius: 10px; background: #fff; margin: 20px 0;}
+    .accordion button {width: 100%; text-align: left; background: none; border: 0; font-size: 16px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+    .accordion svg {width: 16px; height: 16px; transition: transform .2s;}
+    .accordion button[aria-expanded="true"] svg {transform: rotate(90deg);}
+    .accordion-content {padding: 16px; display: none; border-top: 1px solid #eee;}
+    .accordion-content.active {display: block;}
+    .center-content {text-align: center; padding: 20px 0;}
+    .center-content img {width: 100px; height: auto; margin-bottom: 8px;}
+    .btn-list {display: flex; justify-content: center; list-style: none; padding: 0; margin: 0;}
+    .btn-list li {margin: 0 4px;}
+    .btn-list button {padding: 8px 16px; border: 1px solid #ddd; border-radius: 20px; background: #fff; cursor: pointer;}
+    .section-title {margin: 20px 0 8px; font-weight: 600; font-size: 15px;}
+    .link-list {list-style: none; margin: 0; padding: 0;}
+    .link-list li {border-bottom: 1px solid #eee;}
+    .link-list a {display: flex; justify-content: space-between; align-items: center; padding: 14px 0; color: #222; text-decoration: none;}
+    .link-list svg {width: 14px; height: 14px;}
+  </style>
+</head>
+<body>
+  <header class="account-header">
+    <!-- 로고 -->
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="#0051C7"></circle>
+      <text x="12" y="16" font-size="10" text-anchor="middle" fill="#fff">S</text>
+    </svg>
+    <h1>SOL 모임통장</h1>
+  </header>
+
+  <div class="account-number">
+    <span>신한 110-000-123456</span>
+    <button type="button" class="btn-copy" aria-label="계좌번호 복사">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 8h12v12H8z" fill="#aaa"/><path d="M4 4h12v12H4z" fill="none" stroke="#aaa" stroke-width="2"/></svg>
+    </button>
+  </div>
+
+  <section class="info-list" aria-label="계좌 정보">
+    <div class="info-item"><strong>적용이율</strong><span>연 N.NN%</span></div>
+    <div class="info-item"><strong>만기일</strong><span>YYYY.MM.DD</span></div>
+    <div class="info-item"><strong>출금가능금액</strong><span>0원</span></div>
+    <div class="info-item"><strong>계좌관리점</strong><a href="#" aria-label="계좌관리점 상세정보 보기">%관리점명%</a></div>
+  </section>
+
+  <!-- 아코디언: 이체정보 -->
+  <section class="accordion" aria-label="이체정보">
+    <button aria-expanded="false" aria-controls="transfer-info">
+      <span>이체정보</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4z" fill="#333"/></svg>
+    </button>
+    <div id="transfer-info" class="accordion-content" hidden>
+      <div class="center-content">
+        <img src="https://via.placeholder.com/100x100" alt="등록된 자동이체 없음 이미지">
+        <p>등록된 자동이체가 없어요</p>
+        <ul class="btn-list">
+          <li><button type="button">등록하기</button></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 아코디언: 계좌 인사이트 -->
+  <section class="accordion" aria-label="계좌 인사이트">
+    <button aria-expanded="false" aria-controls="account-insight">
+      <span>계좌 인사이트</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4z" fill="#333"/></svg>
+    </button>
+    <div id="account-insight" class="accordion-content" hidden>
+      <div class="info-item"><span>받을 수 있는 무제한 수수료</span><span>N건</span></div>
+      <div class="info-item"><span>받은 수수료 무제한</span><span>N건 전월 / 총 N건</span></div>
+      <div class="info-item"><span>온라인 이체금액</span><span>N,NNN,NNN원</span></div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- 하단 링크영역 -->
+  <section aria-label="계좌 관련 메뉴">
+    <h2 class="section-title">관련정보</h2>
+    <ul class="link-list">
+      <li><a href="#" aria-label="금융거래한도계좌 해제 신청 페이지로 이동">금융거래한도계좌 해제 신청하기
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4l8 8-8 8" stroke="#333" fill="none" stroke-width="2"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="이체결과조회로 이동">이체결과조회
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4l8 8-8 8" stroke="#333" fill="none" stroke-width="2"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="거래내역 이메일 또는 팩스로 보내기 페이지로 이동">거래내역 이메일/팩스 보내기
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4l8 8-8 8" stroke="#333" fill="none" stroke-width="2"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="통장사본보기 페이지로 이동">통장사본보기
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4l8 8-8 8" stroke="#333" fill="none" stroke-width="2"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="영업점 청구 입출금 신청하기 페이지로 이동">영업점 청구 입출금 <span class="link-action">신청하기</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4l8 8-8 8" stroke="#333" fill="none" stroke-width="2"/></svg>
+      </a></li>
+    </ul>
+  </section>
+</body>
+</html>

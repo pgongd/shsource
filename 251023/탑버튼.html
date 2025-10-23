@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보험 상세 페이지</title>
+<style>
+  body {
+    font-family: "Pretendard", sans-serif;
+    margin: 0;
+    background: #fff;
+    color: #222;
+    line-height: 1.5;
+  }
+  .container {
+    padding: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* 배지 */
+  .badge-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .badge-green {
+    background: #28b76b;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .badge-blue {
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 13px;
+    background: #fff;
+  }
+
+  /* 보험 정보 */
+  .insurance-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .insurance-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .insurance-left img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+  .insurance-text strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .insurance-text span {
+    font-size: 13px;
+    color: #666;
+  }
+  .copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .copy-btn img {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* 안내 문구 */
+  .info-box {
+    text-align: center;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+
+  /* 구분선 */
+  hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 16px 0;
+  }
+
+  /* 리스트 섹션 */
+  .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+  .list-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .list-left img {
+    width: 24px;
+    height: 24px;
+  }
+  .list-text strong {
+    display: block;
+    font-size: 15px;
+  }
+  .list-text small {
+    color: #777;
+    font-size: 13px;
+  }
+  .list-item a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .list-item a::after {
+    content: "›";
+    font-size: 18px;
+    color: #aaa;
+  }
+
+  /* 테이블 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: left;
+  }
+  th {
+    background: #f9f9f9;
+    font-weight: 600;
+  }
+
+  /* 맨 위로 버튼 */
+  #btnTop {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+  #btnTop.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="badge-group">
+    <span class="badge-green">만기</span>
+    <span class="badge-blue">종신보험</span>
+  </div>
+
+  <div class="insurance-info">
+    <div class="insurance-left">
+      <img src="https://via.placeholder.com/40" alt="AXA손해보험 로고">
+      <div class="insurance-text">
+        <strong>%보험증권 상품명%</strong>
+        <span>AXA손해보험 123000456789</span>
+      </div>
+    </div>
+    <button class="copy-btn" aria-label="계좌번호 복사">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="">
+    </button>
+  </div>
+
+  <div class="info-box">보험계약자가 납부 중 입니다.</div>
+
+  <hr>
+
+  <div class="list-item">
+    <a href="#" aria-label="특약현황 상세 보기">
+      <div class="list-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828940.png" alt="">
+        <div class="list-text">
+          <strong>특약현황</strong>
+          <small>%N%개의 특약에 가입되어 있어요</small>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="list-item">
+    <a href="#" aria-label="보험담보별 보장현황 상세 보기">
+      <div class="list-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" alt="">
+        <div class="list-text">
+          <strong>보험담보별 보장 현황</strong>
+          <small>%N%개의 담보별 보장이 있어요</small>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <hr>
+
+  <h3>주계약 상세정보</h3>
+  <table>
+    <tr>
+      <th scope="row">보험종류</th>
+      <td>ex. 종신보험, 실손보험 등</td>
+    </tr>
+    <tr>
+      <th scope="row">계약자명</th>
+      <td>김OO</td>
+    </tr>
+    <tr>
+      <th scope="row">계약상태</th>
+      <td>정상납, 비경상납</td>
+    </tr>
+    <tr>
+      <th scope="row">계약체결일</th>
+      <td>YYYY.MM.DD</td>
+    </tr>
+    <tr>
+      <th scope="row">만기일</th>
+      <td>YYYY.MM.DD</td>
+    </tr>
+    <tr>
+      <th scope="row">피보험자 및 특약 목록</th>
+      <td>N</td>
+    </tr>
+  </table>
+</div>
+
+<button id="btnTop" aria-label="맨 위로 이동">
+  <span style="font-size: 18px;">↑</span>
+</button>
+
+<script>
+  const btnTop = document.getElementById('btnTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 150) {
+      btnTop.classList.add('visible');
+    } else {
+      btnTop.classList.remove('visible');
+    }
+  });
+  btnTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
