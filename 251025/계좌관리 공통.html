@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>관리정보 리스트</title>
+<style>
+  body {
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+    background: #f8f9fa;
+    margin: 20px;
+  }
+
+  section {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  h2 {
+    font-size: 1rem;
+    color: #555;
+    padding: 16px;
+    border-bottom: 1px solid #e5e5e5;
+    margin: 0;
+  }
+
+  ul.setting-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    background: #fff;
+  }
+
+  .setting-item:last-child {
+    border-bottom: none;
+  }
+
+  .setting-title {
+    color: #222;
+    font-weight: 500;
+  }
+
+  .setting-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .setting-text {
+    font-size: 0.875rem;
+    color: #888;
+  }
+
+  .setting-text.link {
+    color: #0072ce;
+    font-weight: 500;
+  }
+
+  .chevron {
+    width: 7px;
+    height: 12px;
+    border-right: 2px solid #bbb;
+    border-top: 2px solid #bbb;
+    transform: rotate(45deg);
+    margin-left: 6px;
+  }
+
+  /* hover & focus 효과 */
+  .setting-item:focus-within,
+  .setting-item:hover {
+    background: #f1f6fb;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+  }
+
+  a:focus {
+    outline: 2px solid #0072ce;
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<section aria-labelledby="infoTitle">
+  <h2 id="infoTitle">관리정보</h2>
+  <ul class="setting-list">
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">금융거래한도계좌 해제 신청</div>
+        <div class="setting-right">
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">이체결과조회</div>
+        <div class="setting-right">
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">거래내역 이메일/팩스 보내기</div>
+        <div class="setting-right">
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">통장사본보기</div>
+        <div class="setting-right">
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">구 계좌번호</div>
+        <div class="setting-right">
+          <span class="setting-text link">110-123-123456</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">영업점 창구 입출금</div>
+        <div class="setting-right">
+          <span class="setting-text">신청하기</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">간편앱출금</div>
+        <div class="setting-right">
+          <span class="setting-text">사용하기</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">비밀번호 변경</div>
+        <div class="setting-right">
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="setting-item">
+      <a href="#">
+        <div class="setting-title">카카오톡 전송</div>
+        <div class="setting-right">
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</section>
+
+</body>
+</html>

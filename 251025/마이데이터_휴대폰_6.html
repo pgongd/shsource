@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>이번 주 인기 검색 휴대폰</title>
+
+<!-- Swiper CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<style>
+body {
+  font-family: "Pretendard", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9fafb;
+  color: #222;
+}
+
+/* 전체 페이지 레이아웃 */
+.page {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 24px 0 80px; /* 상단 패딩 + 하단 여백 */
+}
+
+/* 제목 영역 */
+.section-header {
+  padding: 0 20px;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.section-header p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* 스와이프 영역 */
+.swiper {
+  padding-left: 20px; /* 왼쪽 여백 */
+  padding-right: 0; /* 오른쪽은 화면에 걸쳐 보이도록 */
+  overflow: visible; /* 오른쪽 반쪽 노출 */
+}
+
+.swiper-slide {
+  background: #f2f4f6;
+  border-radius: 16px;
+  width: calc((100% - 40px) / 2.5);
+  box-sizing: border-box;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.phone-title {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.phone-sub {
+  font-size: 13px;
+  color: #777;
+  margin: 2px 0 0;
+}
+
+.phone-price {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+/* 스크롤바 숨김 */
+.swiper::-webkit-scrollbar {
+  display: none;
+}
+
+/* 접근성용 포커스 표시 */
+.swiper-slide:focus {
+  outline: 2px solid #007aff;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+  <!-- 이번 주 인기 검색 휴대폰 -->
+  <section aria-labelledby="popular-title">
+    <div class="section-header">
+      <h2 id="popular-title">이번 주 인기 검색 휴대폰</h2>
+      <p>번개장터에서 제공되는 실시간 시세정보입니다.</p>
+    </div>
+
+    <div class="swiper" aria-label="인기 휴대폰 목록">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" tabindex="0" aria-label="아이폰 14 Pro 256GB 653,000원">
+          <div>
+            <p class="phone-title">아이폰 14 Pro</p>
+            <p class="phone-sub">256GB</p>
+          </div>
+          <p class="phone-price">653,000원</p>
+        </div>
+
+        <div class="swiper-slide" tabindex="0" aria-label="아이폰 14 Pro 128GB 592,000원">
+          <div>
+            <p class="phone-title">아이폰 14 Pro</p>
+            <p class="phone-sub">128GB</p>
+          </div>
+          <p class="phone-price">592,000원</p>
+        </div>
+
+        <div class="swiper-slide" tabindex="0" aria-label="갤럭시 S23 Ultra 256GB 715,000원">
+          <div>
+            <p class="phone-title">갤럭시 S23 Ultra</p>
+            <p class="phone-sub">256GB</p>
+          </div>
+          <p class="phone-price">715,000원</p>
+        </div>
+
+        <div class="swiper-slide" tabindex="0" aria-label="갤럭시 Z 플립5 512GB 832,000원">
+          <div>
+            <p class="phone-title">갤럭시 Z 플립5</p>
+            <p class="phone-sub">512GB</p>
+          </div>
+          <p class="phone-price">832,000원</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+new Swiper(".swiper", {
+  slidesPerView: 2.5,
+  spaceBetween: 12,
+  freeMode: true,
+  slidesOffsetBefore: 0,
+  slidesOffsetAfter: 0,
+});
+</script>
+</body>
+</html>

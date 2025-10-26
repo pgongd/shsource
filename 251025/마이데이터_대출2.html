@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KB able Plus 통장 상세</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    background: #f9fafb;
+    color: #111;
+  }
+  .visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    width: 1px; height: 1px;
+    overflow: hidden; white-space: nowrap;
+  }
+  header.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  .page-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .btn-back::before {
+    content: "←";
+    font-size: 18px;
+  }
+  .header-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .btn-home::before {
+    content: "🏠";
+    font-size: 18px;
+  }
+  .btn-manage {
+    color: #007aff;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 15px;
+  }
+
+  .account-info {
+    background: #fff;
+    padding: 20px 16px 24px;
+    border-bottom: 8px solid #f2f3f5;
+  }
+  .bank-info {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .bank-logo {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #ffd700; display: inline-block;
+  }
+  .account-name {
+    font-size: 16px; font-weight: 600;
+  }
+  .account-number {
+    font-size: 13px; color: #777;
+  }
+  .btn-copy::before {
+    content: "📋";
+    margin-left: 4px;
+  }
+  .balance {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 20px 0 16px;
+  }
+  .btn-transfer {
+    display: block;
+    width: 100%;
+    background: #eef5ff;
+    color: #007aff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    padding: 12px 0;
+    border-radius: 10px;
+  }
+
+  .account-links {
+    background: #fff;
+    border-bottom: 8px solid #f2f3f5;
+  }
+  .account-links ul li {
+    border-bottom: 1px solid #eee;
+  }
+  .account-links a {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    justify-content: space-between;
+  }
+  .account-links i {
+    margin-right: 10px;
+  }
+  .link-text {
+    flex: 1;
+  }
+  .link-text strong {
+    display: block;
+    font-size: 15px;
+  }
+  .link-text .desc {
+    font-size: 13px;
+    color: #777;
+  }
+
+  .transaction-filter {
+    background: #f4f5f7;
+    padding: 12px 16px;
+  }
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .filter-bar::before {
+    content: "🔍";
+    margin-right: 8px;
+  }
+  .btn-filter {
+    border: none;
+    background: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .btn-filter::after {
+    content: "⌄";
+    font-size: 12px;
+    transition: transform 0.3s;
+  }
+  .btn-filter[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+  }
+
+  .transaction-list {
+    background: #fff;
+    padding: 16px;
+  }
+  .date-title {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .transaction-list ul {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .tx-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tx-title {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .tx-amount {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .tx-amount.plus { color: #007aff; }
+  .tx-amount.minus { color: #d93025; }
+  .tx-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px;
+  }
+  .tx-detail span { flex: 1; }
+  .tx-detail .tx-balance { text-align: right; flex: 1.5; }
+
+  .btn-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 44px; height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: #007aff;
+    color: #fff;
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+<main class="account-detail" aria-labelledby="page-title">
+  <h1 id="page-title" class="visually-hidden">KB able Plus 통장 상세 페이지</h1>
+
+  <!-- 헤더 -->
+  <header class="page-header">
+    <button type="button" class="btn-back" aria-label="이전으로"></button>
+    <h2>KB able Plus 통장</h2>
+    <div class="header-right">
+      <a href="#" class="btn-home" aria-label="홈으로 이동"></a>
+      <a href="#" class="btn-manage" aria-label="계좌 관리">계좌관리</a>
+    </div>
+  </header>
+
+  <!-- 계좌 정보 -->
+  <section class="account-info">
+    <div class="bank-info">
+      <div class="bank-logo" aria-hidden="true"></div>
+      <div>
+        <strong class="account-name">KB able Plus 통장</strong>
+        <div class="account-number">
+          국민 123000456789
+          <button type="button" class="btn-copy" aria-label="계좌번호 복사"></button>
+        </div>
+      </div>
+    </div>
+
+    <p class="balance"><strong>10,000,000</strong>원</p>
+
+    <button type="button" class="btn-transfer">이체</button>
+  </section>
+
+  <!-- 링크 리스트 -->
+  <section class="account-links" aria-label="계좌 관련 메뉴">
+    <ul>
+      <li>
+        <a href="#">
+          <i aria-hidden="true">💬</i>
+          <div class="link-text">
+            <strong>대출상담 계좌 상세정보</strong>
+            <span class="desc">YYYY.MM.DD 이자 상환 예정입니다.</span>
+          </div>
+          <i aria-hidden="true">›</i>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i aria-hidden="true">🔁</i>
+          <div class="link-text">
+            <strong>자동이체 현황</strong>
+            <span class="desc">%통장% 자동이체 설정 중이에요.</span>
+          </div>
+          <i aria-hidden="true">›</i>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i aria-hidden="true">📊</i>
+          <div class="link-text">
+            <strong>가계부로 소비 현황을 확인해 보세요.</strong>
+          </div>
+          <i aria-hidden="true">›</i>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 필터 -->
+  <section class="transaction-filter" aria-label="거래 내역 검색 및 정렬">
+    <div class="filter-bar">
+      <span aria-hidden="true"></span>
+      <button type="button" class="btn-filter" aria-expanded="false" aria-label="기간 및 정렬 옵션 열기">
+        1개월 ∙ 전체 ∙ 최신순
+      </button>
+    </div>
+  </section>
+
+  <!-- 거래 리스트 -->
+  <section class="transaction-list" aria-label="거래 내역">
+    <h3 class="date-title">9월 1일</h3>
+    <ul>
+      <li>
+        <div class="tx-row">
+          <strong class="tx-title">%통장 메모%</strong>
+          <span class="tx-amount plus" aria-label="입금 금액">+503,000원</span>
+        </div>
+        <div class="tx-detail">
+          <span class="tx-time">hh:mm:ss</span>
+          <span class="tx-type">%거래구분%</span>
+          <span class="tx-count">%납입회차%</span>
+          <span class="tx-balance">999,999,999원</span>
+        </div>
+      </li>
+    </ul>
+
+    <h3 class="date-title">8월 23일</h3>
+    <ul>
+      <li>
+        <div class="tx-row">
+          <strong class="tx-title">%통장 메모%</strong>
+          <span class="tx-amount minus" aria-label="출금 금액">-500,000원</span>
+        </div>
+        <div class="tx-detail">
+          <span class="tx-time">hh:mm:ss</span>
+          <span class="tx-type">%거래구분%</span>
+          <span class="tx-count">%납입회차%</span>
+          <span class="tx-balance">999,999,999원</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 상단 이동 -->
+  <button type="button" class="btn-top" aria-label="상단으로 이동">↑</button>
+</main>
+
+<script>
+  const btnFilter = document.querySelector('.btn-filter');
+  btnFilter.addEventListener('click', () => {
+    const expanded = btnFilter.getAttribute('aria-expanded') === 'true';
+    btnFilter.setAttribute('aria-expanded', !expanded);
+  });
+
+  const btnTop = document.querySelector('.btn-top');
+  btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

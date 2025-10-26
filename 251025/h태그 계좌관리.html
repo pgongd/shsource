@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>계좌 상세 페이지</title>
+<style>
+  body {
+    font-family: "Apple SD Gothic Neo", sans-serif;
+    background: #f5f6fa;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .account-header {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 12px;
+  }
+
+  .account-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+  }
+
+  .account-info {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .accordion {
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .accordion h3 {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .accordion button {
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    border: none;
+    background: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .accordion button:focus {
+    outline: 2px solid #6570ff;
+    outline-offset: -2px;
+  }
+
+  .accordion .panel {
+    display: none;
+    padding: 0 16px 16px;
+    font-size: 14px;
+    color: #444;
+  }
+
+  .accordion .panel.active {
+    display: block;
+  }
+
+  .list-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .list-section h3 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+  }
+
+  ul.link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul.link-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  ul.link-list li:last-child {
+    border-bottom: none;
+  }
+
+  ul.link-list a {
+    text-decoration: none;
+    color: #222;
+    font-size: 14px;
+  }
+
+  ul.link-list .badge {
+    font-size: 12px;
+    color: #6570ff;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="sr-only">계좌 상세 페이지</h1>
+
+<section class="account-header" role="region" aria-label="계좌 기본 정보">
+  <h2 class="account-title">
+    쏠편한입출금통장
+    <span style="font-size:14px; color:#6570ff;">활성화</span>
+  </h2>
+  <p class="account-info">계좌번호 110-000-123456</p>
+</section>
+
+<section class="accordion" role="region" aria-label="상세 정보 아코디언">
+  <h3><button aria-expanded="false">운영 현황 추이</button></h3>
+  <div class="panel">운영 현황 관련 내용이 표시됩니다.</div>
+
+  <h3><button aria-expanded="false">잔액정보</button></h3>
+  <div class="panel">현재 잔액 및 거래 내역이 표시됩니다.</div>
+
+  <h3><button aria-expanded="false">이체정보</button></h3>
+  <div class="panel">최근 이체 내역이 표시됩니다.</div>
+
+  <h3><button aria-expanded="false">계좌 간소화</button></h3>
+  <div class="panel">계좌 설정 관련 내용이 표시됩니다.</div>
+</section>
+
+<section class="list-section" role="region" aria-label="관련 메뉴">
+  <h3>관련 메뉴</h3>
+  <ul class="link-list">
+    <li><a href="#">메뉴리스트</a></li>
+    <li><a href="#">메뉴리스트</a></li>
+    <li><a href="#">메뉴리스트 <span class="badge">NEW</span></a></li>
+    <li><a href="#">메뉴리스트</a></li>
+  </ul>
+</section>
+
+<section class="list-section" role="region" aria-label="연관 서비스">
+  <h3>연관 서비스</h3>
+  <ul class="link-list">
+    <li><a href="#">메뉴리스트</a></li>
+    <li><a href="#">메뉴리스트</a></li>
+    <li><a href="#">메뉴리스트 <span class="badge">공지</span></a></li>
+    <li><a href="#">메뉴리스트</a></li>
+  </ul>
+</section>
+
+<script>
+  // 접근성 준수 아코디언 스크립트
+  const buttons = document.querySelectorAll('.accordion button');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+
+      const panel = btn.parentElement.nextElementSibling;
+      document.querySelectorAll('.accordion .panel').forEach(p => p.classList.remove('active'));
+      if (!expanded) panel.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

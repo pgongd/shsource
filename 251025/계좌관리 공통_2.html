@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>청약정보 아코디언</title>
+<style>
+  body {
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+    background: #f8f9fa;
+    margin: 20px;
+  }
+
+  .accordion {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px;
+    background: #fff;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .accordion-header[aria-expanded="true"] {
+    border-bottom: 1px solid #eee;
+  }
+
+  .accordion-icon {
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+  }
+
+  .accordion-header[aria-expanded="true"] .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion-content {
+    display: none;
+    padding: 16px;
+  }
+
+  .accordion-content[aria-hidden="false"] {
+    display: block;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .info-label {
+    color: #333;
+    font-weight: 500;
+  }
+
+  .info-value {
+    color: #0072ce;
+    font-weight: 600;
+  }
+
+  .gray-box {
+    background: #f2f4f6;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+  }
+
+  .gray-box h3 {
+    font-size: 0.95rem;
+    margin: 0 0 12px;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .gray-box ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gray-box li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9375rem;
+  }
+
+  .gray-box li:last-child {
+    margin-bottom: 0;
+  }
+
+  .gray-box .label {
+    color: #555;
+  }
+
+  .gray-box .value {
+    color: #222;
+    font-weight: 500;
+  }
+
+  .note {
+    font-size: 0.8125rem;
+    color: #777;
+    margin-top: 12px;
+  }
+
+  .warn {
+    font-size: 0.8125rem;
+    color: #d22;
+    margin-top: 6px;
+  }
+
+  /* focus style */
+  .accordion-header:focus {
+    outline: 2px solid #0072ce;
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<section class="accordion" aria-labelledby="accTitle">
+  <h2 id="accTitle" class="sr-only">청약정보</h2>
+  <button class="accordion-header" aria-expanded="true" aria-controls="panel1" id="accordion1">
+    청약정보
+    <span class="accordion-icon" aria-hidden="true">⌃</span>
+  </button>
+
+  <div id="panel1" class="accordion-content" role="region" aria-labelledby="accordion1" aria-hidden="false">
+    <div class="info-row">
+      <span class="info-label">청약납입회차</span>
+      <span class="info-value">32회</span>
+    </div>
+
+    <div class="gray-box">
+      <h3>청약 지역별 순위 정보 안내</h3>
+      <ul>
+        <li><span class="label">청약지역명</span><span class="value">서울</span></li>
+        <li><span class="label">순위기산일</span><span class="value">YYYY.MM.DD</span></li>
+        <li><span class="label">청약가능최대평형</span><span class="value">85㎡ 이하</span></li>
+        <li><span class="label">민영주택 1순위 발생일</span><span class="value">YYYY.MM.DD</span></li>
+        <li><span class="label">국민주택 1순위 발생일</span><span class="value">YYYY.MM.DD</span></li>
+        <li><span class="label">국민주택 납입인정 회차</span><span class="value">28회</span></li>
+        <li><span class="label">국민주택 납입인정 금액</span><span class="value">1,234,000원</span></li>
+      </ul>
+    </div>
+
+    <p class="note">* 1순위 정보는 “12개월” 기준으로 산출되었습니다.</p>
+    <p class="warn">* 조정대상지역 및 투기과열지구 1순위는 24개월이 적용됨에 유의!</p>
+  </div>
+</section>
+
+<script>
+  // 접근성 대응 아코디언 스크립트
+  const accordionBtn = document.querySelector('.accordion-header');
+  const panel = document.querySelector('.accordion-content');
+
+  accordionBtn.addEventListener('click', () => {
+    const expanded = accordionBtn.getAttribute('aria-expanded') === 'true';
+    accordionBtn.setAttribute('aria-expanded', !expanded);
+    panel.setAttribute('aria-hidden', expanded);
+  });
+</script>
+
+</body>
+</html>

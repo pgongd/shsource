@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시세 및 인기 검색 휴대폰</title>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<style>
+  body {
+    font-family: "Apple SD Gothic Neo", sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f7f9fc;
+    color: #111;
+  }
+
+  h1, h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* 시세 영역 */
+  .price-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+
+  .chart-area {
+    height: 160px;
+    background: linear-gradient(to bottom, #f9fbff 0%, #f2f5fa 100%);
+    border-radius: 8px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8fa3bf;
+    font-size: 0.875rem;
+  }
+
+  .expand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    border: 1px solid #d0d7e2;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+  }
+  .expand-btn svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    transition: transform 0.3s;
+  }
+  .expand-btn[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #e2e6ec;
+    margin: 24px 0;
+  }
+
+  /* 인기 검색 휴대폰 */
+  .popular-section h2 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .popular-section p {
+    font-size: 0.875rem;
+    color: #6c7a89;
+    margin-bottom: 12px;
+  }
+
+  .swiper {
+    padding-bottom: 12px;
+  }
+
+  .swiper-slide {
+    background: #f3f5f9;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+    min-width: 150px;
+  }
+
+  .phone-card h3 {
+    font-size: 0.875rem;
+    color: #555;
+    margin: 0 0 4px 0;
+  }
+  .phone-card p {
+    font-size: 0.8125rem;
+    color: #888;
+    margin: 0 0 8px 0;
+  }
+  .phone-card strong {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* 배너 */
+  .banner {
+    margin-top: 24px;
+    background: #1f2937;
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .banner-text {
+    flex: 1;
+  }
+  .banner small {
+    display: block;
+    font-size: 0.75rem;
+    color: #a0aec0;
+    margin-bottom: 4px;
+  }
+  .banner strong {
+    font-size: 1rem;
+    display: block;
+    line-height: 1.4;
+  }
+  .banner img {
+    width: 60px;
+    height: auto;
+    margin-left: 8px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+</style>
+</head>
+<body>
+  <main>
+    <!-- 시세 영역 -->
+    <section class="price-section" aria-labelledby="section-price-title">
+      <h1 id="section-price-title">시세</h1>
+
+      <div class="chart-area" role="img" aria-label="최근 일주일간 시세 변동 차트">차트 영역</div>
+
+      <button class="expand-btn" aria-expanded="false" aria-controls="data-table">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+        데이터 테이블 펼치기
+      </button>
+    </section>
+
+    <hr aria-hidden="true">
+
+    <!-- 인기 검색 휴대폰 -->
+    <section class="popular-section" aria-labelledby="section-popular-title">
+      <h2 id="section-popular-title">이번 주 인기 검색 휴대폰</h2>
+      <p>번개장터에서 제공되는 실시간 시세정보입니다.</p>
+
+      <div class="swiper" aria-label="인기 검색 휴대폰 목록">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide phone-card" role="group" aria-label="1 / 4">
+            <h3>아이폰 14 Pro</h3>
+            <p>256GB</p>
+            <strong>653,000원</strong>
+          </div>
+          <div class="swiper-slide phone-card" role="group" aria-label="2 / 4">
+            <h3>아이폰 14 Pro</h3>
+            <p>128GB</p>
+            <strong>592,000원</strong>
+          </div>
+          <div class="swiper-slide phone-card" role="group" aria-label="3 / 4">
+            <h3>갤럭시 Z 플립 5</h3>
+            <p>512GB</p>
+            <strong>789,000원</strong>
+          </div>
+          <div class="swiper-slide phone-card" role="group" aria-label="4 / 4">
+            <h3>갤럭시 S23 울트라</h3>
+            <p>256GB</p>
+            <strong>845,000원</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 배너 -->
+    <section class="banner" aria-label="시세 조회 배너">
+      <div class="banner-text">
+        <small>번개장터</small>
+        <strong>시세 조회한 휴대폰<br>판매하고 싶다면?</strong>
+      </div>
+      <img src="https://cdn-icons-png.flaticon.com/512/2830/2830345.png" alt="">
+    </section>
+  </main>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    // Swiper 초기화
+    const swiper = new Swiper('.swiper', {
+      slidesPerView: 2.5,
+      spaceBetween: 12,
+      grabCursor: true,
+      keyboard: {
+        enabled: true,
+      },
+      a11y: {
+        prevSlideMessage: '이전 휴대폰 보기',
+        nextSlideMessage: '다음 휴대폰 보기',
+      },
+    });
+
+    // 버튼 애니메이션 (데이터 테이블 펼치기)
+    const btn = document.querySelector('.expand-btn');
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+    });
+  </script>
+</body>
+</html>
