@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>필터바 영역 퍼블리싱 예시</title>
+<style>
+body {
+  background-color: #4a5568;
+  font-family: "Noto Sans KR", sans-serif;
+  margin: 0;
+  padding: 24px;
+  color: #111;
+}
+
+/* 개별 필터 영역 */
+.filter-section {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* 왼쪽: 검색영역 */
+.filter-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+/* 오른쪽: 조건버튼(셀렉트 역할) */
+.filter-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f3f4f6;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #111;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: none;
+}
+
+.filter-select svg {
+  width: 14px;
+  height: 14px;
+  fill: #666;
+}
+
+/* 검색 버튼 */
+.filter-search {
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.filter-search svg {
+  width: 20px;
+  height: 20px;
+  fill: #666;
+}
+
+/* 캡슐형 검색결과 */
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 16px;
+  background-color: #e9f3ff;
+  color: #0066cc;
+  padding: 4px 10px;
+  font-size: 14px;
+}
+
+.filter-tag button {
+  background: none;
+  border: none;
+  margin-left: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.filter-tag button svg {
+  width: 12px;
+  height: 12px;
+  fill: #0066cc;
+}
+
+/* 제목 */
+.filter-title {
+  color: #fff;
+  font-weight: 500;
+  margin: 16px 0 8px;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<h2 class="filter-title">기본</h2>
+<div class="filter-section">
+  <div class="filter-left">
+    <button type="button" class="filter-search" aria-label="검색">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.48-5.34C15.24 5.59 12.4 3 9 3S2.76 5.59 2.09 8.39a6.5 6.5 0 0 0 10.33 6.17l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9 14a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+    </button>
+  </div>
+  <button type="button" class="filter-select" aria-label="조회 조건 선택">
+    1개월 · 전체 · 최신순
+    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+  </button>
+</div>
+
+<h2 class="filter-title">임의 날짜 설정 시</h2>
+<div class="filter-section">
+  <div class="filter-left">
+    <button type="button" class="filter-search" aria-label="검색">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.48-5.34C15.24 5.59 12.4 3 9 3S2.76 5.59 2.09 8.39a6.5 6.5 0 0 0 10.33 6.17l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9 14a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+    </button>
+  </div>
+  <button type="button" class="filter-select" aria-label="조회 조건 선택">
+    2025.10.06 ~ 2025.10.31 · 전체 · 최신순
+    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+  </button>
+</div>
+
+<h2 class="filter-title">검색 결과 노출</h2>
+<div class="filter-section">
+  <div class="filter-left">
+    <button type="button" class="filter-search" aria-label="검색">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.48-5.34C15.24 5.59 12.4 3 9 3S2.76 5.59 2.09 8.39a6.5 6.5 0 0 0 10.33 6.17l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9 14a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+    </button>
+    <span class="filter-tag">KODEX100
+      <button type="button" aria-label="KODEX100 제거">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </span>
+    <span class="filter-tag">TIGER미국…나스닥
+      <button type="button" aria-label="TIGER미국 나스닥 제거">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </span>
+  </div>
+  <button type="button" class="filter-select" aria-label="조회 조건 선택">
+    1개월 · 전체 · 최신순
+    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+  </button>
+</div>
+
+<h2 class="filter-title">검색 기능 미제공</h2>
+<div class="filter-section">
+  <div class="filter-left"></div>
+  <button type="button" class="filter-select" aria-label="조회 조건 선택">
+    2025.09.01 ~ 2025.09.30 · 전체 · 최신순
+    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+  </button>
+</div>
+
+</body>
+</html>

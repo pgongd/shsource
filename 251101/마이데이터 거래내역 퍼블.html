@@ -1,0 +1,280 @@
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>거래내역 접근성 예시</title>
+<style>
+  :root{--bg:#f9fafc;--card:#fff;--muted:#6b7280;--line:#e5e7eb;--accent:#007aff;--danger:#e11d48;}
+  html,body{height:100%}
+  body{
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans KR",sans-serif;
+    margin:0;padding:20px;background:var(--bg);color:#111;line-height:1.45;
+  }
+  .visually-hidden{
+    position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+
+/* 날짜 헤더 */
+.date-group{margin-top:28px}
+.date-title{font-weight:700;color:#374151;margin:0 0 10px 0;font-size:15px}
+
+/* 리스트 */
+.transactions{border-top:1px solid var(--line);padding-top:10px;list-style:none;margin:0}
+.transaction{background:var(--card);border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(2,6,23,0.04)}
+.tx-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.tx-title{font-weight:700;color:#111}
+.tx-amount{font-weight:800}
+.tx-amount.plus{color:var(--accent)}
+.tx-amount.minus{color:var(--danger)}
+.tx-amount.canceled del{color:#6b7280;text-decoration:line-through}
+
+/* 서브정보 라인 (시간, 타입 등) */
+.tx-sub{
+margin-top:8px;font-size:13px;color:var(--muted);
+display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+.tx-sub .left{display:flex;gap:8px;flex-wrap:wrap}
+.tx-sub .pill{padding:2px 6px;border-radius:6px;background:rgba(0,0,0,0.03);font-size:12px;color:#475569}
+
+/* 항목 행 */
+.tx-field{display:flex;justify-content:space-between;align-items:flex-start;margin-top:8px;font-size:14px}
+.tx-field .label{color:#4b5563}
+.tx-field .value{color:#111}
+.tx-field .value.link a{color:var(--accent);text-decoration:underline}
+.tx-field .value.gray{color:#9ca3af}
+
+/* 버튼 */
+.tx-action{margin-top:10px}
+.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:1px solid #d1d5db;background:#fff;font-size:14px;cursor:pointer}
+
+/* 상세 보더 박스 (복수 가능) */
+.detail-box{margin-top:10px;padding:12px;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:14px}
+.detail-row .label{color:#475569}
+.detail-row .value{font-weight:600}
+.detail-row .value.blue{color:var(--accent)}
+.detail-row + .detail-row{border-top:1px dashed rgba(0,0,0,0.04)}
+
+/* 섹션 분리선 */
+.section-sep{height:1px;background:var(--line);margin:18px 0;border-radius:2px}
+
+/* 반응형 작은 화면에서 여백 줄임 */
+@media (max-width:480px){
+body{padding:12px}
+.tx-field{font-size:13px}
+.detail-row{font-size:13px}
+} </style>
+
+</head>
+<body>
+  <h1 class="visually-hidden">거래내역 예시 페이지</h1>
+
+  <!-- =============== 날짜 그룹 1 =============== -->
+
+  <section class="date-group" aria-labelledby="date-1">
+    <h2 id="date-1" class="date-title">9월 1일</h2>
+
+```
+<ul class="transactions" role="list" aria-label="9월 1일 거래내역 목록">
+  <!-- 거래: 기본 (서브정보 1개, 링크, 버튼, 증가) -->
+  <li class="transaction" role="listitem" aria-labelledby="tx1-title" aria-describedby="tx1-desc">
+    <div class="tx-header">
+      <div>
+        <div id="tx1-title" class="tx-title">입금 연관 거래건%</div>
+        <div id="tx1-desc" class="tx-sub">
+          <div class="left">
+            <span class="pill">%이름%</span>
+            <span class="pill">hh:mm:ss</span>
+          </div>
+          <div class="right" aria-hidden="true" style="color:#94a3b8">잔액 USD 1,000.00</div>
+        </div>
+      </div>
+      <div class="tx-amount plus" aria-label="금액 플러스 100,000원">+ 100,000원</div>
+    </div>
+
+    <!-- 가변 항목들: 0개 이상 가능 (여기서는 2개: 하나 일반, 하나 링크) -->
+    <div class="tx-field" role="group" aria-label="항목 목록">
+      <div class="label">항목명1</div>
+      <div class="value">항목값단위%</div>
+    </div>
+    <div class="tx-field">
+      <div class="label">항목명2</div>
+      <div class="value link"><a href="#" onclick="event.preventDefault()">항목값단위%</a></div>
+    </div>
+
+    <!-- 버튼 예시 -->
+    <div class="tx-action">
+      <button type="button" class="btn" aria-label="상세보기 버튼">상세보기</button>
+    </div>
+  </li>
+
+  <!-- 거래: 서브정보 없음, 왼쪽 라벨만 있는 경우, 금액 취소선 (정정) -->
+  <li class="transaction" role="listitem" aria-labelledby="tx2-title" aria-describedby="tx2-desc">
+    <div class="tx-header">
+      <div>
+        <div id="tx2-title" class="tx-title">정정 처리된 거래</div>
+        <!-- 의도적으로 서브정보 없음 (스크린리더는 바로 제목-금액으로 이동) -->
+      </div>
+      <div class="tx-amount canceled" aria-label="금액 정정 취소선 50,000원"><del>50,000원</del></div>
+    </div>
+
+    <!-- 왼쪽 값이 없는 라인 예제 (label만 있음) -->
+    <div class="tx-field">
+      <div class="label">메모</div>
+      <div class="value gray">-</div>
+    </div>
+  </li>
+
+  <!-- 거래: 여러 서브정보 (3개), 금액 감소 색 -->
+  <li class="transaction" role="listitem" aria-labelledby="tx3-title" aria-describedby="tx3-desc">
+    <div class="tx-header">
+      <div>
+        <div id="tx3-title" class="tx-title">%입금 연관 거래2%</div>
+        <div id="tx3-desc" class="tx-sub">
+          <div class="left">
+            <span class="pill">타입A</span>
+            <span class="pill">2023-09-01</span>
+            <span class="pill">12:34:56</span>
+          </div>
+          <div class="right" style="color:#94a3b8">잔액 200,000원</div>
+        </div>
+      </div>
+      <div class="tx-amount minus" aria-label="감소 20,000원">- 20,000원</div>
+    </div>
+
+    <div class="tx-field">
+      <div class="label">항목명A</div>
+      <div class="value">값A</div>
+    </div>
+
+    <div class="tx-field">
+      <div class="label">항목명B</div>
+      <div class="value gray">값B (회색)</div>
+    </div>
+  </li>
+</ul>
+```
+
+  </section>
+
+  <div class="section-sep" role="separator" aria-hidden="true"></div>
+
+  <!-- =============== 날짜 그룹 2 (주식 매수/매도 케이스) =============== -->
+
+  <section class="date-group" aria-labelledby="date-2">
+    <h2 id="date-2" class="date-title">2025년 12월 27일</h2>
+
+```
+<ul class="transactions" role="list" aria-label="2025년 12월 27일 거래내역 목록">
+  <!-- 매수 -->
+  <li class="transaction" role="listitem" aria-labelledby="tx4-title">
+    <div class="tx-header">
+      <div>
+        <div id="tx4-title" class="tx-title">KODEX 미국S&amp;P500 — 매수</div>
+        <div class="tx-sub">
+          <div class="left">
+            <span class="pill">종목코드 1100</span>
+            <span class="pill">체결(1주)</span>
+          </div>
+          <div class="right" style="color:#94a3b8">잔액 999,999,999원</div>
+        </div>
+      </div>
+      <div class="tx-amount minus" aria-label="거래금액 475,000원">475,000원</div>
+    </div>
+
+    <div class="tx-field"><div class="label">거래점(1100)</div><div class="value">999,999,999원</div></div>
+    <div class="tx-field"><div class="label">거래개수</div><div class="value">7주 · 1주당 12,800원</div></div>
+    <div class="tx-field"><div class="label">수수료</div><div class="value gray">30원</div></div>
+    <div class="tx-field"><div class="label">보유수량</div><div class="value">4주</div></div>
+  </li>
+
+  <!-- 매도 (취소선 적용 예시) -->
+  <li class="transaction" role="listitem" aria-labelledby="tx5-title">
+    <div class="tx-header">
+      <div>
+        <div id="tx5-title" class="tx-title">KODEX 미국S&amp;P500 — 매도</div>
+      </div>
+      <div class="tx-amount plus" aria-label="거래금액 475,000원">475,000원</div>
+    </div>
+
+    <div class="tx-field"><div class="label">거래점(1100)</div><div class="value">999,999,999원</div></div>
+    <div class="tx-field"><div class="label">보유수량</div><div class="value">4주</div></div>
+  </li>
+</ul>
+```
+
+  </section>
+
+  <div class="section-sep" role="separator" aria-hidden="true"></div>
+
+  <!-- =============== 날짜 그룹 3 (이자 수입, 상세 박스 다수) =============== -->
+
+  <section class="date-group" aria-labelledby="date-3">
+    <h2 id="date-3" class="date-title">9월 1일</h2>
+
+```
+<ul class="transactions" role="list" aria-label="9월 1일 추가 거래내역 목록">
+  <!-- 이자수입: 상세 보더 박스 2개 (복수), 값 강조 색상 -->
+  <li class="transaction" role="listitem" aria-labelledby="tx6-title">
+    <div class="tx-header">
+      <div>
+        <div id="tx6-title" class="tx-title">이자수입</div>
+        <div class="tx-sub">
+          <div class="left"><span class="pill">정기이자</span><span class="pill">발생일 2026-09-01</span></div>
+          <div class="right" style="color:#94a3b8">누적잔액 999,999,999원</div>
+        </div>
+      </div>
+      <div class="tx-amount plus" aria-label="금액 플러스 503,000원">+ 503,000원</div>
+    </div>
+
+    <div class="tx-field"><div class="label">원금</div><div class="value">400,000원</div></div>
+    <div class="tx-field"><div class="label">이자</div><div class="value">103,000원</div></div>
+
+    <!-- 상세 박스 1 -->
+    <div class="detail-box" role="group" aria-label="이자 세부정보 1">
+      <div class="detail-row"><div class="label">이자종류</div><div class="value">약정이자</div></div>
+      <div class="detail-row"><div class="label">이자</div><div class="value blue">103,000원</div></div>
+      <div class="detail-row"><div class="label">이자기간</div><div class="value">2020.06.10 ~ 2030.06.09</div></div>
+      <div class="detail-row"><div class="label">금리</div><div class="value blue">8.55%</div></div>
+    </div>
+
+    <!-- 상세 박스 2 (다른 형식의 정보 포함) -->
+    <div class="detail-box" role="group" aria-label="이자 세부정보 2">
+      <div class="detail-row"><div class="label">이자종류</div><div class="value">약정이자</div></div>
+      <div class="detail-row"><div class="label">이자</div><div class="value blue">103,000원</div></div>
+      <div class="detail-row"><div class="label">금리</div><div class="value">8.55%</div></div>
+    </div>
+  </li>
+
+  <!-- 다른 날짜의 이자수입 (중복 케이스) -->
+  <li class="transaction" role="listitem" aria-labelledby="tx7-title">
+    <div class="tx-header">
+      <div>
+        <div id="tx7-title" class="tx-title">이자수입</div>
+        <div class="tx-sub">
+          <div class="left"><span class="pill">정기이자</span></div>
+          <div class="right" style="color:#94a3b8">누적잔액 999,999,999원</div>
+        </div>
+      </div>
+      <div class="tx-amount plus" aria-label="금액 플러스 503,000원">+ 503,000원</div>
+    </div>
+
+    <div class="tx-field"><div class="label">원금</div><div class="value">400,000원</div></div>
+    <div class="tx-field"><div class="label">이자</div><div class="value">103,000원</div></div>
+
+  </li>
+</ul>
+<ul class="transactions" role="list" aria-label="2025년 12월 27일 거래내역 목록"> <!-- 매수 --> <li class="transaction" role="listitem" aria-labelledby="tx4-title"> <div class="tx-header"> <div> <div id="tx4-title" class="tx-title">KODEX 미국S&amp;P500 — 매수</div> <div class="tx-sub"> <div class="left"> <span class="pill">종목코드 1100</span> <span class="pill">체결(1주)</span> </div> <div class="right" style="color:#94a3b8">잔액 999,999,999원</div> </div> </div> <div class="tx-amount minus" aria-label="거래금액 475,000원">475,000원</div> </div> <div class="tx-field"><div class="label">거래점(1100)</div><div class="value">999,999,999원</div></div> <div class="tx-field"><div class="label">거래개수</div><div class="value">7주 · 1주당 12,800원</div></div> <div class="tx-field"><div class="label">수수료</div><div class="value gray">30원</div></div> <div class="tx-field"><div class="label">보유수량</div><div class="value">4주</div></div> </li> <!-- 매도 (취소선 적용 예시) --> <li class="transaction" role="listitem" aria-labelledby="tx5-title"> <div class="tx-header"> <div> <div id="tx5-title" class="tx-title">KODEX 미국S&amp;P500 — 매도</div> </div> <div class="tx-amount plus" aria-label="거래금액 475,000원">475,000원</div> </div> <div class="tx-field"><div class="label">거래점(1100)</div><div class="value">999,999,999원</div></div> <div class="tx-field"><div class="label">보유수량</div><div class="value">4주</div></div> </li> </ul>
+<ul class="transactions" role="list" aria-label="9월 1일 추가 거래내역 목록"> <!-- 이자수입: 상세 보더 박스 2개 (복수), 값 강조 색상 --> <li class="transaction" role="listitem" aria-labelledby="tx6-title"> <div class="tx-header"> <div> <div id="tx6-title" class="tx-title">이자수입</div> <div class="tx-sub"> <div class="left"><span class="pill">정기이자</span><span class="pill">발생일 2026-09-01</span></div> <div class="right" style="color:#94a3b8">누적잔액 999,999,999원</div> </div> </div> <div class="tx-amount plus" aria-label="금액 플러스 503,000원">+ 503,000원</div> </div> <div class="tx-field"><div class="label">원금</div><div class="value">400,000원</div></div> <div class="tx-field"><div class="label">이자</div><div class="value">103,000원</div></div> <!-- 상세 박스 1 --> <div class="detail-box" role="group" aria-label="이자 세부정보 1"> <div class="detail-row"><div class="label">이자종류</div><div class="value">약정이자</div></div> <div class="detail-row"><div class="label">이자</div><div class="value blue">103,000원</div></div> <div class="detail-row"><div class="label">이자기간</div><div class="value">2020.06.10 ~ 2030.06.09</div></div> <div class="detail-row"><div class="label">금리</div><div class="value blue">8.55%</div></div> </div> <!-- 상세 박스 2 (다른 형식의 정보 포함) --> <div class="detail-box" role="group" aria-label="이자 세부정보 2"> <div class="detail-row"><div class="label">이자종류</div><div class="value">약정이자</div></div> <div class="detail-row"><div class="label">이자</div><div class="value blue">103,000원</div></div> <div class="detail-row"><div class="label">금리</div><div class="value">8.55%</div></div> </div> </li> <!-- 다른 날짜의 이자수입 (중복 케이스) --> <li class="transaction" role="listitem" aria-labelledby="tx7-title"> <div class="tx-header"> <div> <div id="tx7-title" class="tx-title">이자수입</div> <div class="tx-sub"> <div class="left"><span class="pill">정기이자</span></div> <div class="right" style="color:#94a3b8">누적잔액 999,999,999원</div> </div> </div> <div class="tx-amount plus" aria-label="금액 플러스 503,000원">+ 503,000원</div> </div> <div class="tx-field"><div class="label">원금</div><div class="value">400,000원</div></div> <div class="tx-field"><div class="label">이자</div><div class="value">103,000원</div></div> </li> </ul>
+  </section>
+
+  <script>
+    // 데모: 키보드 접근성 테스트를 돕는 간단한 포커스 스타일(개발용)
+    document.querySelectorAll('.btn, a').forEach(el=>{
+      el.addEventListener('focus', ()=> el.style.outline='3px solid #bfe4ff');
+      el.addEventListener('blur', ()=> el.style.outline='none');
+    });
+  </script>
+
+</body>
+</html>

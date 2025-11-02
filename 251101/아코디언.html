@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>아코디언 예시</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f7f8fa;
+    padding: 40px;
+  }
+
+  .toggle-box {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .toggle-btn {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    text-align: left;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .toggle-btn.on {
+    background: #0a6bff;
+    color: #fff;
+  }
+
+  .toggle-content {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: height 0.3s ease, opacity 0.3s ease;
+  }
+
+  .toggle-content-inner {
+    padding: 16px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="toggle-box">
+  <button type="button" class="toggle-btn" aria-expanded="false">토글 열기</button>
+  <div class="toggle-content">
+    <div class="toggle-content-inner">
+      토글되는 영역입니다.<br />
+      애니메이션이 자연스럽게 작동해야 합니다.<br />
+      열리고 닫힐 때 부드럽게 전환됩니다.<br />
+      접근성도 고려되어 있습니다.
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const box = document.querySelector(".toggle-box");
+  const button = box.querySelector(".toggle-btn");
+  const content = box.querySelector(".toggle-content");
+
+  if (!box || !button || !content) return;
+
+  function openPanel() {
+    box.classList.add("is-open");
+    button.classList.add("on");
+    button.setAttribute("aria-expanded", "true");
+
+    // 현재 콘텐츠 높이 계산 후 px 단위로 설정
+    const contentHeight = content.scrollHeight + "px";
+    content.style.height = contentHeight;
+    content.style.opacity = "1";
+  }
+
+  function closePanel() {
+    box.classList.remove("is-open");
+    button.classList.remove("on");
+    button.setAttribute("aria-expanded", "false");
+
+    // 높이를 고정한 뒤 -> 강제로 리플로우 -> 0px로 줄이기 (부드럽게 닫힘)
+    content.style.height = content.scrollHeight + "px";
+    void content.offsetHeight; // 강제 리플로우
+    content.style.height = "0px";
+    content.style.opacity = "0";
+  }
+
+  function isOpen() {
+    return box.classList.contains("is-open");
+  }
+
+  // transition 종료 후 auto 복원
+  content.addEventListener("transitionend", (e) => {
+    if (e.propertyName !== "height") return;
+    if (isOpen()) {
+      content.style.height = "auto"; // 열린 상태에서 height auto로 변경 (자연스러운 확장)
+    }
+  });
+
+  // 초기 상태
+  content.style.height = "0px";
+  button.setAttribute("aria-expanded", "false");
+
+  // 버튼 클릭 이벤트
+  button.addEventListener("click", () => {
+    if (isOpen()) {
+      closePanel();
+    } else {
+      // auto → px 전환을 위해 초기화
+      content.style.height = "0px";
+      void content.offsetHeight; // 리플로우
+      openPanel();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
