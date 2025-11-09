@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>체크 아이콘 예시</title>
+<style>
+body {
+  background: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  height: 100vh;
+}
+
+.check-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ✅ 파란 배경 + 흰색 체크 */
+.check-circle.blue {
+  background: #0076ff;
+}
+.check-circle.blue::before {
+  content: "";
+  width: 28px;
+  height: 14px;
+  border-left: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  transform: rotate(-45deg);
+}
+
+/* ⚪ 회색 점선 + 회색 체크 */
+.check-circle.gray {
+  background: #fff;
+  border: 3px dashed #c5c9d2;
+}
+.check-circle.gray::before {
+  content: "";
+  width: 28px;
+  height: 14px;
+  border-left: 4px solid #8b95a1;
+  border-bottom: 4px solid #8b95a1;
+  transform: rotate(-45deg);
+}
+</style>
+</head>
+<body>
+  <div class="check-circle blue" aria-label="포인트 받음"></div>
+  <div class="check-circle blue" aria-label="포인트 받음"></div>
+  <div class="check-circle gray" aria-label="포인트 미획득"></div>
+</body>
+</html>

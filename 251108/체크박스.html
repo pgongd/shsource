@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정확한 체크 아이콘</title>
+<style>
+body {
+  background: #0076ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* 파란 원형 배경 */
+.check-circle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0076ff;
+}
+
+/* 체크 마크 */
+.check-circle::before {
+  content: "";
+  position: absolute;
+  width: 16.65px;
+  height: 12.34px;
+  border-left: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  transform: rotate(-45deg);
+  top: 14.38px;
+  left: 11.67px;
+}
+</style>
+</head>
+<body>
+  <div class="check-circle" aria-label="체크됨"></div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>포인트 지급 안내</title>
+<style>
+:root {
+  --blue:#0076ff;
+  --gray:#d1d5db;
+  --text-gray:#6b7280;
+  --border-gray:#e5e7eb;
+  --bg:#f9fafb;
+  --gradient:linear-gradient(90deg, #00b4ff, #0076ff);
+}
+
+body {
+  font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.point-box {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--border-gray);
+  padding: 24px 20px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.point-title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.point-title .blue {
+  color: var(--blue);
+}
+
+.point-desc {
+  font-size: 14px;
+  color: var(--text-gray);
+  margin-bottom: 16px;
+}
+
+.day-progress {
+  border: 1px solid var(--gray);
+  border-radius: 12px;
+  padding: 16px 12px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.day-item {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.day-item span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-gray);
+  margin-bottom: 6px;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 2px solid var(--gray);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle::before {
+  content: "✔";
+  color: var(--gray);
+  font-size: 16px;
+}
+
+/* 받은 날 */
+.circle.checked {
+  background: var(--blue);
+  border: none;
+  color: #fff;
+}
+.circle.checked::before {
+  color: #fff;
+}
+
+/* 마지막 미완성 물음표 */
+.circle.question::before {
+  content: "?";
+  color: var(--gray);
+  font-weight: 700;
+}
+
+/* 7일 모두 채운 경우 보상 */
+.circle.reward {
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+}
+.circle.reward::before {
+  content: "★";
+  font-size: 16px;
+  color: #fff;
+}
+
+/* 접근성 숨김 텍스트 */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+</style>
+</head>
+<body>
+
+<section class="point-box" aria-labelledby="point-title">
+  <h2 id="point-title" class="point-title">
+    추가 포인트 지급까지 <span class="blue">5일</span> 남았어요
+  </h2>
+  <p class="point-desc">7일 동안 매일 랜덤포인트 받으면 추가 혜택!</p>
+
+  <div class="day-progress" role="group" aria-label="7일간 포인트 적립 진행상황">
+    <!-- 1일 -->
+    <div class="day-item">
+      <span>1일</span>
+      <div class="circle checked" aria-label="1일차 포인트 받음">
+        <span class="sr-only">체크됨</span>
+      </div>
+    </div>
+    <!-- 2일 -->
+    <div class="day-item">
+      <span>2일</span>
+      <div class="circle checked" aria-label="2일차 포인트 받음">
+        <span class="sr-only">체크됨</span>
+      </div>
+    </div>
+    <!-- 3일 -->
+    <div class="day-item">
+      <span>3일</span>
+      <div class="circle checked" aria-label="3일차 포인트 받음">
+        <span class="sr-only">체크됨</span>
+      </div>
+    </div>
+    <!-- 4일 -->
+    <div class="day-item">
+      <span>4일</span>
+      <div class="circle" aria-label="4일차 포인트 미획득">
+        <span class="sr-only">체크 안됨</span>
+      </div>
+    </div>
+    <!-- 5일 -->
+    <div class="day-item">
+      <span>5일</span>
+      <div class="circle" aria-label="5일차 포인트 미획득">
+        <span class="sr-only">체크 안됨</span>
+      </div>
+    </div>
+    <!-- 6일 -->
+    <div class="day-item">
+      <span>6일</span>
+      <div class="circle" aria-label="6일차 포인트 미획득">
+        <span class="sr-only">체크 안됨</span>
+      </div>
+    </div>
+    <!-- 7일 -->
+    <div class="day-item">
+      <span>7일</span>
+      <div class="circle question" aria-label="7일차 포인트 보상 예정">
+        <span class="sr-only">보상 예정</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

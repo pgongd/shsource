@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>체크 아이콘 예시</title>
+<style>
+body {
+  background: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  height: 100vh;
+}
+
+.check-circle {
+  width: 32.5px;
+  height: 32.5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ✅ 파란 배경 + 흰색 체크 */
+.check-circle.blue {
+  background: #0076ff;
+}
+.check-circle.blue::before {
+  content: "";
+  width: 14.33px;
+  height: 9.2px;
+  border-left: 3.12px solid #fff;
+  border-bottom: 3.12px solid #fff;
+  transform: rotate(-45deg);
+  box-sizing: border-box;
+}
+
+/* ⚪ 회색 점선 + 회색 체크 */
+.check-circle.gray {
+  background: #fff;
+  border: 3px dashed #c5c9d2;
+}
+.check-circle.gray::before {
+  content: "";
+  width: 28px;
+  height: 14px;
+  border-left: 4px solid #8b95a1;
+  border-bottom: 4px solid #8b95a1;
+  transform: rotate(-45deg);
+}
+</style>
+</head>
+<body>
+  <div class="check-circle blue" aria-label="포인트 받음"></div>
+  <div class="check-circle blue" aria-label="포인트 받음"></div>
+  <div class="check-circle gray" aria-label="포인트 미획득"></div>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
