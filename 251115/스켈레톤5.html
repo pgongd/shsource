@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Skeleton 접근성 테스트</title>
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --card:#fff;
+    --muted:#dfe6ef;
+    --radius:12px;
+  }
+  body{ margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif; background:var(--bg); color:#111;}
+  .wrap{max-width:420px;margin:18px auto;padding:16px;}
+
+  /* header */
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .logo{font-weight:700;}
+  .btn-toggle{font-size:13px;padding:6px 10px;border:1px solid #cbd6e6;border-radius:8px;background:#fff;cursor:pointer}
+
+  /* 카드 */
+  .card{background:var(--card);padding:16px;border-radius:14px;box-shadow:0 1px 0 rgba(15,23,42,0.04);margin-bottom:14px;}
+  .bankline{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .bankname{font-weight:700}
+  .badge{font-size:12px;color:#0b6cff}
+
+  .amount{font-size:22px;font-weight:800;margin:10px 0;}
+  .action{display:block;text-align:center;padding:10px;border-radius:10px;background:#eef4ff;color:#0b63ff;text-decoration:none;display:inline-block;min-width:120px}
+
+  /* 리스트 */
+  .list{margin-top:12px;}
+  .item{background:var(--card);padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+  .meta{display:flex;flex-direction:column}
+  .title{font-weight:600;margin-bottom:6px}
+  .sub{font-size:13px;color:#6b7280}
+
+  /* Skeleton primitives */
+  .skeleton{background:linear-gradient(90deg,#e6ebf4 0%, #f6f9ff 50%, #e6ebf4 100%); background-size:200% 100%; animation:shimmer 1.1s linear infinite; border-radius:6px;}
+  @keyframes shimmer{ 0%{background-position:200% 0} 100%{background-position:-200% 0}}
+  @media (prefers-reduced-motion: reduce){ .skeleton{ animation:none; background:#e9eef7 } }
+
+  .sk-line{height:12px;margin-bottom:8px}
+  .sk-title{height:16px;width:45%}
+  .sk-small{height:12px;width:60%}
+  .sk-amount{height:26px;width:60%;border-radius:8px;margin:8px 0}
+  .sk-box{height:46px;border-radius:10px}
+  .sk-avatar{width:36px;height:36px;border-radius:50%}
+
+  /* layout helpers */
+  .row{display:flex;gap:12px;align-items:center}
+  .right{text-align:right}
+
+  /* Hidden/visible states */
+  .hidden{display:none !important}
+  .sr-only{ position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  /* small adjustments for mobile-like look */
+  @media (max-width:420px){
+    .wrap{margin:12px auto;padding:12px}
+    .amount{font-size:20px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo">ICON</div>
+      <div>
+        <button class="btn-toggle" id="btn-all">모두 로드</button>
+        <button class="btn-toggle" id="btn-card">카드만 로드</button>
+        <button class="btn-toggle" id="btn-part" style="margin-left:6px">부분 로드</button>
+      </div>
+    </header>
+
+    <!-- 라이브 리전: 스크린리더에게만 알림 (로딩/완료 상태) -->
+    <div id="live-status" role="status" aria-live="polite" class="sr-only">초기 상태</div>
+
+    <!-- 카드 (일부만 로드되는 케이스 시뮬레이션) -->
+    <section class="card" aria-labelledby="card-label">
+      <div class="bankline">
+        <div id="card-label" class="bankname">신한 알뜰적금</div>
+        <div class="badge" id="card-badge">만기예정</div>
+      </div>
+
+      <!-- 카드 내부: 금액 영역 (종종 늦게 로드됨) -->
+      <div id="card-amount">
+        <!-- skeleton amount -->
+        <div class="skeleton sk-amount" id="sk-amount" aria-hidden="true"></div>
+
+        <!-- 실제 amount (초기에는 숨김) -->
+        <div id="real-amount" class="hidden">
+          <div class="amount">10,360,000원</div>
+          <div class="sub">2025년 7월 21일 만기</div>
+        </div>
+      </div>
+
+      <!-- 버튼/액션: 이건 보통 빠르게 표시되는 경우 -->
+      <div style="margin-top:12px">
+        <a href="#" class="action" id="real-action" style="text-decoration:none">입금</a>
+        <!-- skeleton 대체 (만약 액션도 늦으면) -->
+        <div id="sk-action" class="skeleton sk-box hidden" aria-hidden="true" style="display:inline-block;margin-left:8px;width:120px"></div>
+      </div>
+    </section>
+
+    <!-- 리스트: 일부 항목만 스켈레톤 -->
+    <section class="list" aria-label="거래내역">
+      <!-- item 1 : 실제 데이터 (빠르게 로드) -->
+      <article class="item" id="item-1">
+        <div class="meta">
+          <div class="title">입금</div>
+          <div class="sub">9월 1일 · 급여</div>
+        </div>
+        <div class="right">+100,000원</div>
+      </article>
+
+      <!-- item 2 : skeleton (늦게 로드되는 항목) -->
+      <article class="item" id="item-2">
+        <div class="row" style="flex:1;">
+          <div class="skeleton sk-avatar" aria-hidden="true" id="sk-avatar"></div>
+          <div style="flex:1;margin-left:8px;">
+            <div class="skeleton sk-title" aria-hidden="true" id="sk-title"></div>
+            <div class="skeleton sk-small" aria-hidden="true" id="sk-small"></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="skeleton sk-small" style="width:80px" aria-hidden="true" id="sk-amt"></div>
+        </div>
+      </article>
+
+      <!-- item 3 : 실제 데이터 (나중에 로드) -->
+      <article class="item hidden" id="item-3">
+        <div class="meta">
+          <div class="title">출금</div>
+          <div class="sub">8월 28일 · 자동이체</div>
+        </div>
+        <div class="right">-20,000원</div>
+      </article>
+
+      <!-- item 4 : skeleton -->
+      <article class="item" id="item-4">
+        <div style="flex:1;">
+          <div class="skeleton sk-title" aria-hidden="true"></div>
+          <div class="skeleton sk-small" aria-hidden="true" style="width:50%"></div>
+        </div>
+        <div class="right">
+          <div class="skeleton sk-small" style="width:60px" aria-hidden="true"></div>
+        </div>
+      </article>
+    </section>
+  </div>
+
+<script>
+  // 초기 상태: 모든 스켈레톤 보이는 상태 (card amount와 리스트 일부는 skeleton)
+  const live = document.getElementById('live-status');
+  const skAmount = document.getElementById('sk-amount');
+  const realAmount = document.getElementById('real-amount');
+  const skAction = document.getElementById('sk-action');
+  const realAction = document.getElementById('real-action');
+
+  const skItems = ['sk-avatar','sk-title','sk-small','sk-amt'];
+  const item2 = document.getElementById('item-2');
+  const item3 = document.getElementById('item-3');
+  const item4 = document.getElementById('item-4');
+
+  function setLive(text){
+    live.textContent = text; // 스크린리더에게만 보임
+  }
+
+  // 시뮬레이터 함수: 로딩 모드
+  function loadAll(){
+    setLive('데이터 로딩 완료');
+    // 카드 금액 로드
+    skAmount.classList.add('hidden');
+    realAmount.classList.remove('hidden');
+
+    // item2: skeleton -> 실제로 바꾸기
+    skItems.forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.classList.add('hidden');
+    });
+    // replace item2 with actual content
+    item2.innerHTML = `
+      <div class="meta">
+        <div class="title">정기예금 이자</div>
+        <div class="sub">11:14:21 · 상세</div>
+      </div>
+      <div class="right">+5,000원</div>
+    `;
+
+    // item3 show real
+    item3.classList.remove('hidden');
+
+    // item4 hide skeleton and replace
+    item4.innerHTML = `
+      <div style="flex:1;">
+        <div class="title">포인트 적립</div>
+        <div class="sub">7월 20일</div>
+      </div>
+      <div class="right">+1,200원</div>
+    `;
+  }
+
+  function loadCardOnly(){
+    setLive('카드 데이터만 로드됨');
+    skAmount.classList.add('hidden');
+    realAmount.classList.remove('hidden');
+
+    // leave list skeletons as-is to show partial shimmer
+  }
+
+  function loadPartial(){
+    setLive('부분 로딩: 일부 항목만 표시됩니다');
+    // 카드 remains skeleton
+    skAmount.classList.remove('hidden');
+    realAmount.classList.add('hidden');
+
+    // item2 -> becomes real after 1.5s
+    setTimeout(() => {
+      skItems.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.classList.add('hidden');
+      });
+      item2.innerHTML = `
+        <div class="meta">
+          <div class="title">이벤트 캐시백</div>
+          <div class="sub">9월 5일</div>
+        </div>
+        <div class="right">+2,500원</div>
+      `;
+    }, 1500);
+
+    // item3 remains hidden (loaded later)
+    setTimeout(()=> {
+      item3.classList.remove('hidden');
+    }, 3000);
+  }
+
+  // 버튼 바인딩
+  document.getElementById('btn-all').addEventListener('click', loadAll);
+  document.getElementById('btn-card').addEventListener('click', loadCardOnly);
+  document.getElementById('btn-part').addEventListener('click', loadPartial);
+
+  // 초기 aria live
+  setLive('데이터를 불러오는 중입니다');
+
+  // 자동 시뮬레이션: 2.5초 뒤 부분 로드 시연 (브라우저 열면 바로 보임)
+  setTimeout(loadPartial, 800);
+</script>
+</body>
+</html>

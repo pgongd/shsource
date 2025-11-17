@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skeleton Demo</title>
+
+<style>
+  body { font-family: sans-serif; padding: 20px; background: #f6f7f8; }
+
+  /* ===== 스켈레톤 기본 ===== */
+  .skeleton-list { padding: 16px; }
+
+  .skeleton-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .skeleton-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e9e9ec;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .skeleton-text { flex: 1; }
+
+  .skeleton-line {
+    height: 14px;
+    background: #e9e9ec;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .w-60 { width: 60%; }
+  .w-40 { width: 40%; }
+  .w-50 { width: 50%; }
+  .w-30 { width: 30%; }
+  .w-70 { width: 70%; }
+
+  /* ===== Shimmer Animation ===== */
+  .skeleton-item div::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+    animation: shimmer 1.1s infinite;
+  }
+
+  @keyframes shimmer {
+    100% { left: 100%; }
+  }
+
+  /* 실제 데이터 영역 스타일 */
+  .account-box {
+    padding: 16px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .name { font-size: 15px; margin-bottom: 6px; }
+  .amount { font-size: 19px; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<h2>스켈레톤 로딩 데모</h2>
+<p>2초 후 실제 데이터가 나타납니다.</p>
+
+<!-- ============================
+     로딩 상태
+============================= -->
+<div id="loadingSkeleton" class="skeleton-list" aria-hidden="true">
+  <div class="skeleton-item">
+    <div class="skeleton-thumb"></div>
+    <div class="skeleton-text">
+      <div class="skeleton-line w-60"></div>
+      <div class="skeleton-line w-40"></div>
+    </div>
+  </div>
+
+  <div class="skeleton-item">
+    <div class="skeleton-thumb"></div>
+    <div class="skeleton-text">
+      <div class="skeleton-line w-50"></div>
+      <div class="skeleton-line w-30"></div>
+    </div>
+  </div>
+
+  <div class="skeleton-item">
+    <div class="skeleton-thumb"></div>
+    <div class="skeleton-text">
+      <div class="skeleton-line w-70"></div>
+      <div class="skeleton-line w-40"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     실제 데이터 영역
+============================= -->
+<div id="realContent" style="display:none;">
+  <div class="account-box">
+    <div class="name">입출금통장</div>
+    <div class="amount">1,200,000 원</div>
+  </div>
+
+  <div class="account-box">
+    <div class="name">저축예금</div>
+    <div class="amount">5,420,100 원</div>
+  </div>
+
+  <div class="account-box">
+    <div class="name">주식계좌</div>
+    <div class="amount">18,340,200 원</div>
+  </div>
+</div>
+
+
+<script>
+  // ======= 로딩 → 실제 데이터 전환 =======
+  setTimeout(() => {
+    document.getElementById("loadingSkeleton").style.display = "none";
+    document.getElementById("realContent").style.display = "block";
+  }, 2000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스켈레톤 공통 + 페이지 적용 예시</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #f5f7fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #222;
+    }
+
+    /* ------------------------------
+       공통 스켈레톤 컴포넌트 영역
+    ------------------------------ */
+
+    .skeleton {
+        position: relative;
+        overflow: hidden;
+        background: #e9edf3;
+        border-radius: 6px;
+    }
+
+    /* shimmer 효과 */
+    @media (prefers-reduced-motion: no-preference) {
+        .skeleton::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150px;
+            width: 120px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+            animation: shimmer 1.3s infinite;
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(350px); }
+        }
+    }
+
+    /* 스켈레톤 공통 세트 */
+    .skeleton-line {
+        height: 14px;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .skeleton-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    /* ------------------------------
+       실제 페이지 레이아웃
+    ------------------------------ */
+    .page {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        min-height: 100vh;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .tx-right { text-align: right; }
+    .tx-bold { font-weight: bold; }
+
+    .item {
+        padding: 20px 0;
+        border-bottom: 1px solid #e2e6ed;
+    }
+
+    /* 데이터 숨김: 스켈레톤이 보여질 때 실제 텍스트 읽히지 않도록 */
+    .data-hidden {
+        visibility: hidden;
+    }
+
+    .loading .data-hidden {
+        display: none;
+    }
+
+    /* 스켈레톤 노출 when .loading */
+    .loading .skeleton-wrapper {
+        display: block;
+    }
+    .skeleton-wrapper {
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 
+=====================================================
+    공통 스켈레톤 컴포넌트 (공통팀이 만드는 영역)
+    → 퍼블리셔는 이 블록만 가져다 조립하면 됨
+=====================================================
+-->
+<template id="COMMON-SKELETON-TEMPLATE">
+    <div class="skeleton-wrapper" role="status" aria-live="polite">
+        <div class="skeleton skeleton-line" style="width:60%"></div>
+        <div class="skeleton skeleton-line" style="width:40%"></div>
+        <div class="skeleton skeleton-line" style="width:80%"></div>
+    </div>
+</template>
+
+
+<!-- 
+=====================================================
+   실제 페이지 퍼블리싱 (개인 작업 영역)
+   → 여기서 공통 스켈레톤을 사용
+=====================================================
+-->
+<div class="page loading" id="page">
+
+    <div class="header">
+        <div>
+            <span class="data-hidden">ICON</span>
+
+            <!-- 공통 스켈레톤 -->
+            <div class="skeleton-wrapper">
+                <div class="skeleton skeleton-line" style="width:80px"></div>
+            </div>
+        </div>
+
+        <div class="tx-right">
+            <span class="data-hidden tx-bold">계좌관리</span>
+
+            <div class="skeleton-wrapper">
+                <div class="skeleton skeleton-line" style="width:60px"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="data-hidden tx-bold">입금 · +100,000원</div>
+        <div class="data-hidden">거래일시: 11:14:21</div>
+
+        <div class="skeleton-wrapper">
+            <div class="skeleton skeleton-line" style="width:50%"></div>
+            <div class="skeleton skeleton-line" style="width:40%"></div>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="data-hidden tx-bold">입금 · +100,000원</div>
+        <div class="data-hidden">거래일시: 11:14:21</div>
+
+        <div class="skeleton-wrapper">
+            <div class="skeleton skeleton-line" style="width:55%"></div>
+            <div class="skeleton skeleton-line" style="width:38%"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- 
+=====================================================
+  스크립트 담당자에게 넘기는 방식 안내용 주석
+  퍼블리셔는 이런 간단한 토글만 유지하면 됨
+=====================================================
+-->
+
+<script>
+/*
+    스크립트 담당자에게 전달할 요구사항:
+
+    1) API 호출 전 → .page 에 .loading 추가
+    2) API 성공 후 → .loading 제거
+    3) 텍스트를 표시할 때는 .data-hidden 요소가 자동으로 보여짐
+       (CSS로 처리됨)
+
+    지금은 테스트 위해 2초 뒤 스켈레톤 제거
+*/
+
+setTimeout(() => {
+    document.getElementById("page").classList.remove("loading");
+}, 2000);
+
+</script>
+
+</body>
+</html>

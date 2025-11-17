@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skeleton Test</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    background: #f5f7fa;
+  }
+
+  /* 공통 skeleton 박스 */
+  .skeleton {
+    background: linear-gradient(90deg, #e6eaf1 0%, #f4f6fa 50%, #e6eaf1 100%);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    animation: shimmer 1.2s infinite;
+  }
+
+  /* 모션 감도 사용자 지원 */
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+    }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .page {
+    padding: 20px;
+  }
+
+  /* Skeleton 레이아웃 예시 */
+  .sk-line { height: 14px; margin-bottom: 12px; }
+  .sk-title { height: 22px; width: 40%; margin-bottom: 20px; }
+  .sk-box { height: 60px; margin-bottom: 16px; }
+
+  /* 실제 콘텐츠 */
+  .content { display: none; }
+</style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- 📌 Skeleton (초기 로딩) -->
+    <div id="skeleton-area" aria-hidden="true">
+      <div class="skeleton sk-title"></div>
+      <div class="skeleton sk-line"></div>
+      <div class="skeleton sk-line"></div>
+
+      <div class="skeleton sk-box"></div>
+
+      <div class="skeleton sk-line"></div>
+      <div class="skeleton sk-line"></div>
+      <div class="skeleton sk-line"></div>
+    </div>
+
+    <!-- 📌 실제 콘텐츠 -->
+    <div id="content-area" class="content">
+      <h2>계좌관리</h2>
+      <p>홍길동 님의 계좌 정보가 로딩되었습니다.</p>
+
+      <div style="background:#fff;padding:15px;border-radius:8px;margin-top:20px;">
+        <strong>입금</strong> <span style="float:right;">+100,000원</span>
+        <p style="margin-top:10px;">2025년 1월 1일 · 회사별 우대금리</p>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // 📌 2초 뒤 스켈레톤 제거하고 콘텐츠 표시 (테스트용)
+  setTimeout(() => {
+    document.getElementById("skeleton-area").style.display = "none";
+    document.getElementById("content-area").style.display = "block";
+  }, 2000);
+</script>
+
+</body>
+</html>
