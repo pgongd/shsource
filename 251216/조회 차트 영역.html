@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>스와이프 카드 차트</title>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px;
+    background: #f2f4f7;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* ===== 스와이프 영역 ===== */
+  .swiper {
+    overflow: hidden;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .swiper-track {
+    display: flex;
+    transition: transform .3s ease;
+  }
+
+  .swiper-slide {
+    flex: 0 0 100%;
+    padding: 8px;
+  }
+
+  /* ===== 카드 ===== */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    height: 420px; /* 데모용 (실서비스에선 부모 기준) */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 상단 */
+  .card__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .card__link {
+    font-size: 14px;
+    color: #2a6df4;
+    text-decoration: none;
+  }
+  .card__link:focus-visible {
+    outline: 2px solid #2a6df4;
+    border-radius: 4px;
+  }
+
+  /* 차트 영역 (핵심) */
+  .card__chart {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .chart-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: repeating-linear-gradient(
+      45deg,
+      #e6ecff,
+      #e6ecff 10px,
+      #d4defc 10px,
+      #d4defc 20px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3a5edb;
+    font-size: 14px;
+  }
+
+  /* 범례 */
+  .legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .legend__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #444;
+  }
+
+  .legend__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .dot--gray { background: #8e9aae; }
+  .dot--blue { background: #2a6df4; }
+
+  /* 스와이프 버튼 */
+  .swiper-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .swiper-btn {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #cfd6e3;
+    border: none;
+  }
+
+  .swiper-btn[aria-current="true"] {
+    background: #2a6df4;
+  }
+</style>
+</head>
+<body>
+
+<section class="swiper" aria-label="자산 건강도 카드 스와이프">
+  <div class="swiper-track" id="track">
+
+    <!-- 슬라이드 1 -->
+    <article class="swiper-slide">
+      <div class="card">
+        <div class="card__header">
+          <a href="#" class="card__link">자산건강도 확인하기</a>
+        </div>
+
+        <div class="card__chart" aria-label="자산 건강도 차트">
+          <div class="chart-placeholder" aria-hidden="true">
+            차트 영역
+          </div>
+        </div>
+
+        <div class="legend" aria-label="차트 범례">
+          <div class="legend__item">
+            <span class="legend__dot dot--gray" aria-hidden="true"></span>
+            <span>2025년 6월 6일(전년기말)</span>
+          </div>
+          <div class="legend__item">
+            <span class="legend__dot dot--blue" aria-hidden="true"></span>
+            <span>2025년 9월 24일</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 슬라이드 2 (샘플) -->
+    <article class="swiper-slide">
+      <div class="card">
+        <div class="card__header">
+          <a href="#" class="card__link">자산건강도 확인하기</a>
+        </div>
+        <div class="card__chart">
+          <div class="chart-placeholder">차트 영역</div>
+        </div>
+        <div class="legend">
+          <div class="legend__item">
+            <span class="legend__dot dot--blue"></span>
+            <span>기준 데이터</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="swiper-controls" role="tablist" aria-label="슬라이드 선택">
+  <button class="swiper-btn" aria-current="true"></button>
+  <button class="swiper-btn"></button>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('.swiper-btn');
+  let index = 0;
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      index = i;
+      track.style.transform = `translateX(-${i * 100}%)`;
+      dots.forEach(d => d.removeAttribute('aria-current'));
+      dot.setAttribute('aria-current', 'true');
+    });
+  });
+</script>
+
+</body>
+</html>

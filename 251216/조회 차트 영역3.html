@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>자산건강도 카드</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 16px;
+    background: #f2f4f7;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* ===== 스와이프 컨테이너 ===== */
+  .swiper {
+    overflow: hidden;
+  }
+
+  .swiper-track {
+    white-space: nowrap;
+  }
+
+  .swiper-slide {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  /* ===== 카드 ===== */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 상단 링크 */
+  .card__header {
+    text-align: right;
+    margin-bottom: 16px;
+  }
+
+  .card__link {
+    font-size: 14px;
+    color: #2a6df4;
+    text-decoration: none;
+  }
+
+  .card__link:focus {
+    outline: 2px solid #2a6df4;
+    border-radius: 4px;
+  }
+
+  /* ===== 차트 영역 (핵심) ===== */
+  .card__chart {
+    flex: 1;
+    min-height: 200px;
+    margin-bottom: 16px;
+  }
+
+  /* aspect-ratio 대체 */
+  .chart-box {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 비율 */
+  }
+
+  .chart-box__inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    border-radius: 8px;
+    background: repeating-linear-gradient(
+      45deg,
+      #e6ecff,
+      #e6ecff 10px,
+      #d4defc 10px,
+      #d4defc 20px
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #3a5edb;
+    font-size: 14px;
+  }
+
+  /* ===== 범례 ===== */
+  .legend {
+    text-align: center;
+    font-size: 12px;
+    color: #444;
+  }
+
+  .legend__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .legend__item + .legend__item {
+    margin-left: 16px;
+  }
+
+  .legend__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  .dot--gray { background: #8e9aae; }
+  .dot--blue { background: #2a6df4; }
+
+  /* ===== 페이지네이션 ===== */
+  .pagination {
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .pagination button {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border-radius: 50%;
+    border: none;
+    background: #cfd6e3;
+  }
+
+  .pagination button[aria-current="true"] {
+    background: #2a6df4;
+  }
+</style>
+</head>
+<body>
+
+<section class="swiper" aria-label="자산 건강도 카드 스와이프">
+  <div class="swiper-track">
+
+    <article class="swiper-slide">
+      <div class="card">
+        <div class="card__header">
+          <a href="#" class="card__link">자산건강도 확인하기</a>
+        </div>
+
+        <div class="card__chart" aria-label="자산 건강도 차트">
+          <!-- 실제 차트 삽입 위치 -->
+          <div class="chart-box">
+            <div class="chart-box__inner" aria-hidden="true">
+              차트 영역
+            </div>
+          </div>
+        </div>
+
+        <div class="legend" aria-label="차트 범례">
+          <span class="legend__item">
+            <span class="legend__dot dot--gray" aria-hidden="true"></span>
+            <span>2025년 6월 6일(전년기말)</span>
+          </span>
+          <span class="legend__item">
+            <span class="legend__dot dot--blue" aria-hidden="true"></span>
+            <span>2025년 9월 24일</span>
+          </span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="pagination" role="tablist" aria-label="카드 선택">
+  <button aria-current="true"></button>
+  <button></button>
+</div>
+
+</body>
+</html>
