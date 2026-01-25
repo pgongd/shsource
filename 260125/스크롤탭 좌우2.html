@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mobile Tabs Test</title>
+
+<style>
+/* ===== 공통 ===== */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  background: #fff;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+/* =====================================================
+   1. 텍스트 탭 (구분자 있는 타입)
+===================================================== */
+.text-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-tabs .tab {
+  background: none;
+  border: none;
+  padding: 8px 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9aa0a6;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.text-tabs .tab[aria-selected="true"] {
+  color: #2979ff;
+  font-weight: 600;
+}
+
+.text-tabs .separator {
+  width: 1px;
+  height: 12px;
+  background: #F0F4FA;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   2. 스크롤 탭
+===================================================== */
+.scroll-tabs {
+  position: relative;
+  border-bottom: 1px solid #e5e8eb;
+}
+
+/* 스크롤 영역 */
+.tab-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* 탭 리스트 */
+.scroll-tabs .tab-list {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 40px; /* 좌우 흐릿 영역 공간 */
+}
+
+.scroll-tabs .tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 14px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #8b95a1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.scroll-tabs .tab[aria-selected="true"] {
+  color: #111;
+  font-weight: 600;
+}
+
+/* 인디케이터 */
+.scroll-tabs .tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: #111;
+}
+
+/* ===== 하단 흐릿 영역 ===== */
+.fade {
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  height: 18px; /* 하단만 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.fade svg {
+  width: 14px;
+  height: 14px;
+  fill: #b0b8c1;
+}
+
+.fade.left {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    #fff 70%,
+    rgba(255,255,255,0)
+  );
+}
+
+.fade.right {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    #fff 70%,
+    rgba(255,255,255,0)
+  );
+}
+
+/* 스크롤 가능 상태 */
+.scroll-tabs.next .fade.left {
+  opacity: 1;
+}
+.scroll-tabs.prev .fade.right {
+  opacity: 1;
+}
+
+/* ===== 패널 ===== */
+.tab-panel {
+  padding-top: 16px;
+  font-size: 14px;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+/* ===== 작은 모바일 대응 ===== */
+@media (max-width: 360px) {
+  .scroll-tabs .tab {
+    font-size: 14px;
+    padding: 12px 10px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ===============================
+  1. 텍스트 탭 (2개)
+================================ -->
+<section>
+  <h2>텍스트 탭 (2개)</h2>
+
+  <div class="text-tabs" role="tablist" aria-label="텍스트 탭">
+    <button class="tab" role="tab"
+      aria-selected="true" id="text-tab-1" aria-controls="text-panel-1">
+      항목명
+    </button>
+
+    <span class="separator" aria-hidden="true"></span>
+
+    <button class="tab" role="tab"
+      aria-selected="false" id="text-tab-2" aria-controls="text-panel-2">
+      항목명
+    </button>
+  </div>
+
+  <div id="text-panel-1" class="tab-panel" role="tabpanel" aria-labelledby="text-tab-1">
+    텍스트 탭 첫 번째 콘텐츠
+  </div>
+  <div id="text-panel-2" class="tab-panel" role="tabpanel" aria-labelledby="text-tab-2" hidden>
+    텍스트 탭 두 번째 콘텐츠
+  </div>
+</section>
+
+<!-- ===============================
+  2. 스크롤 탭
+================================ -->
+<section>
+  <h2>스크롤 탭</h2>
+
+  <div class="scroll-tabs">
+    <div class="fade left" aria-hidden="true">
+      <!-- > -->
+      <svg viewBox="0 0 24 24">
+        <path d="M8 4l8 8-8 8z"></path>
+      </svg>
+    </div>
+
+    <div class="fade right" aria-hidden="true">
+      <!-- < -->
+      <svg viewBox="0 0 24 24">
+        <path d="M16 4l-8 8 8 8z"></path>
+      </svg>
+    </div>
+
+    <div class="tab-scroll">
+      <div class="tab-list" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" id="s-tab1" aria-controls="s-panel1">항목1</button>
+        <button class="tab" role="tab" aria-selected="false" id="s-tab2" aria-controls="s-panel2">텍스트</button>
+        <button class="tab" role="tab" aria-selected="false" id="s-tab3" aria-controls="s-panel3">텍스트</button>
+        <button class="tab" role="tab" aria-selected="false" id="s-tab4" aria-controls="s-panel4">텍스트</button>
+        <button class="tab" role="tab" aria-selected="false" id="s-tab5" aria-controls="s-panel5">텍스트</button>
+        <button class="tab" role="tab" aria-selected="false" id="s-tab6" aria-controls="s-panel6">텍스트</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-panel1" class="tab-panel" role="tabpanel" aria-labelledby="s-tab1">스크롤 탭 콘텐츠 1</div>
+  <div id="s-panel2" class="tab-panel" role="tabpanel" aria-labelledby="s-tab2" hidden>콘텐츠 2</div>
+  <div id="s-panel3" class="tab-panel" role="tabpanel" aria-labelledby="s-tab3" hidden>콘텐츠 3</div>
+  <div id="s-panel4" class="tab-panel" role="tabpanel" aria-labelledby="s-tab4" hidden>콘텐츠 4</div>
+  <div id="s-panel5" class="tab-panel" role="tabpanel" aria-labelledby="s-tab5" hidden>콘텐츠 5</div>
+  <div id="s-panel6" class="tab-panel" role="tabpanel" aria-labelledby="s-tab6" hidden>콘텐츠 6</div>
+</section>
+
+<script>
+/* ===== 텍스트 탭 ===== */
+document.querySelectorAll('.text-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const tabs = tab.parentElement.querySelectorAll('[role="tab"]');
+    tabs.forEach(t => {
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      const active = t === tab;
+      t.setAttribute('aria-selected', active);
+      panel.hidden = !active;
+    });
+  });
+});
+
+/* ===== 스크롤 탭 ===== */
+const scrollContainer = document.querySelector('.scroll-tabs');
+const scrollArea = scrollContainer.querySelector('.tab-scroll');
+const scrollTabs = scrollContainer.querySelectorAll('[role="tab"]');
+
+function updateFade() {
+  const { scrollLeft, scrollWidth, clientWidth } = scrollArea;
+  scrollContainer.classList.toggle('next', scrollLeft > 0);
+  scrollContainer.classList.toggle(
+    'prev',
+    scrollLeft + clientWidth < scrollWidth - 1
+  );
+}
+
+scrollArea.addEventListener('scroll', updateFade);
+window.addEventListener('resize', updateFade);
+updateFade();
+
+scrollTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    scrollTabs.forEach(t => {
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      const active = t === tab;
+      t.setAttribute('aria-selected', active);
+      panel.hidden = !active;
+    });
+
+    tab.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest'
+    });
+  });
+});
+</script>
+
+</body>
+</html>

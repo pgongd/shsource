@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>투자 수익률</title>
+
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+  color: #111;
+}
+
+section { padding: 16px; }
+h2 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+
+hr {
+  border: 0;
+  height: 8px;
+  background: #f5f6f8;
+  margin: 16px 0;
+}
+
+/* 스위치 탭 */
+.switch-tabs {
+  display: inline-flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.switch-tabs button {
+  padding: 6px 12px;
+  border: 0;
+  background: #fff;
+  font-size: 13px;
+}
+.switch-tabs button[aria-pressed="true"] {
+  background: #111;
+  color: #fff;
+}
+
+/* 텍스트 탭 */
+.text-tabs {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.text-tabs::-webkit-scrollbar { display: none; }
+
+.text-tab {
+  position: relative;
+  padding: 0 14px;
+  background: none;
+  border: 0;
+  font-size: 13px;
+  color: #666;
+  white-space: nowrap;
+}
+.text-tab[aria-selected="true"] {
+  color: #111;
+  font-weight: 500;
+}
+.text-tab + .text-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 12px;
+  background: #F0F4FA;
+  transform: translateY(-50%);
+}
+
+/* 차트 영역 */
+.chart {
+  height: 180px;
+  background: #f8f9fb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 범례 리스트 */
+.legend-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+.legend-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 8px;
+  margin-top: 4px;
+}
+.legend-text {
+  flex: 1;
+}
+.legend-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.legend-title strong {
+  font-weight: 600;
+}
+.legend-sub {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+.plus { color: #d32f2f; }
+.minus { color: #1976d2; }
+
+/* 도넛 */
+.donut {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 투자 수익률 -->
+<section>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>투자 수익률</h2>
+    <div class="switch-tabs" role="group" aria-label="수익 기준">
+      <button aria-pressed="true">평가금액</button>
+      <button aria-pressed="false">평가손익</button>
+    </div>
+  </div>
+
+  <!-- 기간 탭 -->
+  <div class="text-tabs" role="tablist">
+    <button class="text-tab" role="tab" aria-selected="true">1개월</button>
+    <button class="text-tab" role="tab" aria-selected="false">3개월</button>
+    <button class="text-tab" role="tab" aria-selected="false">6개월</button>
+    <button class="text-tab" role="tab" aria-selected="false">1년</button>
+    <button class="text-tab" role="tab" aria-selected="false">가입 이후</button>
+  </div>
+
+  <!-- 라인 차트 (시각 보조) -->
+  <div class="chart">
+    <svg aria-hidden="true" width="90%" height="120" viewBox="0 0 300 120">
+      <polyline
+        points="0,80 60,60 120,90 180,40 240,70 300,50"
+        fill="none"
+        stroke="#1976d2"
+        stroke-width="2"/>
+    </svg>
+  </div>
+</section>
+
+<hr />
+
+<!-- 투자유형 -->
+<section>
+  <h2>투자유형</h2>
+
+  <!-- 도넛 차트 -->
+  <div class="donut">
+    <svg aria-hidden="true" width="140" height="140" viewBox="0 0 42 42">
+      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#ddd" stroke-width="6"/>
+      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#1976d2"
+        stroke-width="6" stroke-dasharray="25 75"/>
+      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#26a69a"
+        stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="-25"/>
+      <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#ff9800"
+        stroke-width="6" stroke-dasharray="35 65" stroke-dashoffset="-40"/>
+    </svg>
+  </div>
+
+  <!-- 범례 -->
+  <ul class="legend-list">
+    <li class="legend-item">
+      <span class="color-box" style="background:#1976d2" aria-hidden="true"></span>
+      <div class="legend-text">
+        <div class="legend-title">
+          <span>국내주식형</span>
+          <strong>25%</strong>
+        </div>
+        <div class="legend-sub">2,500,000원 <span class="plus">(+1.72%)</span></div>
+      </div>
+    </li>
+
+    <li class="legend-item">
+      <span class="color-box" style="background:#26a69a" aria-hidden="true"></span>
+      <div class="legend-text">
+        <div class="legend-title">
+          <span>국내혼합형</span>
+          <strong>15%</strong>
+        </div>
+        <div class="legend-sub">1,500,000원 <span class="minus">(-0.85%)</span></div>
+      </div>
+    </li>
+
+    <li class="legend-item">
+      <span class="color-box" style="background:#ff9800" aria-hidden="true"></span>
+      <div class="legend-text">
+        <div class="legend-title">
+          <span>해외주식형</span>
+          <strong>35%</strong>
+        </div>
+        <div class="legend-sub">3,500,000원 <span class="plus">(+2.10%)</span></div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scrollable Tabs</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+/* ===== 전체 탭 영역 ===== */
+.scroll-tabs {
+  position: relative;
+  border-bottom: 1px solid #e5e8eb;
+}
+
+/* ===== 스크롤 영역 ===== */
+.tab-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== 탭 리스트 ===== */
+.tab-list {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 40px; /* 오버레이 영역 확보 */
+}
+
+.tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 14px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #8b95a1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab[aria-selected="true"] {
+  color: #111;
+  font-weight: 600;
+}
+
+/* ===== 인디케이터 ===== */
+.tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: #111;
+}
+
+/* ===== 좌/우 오버레이 ===== */
+.fade {
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.fade svg {
+  width: 16px;
+  height: 16px;
+  fill: #b0b8c1;
+}
+
+.fade.left {
+  left: 0;
+  background: linear-gradient(to right, #fff 70%, rgba(255,255,255,0));
+}
+
+.fade.right {
+  right: 0;
+  background: linear-gradient(to left, #fff 70%, rgba(255,255,255,0));
+}
+
+/* ===== 상태 클래스 ===== */
+.scroll-tabs.next .fade.left {
+  opacity: 1;
+}
+
+.scroll-tabs.prev .fade.right {
+  opacity: 1;
+}
+
+/* ===== 패널 ===== */
+.tab-panel {
+  padding: 16px 0;
+  font-size: 14px;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-tabs">
+  <div class="fade left" aria-hidden="true">
+    <!-- > -->
+    <svg viewBox="0 0 24 24">
+      <path d="M8 4l8 8-8 8z"></path>
+    </svg>
+  </div>
+
+  <div class="fade right" aria-hidden="true">
+    <!-- < -->
+    <svg viewBox="0 0 24 24">
+      <path d="M16 4l-8 8 8 8z"></path>
+    </svg>
+  </div>
+
+  <div class="tab-scroll">
+    <div class="tab-list" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" id="tab1" aria-controls="panel1">
+        항목1
+      </button>
+      <button class="tab" role="tab" aria-selected="false" id="tab2" aria-controls="panel2">
+        텍스트
+      </button>
+      <button class="tab" role="tab" aria-selected="false" id="tab3" aria-controls="panel3">
+        텍스트
+      </button>
+      <button class="tab" role="tab" aria-selected="false" id="tab4" aria-controls="panel4">
+        텍스트
+      </button>
+      <button class="tab" role="tab" aria-selected="false" id="tab5" aria-controls="panel5">
+        텍스트
+      </button>
+      <button class="tab" role="tab" aria-selected="false" id="tab6" aria-controls="panel6">
+        텍스트
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="panel1" class="tab-panel" role="tabpanel" aria-labelledby="tab1">
+  항목1 콘텐츠
+</div>
+<div id="panel2" class="tab-panel" role="tabpanel" aria-labelledby="tab2" hidden>
+  콘텐츠 2
+</div>
+<div id="panel3" class="tab-panel" role="tabpanel" aria-labelledby="tab3" hidden>
+  콘텐츠 3
+</div>
+<div id="panel4" class="tab-panel" role="tabpanel" aria-labelledby="tab4" hidden>
+  콘텐츠 4
+</div>
+<div id="panel5" class="tab-panel" role="tabpanel" aria-labelledby="tab5" hidden>
+  콘텐츠 5
+</div>
+<div id="panel6" class="tab-panel" role="tabpanel" aria-labelledby="tab6" hidden>
+  콘텐츠 6
+</div>
+
+<script>
+const container = document.querySelector('.scroll-tabs');
+const scrollArea = document.querySelector('.tab-scroll');
+const tabs = document.querySelectorAll('[role="tab"]');
+
+function updateFade() {
+  const { scrollLeft, scrollWidth, clientWidth } = scrollArea;
+
+  container.classList.toggle('next', scrollLeft > 0);
+  container.classList.toggle(
+    'prev',
+    scrollLeft + clientWidth < scrollWidth - 1
+  );
+}
+
+scrollArea.addEventListener('scroll', updateFade);
+window.addEventListener('resize', updateFade);
+updateFade();
+
+/* 탭 활성화 */
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => activateTab(tab));
+
+  tab.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      tabs[(index + 1) % tabs.length].focus();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      tabs[(index - 1 + tabs.length) % tabs.length].focus();
+    }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      activateTab(tab);
+    }
+  });
+});
+
+function activateTab(selected) {
+  tabs.forEach(tab => {
+    const panel = document.getElementById(tab.getAttribute('aria-controls'));
+    const active = tab === selected;
+    tab.setAttribute('aria-selected', active);
+    panel.hidden = !active;
+  });
+
+  selected.scrollIntoView({
+    behavior: 'smooth',
+    inline: 'center',
+    block: 'nearest'
+  });
+}
+</script>
+
+</body>
+</html>

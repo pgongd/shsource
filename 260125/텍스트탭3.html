@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Centered Text Tabs</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+/* ===== 텍스트 탭 영역 ===== */
+.text-tabs {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.text-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* 가운데 정렬 + 스크롤 대응 */
+.text-tabs .tab-list {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;
+}
+
+/* ===== 탭 버튼 ===== */
+.text-tabs .tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 8px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9aa0a6;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 활성 상태: 색만 변경 */
+.text-tabs .tab[aria-selected="true"] {
+  color: #2979ff;
+  font-weight: 600;
+}
+
+/* ===== 구분선 (CSS ONLY) ===== */
+.text-tabs .tab:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background: #F0F4FA;
+}
+
+/* 포커스 접근성 */
+.text-tabs .tab:focus-visible {
+  outline: 2px solid #2979ff;
+  outline-offset: 2px;
+}
+
+/* ===== 패널 ===== */
+.tab-panel {
+  margin-top: 16px;
+  font-size: 14px;
+}
+.tab-panel[hidden] {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<h2>텍스트 탭 (가운데 정렬 / 색상만 변경)</h2>
+
+<div class="text-tabs">
+  <div class="tab-list" role="tablist" aria-label="텍스트 탭">
+    <button class="tab" role="tab"
+      id="tab1" aria-selected="true" aria-controls="panel1">
+      항목명
+    </button>
+    <button class="tab" role="tab"
+      id="tab2" aria-selected="false" aria-controls="panel2">
+      항목명
+    </button>
+    <button class="tab" role="tab"
+      id="tab3" aria-selected="false" aria-controls="panel3">
+      항목명
+    </button>
+  </div>
+</div>
+
+<div id="panel1" class="tab-panel" role="tabpanel" aria-labelledby="tab1">
+  첫 번째 콘텐츠
+</div>
+<div id="panel2" class="tab-panel" role="tabpanel" aria-labelledby="tab2" hidden>
+  두 번째 콘텐츠
+</div>
+<div id="panel3" class="tab-panel" role="tabpanel" aria-labelledby="tab3" hidden>
+  세 번째 콘텐츠
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.text-tabs [role="tab"]');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      const active = t === tab;
+      t.setAttribute('aria-selected', active);
+      panel.hidden = !active;
+    });
+  });
+});
+</script>
+
+</body>
+</html>

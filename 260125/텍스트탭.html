@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mobile Text Tabs</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+/* ===== 탭 컨테이너 ===== */
+.tabs {
+  max-width: 100%;
+}
+
+/* ===== 탭 리스트 ===== */
+.tab-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== 탭 버튼 ===== */
+.tab {
+  background: none;
+  border: none;
+  padding: 8px 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9aa0a6;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab[aria-selected="true"] {
+  color: #2979ff;
+  font-weight: 600;
+}
+
+.tab:focus {
+  outline: 2px solid #2979ff;
+  outline-offset: 2px;
+}
+
+/* ===== 구분자 ===== */
+.separator {
+  width: 1px;
+  height: 12px;
+  background: #F0F4FA;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ===== 패널 ===== */
+.tab-panel {
+  padding-top: 16px;
+  font-size: 14px;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+/* ===== 작은 모바일 대응 ===== */
+@media (max-width: 360px) {
+  .tab {
+    font-size: 13px;
+    padding: 6px 4px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <div class="tab-list" role="tablist" aria-label="항목 탭">
+    <button class="tab" role="tab" id="tab-1"
+      aria-selected="true" aria-controls="panel-1">
+      항목명
+    </button>
+
+    <span class="separator" aria-hidden="true"></span>
+
+    <button class="tab" role="tab" id="tab-2"
+      aria-selected="false" aria-controls="panel-2">
+      항목명
+    </button>
+
+    <span class="separator" aria-hidden="true"></span>
+
+    <button class="tab" role="tab" id="tab-3"
+      aria-selected="false" aria-controls="panel-3">
+      항목명
+    </button>
+
+    <span class="separator" aria-hidden="true"></span>
+
+    <button class="tab" role="tab" id="tab-4"
+      aria-selected="false" aria-controls="panel-4">
+      항목명
+    </button>
+  </div>
+
+  <div id="panel-1" class="tab-panel" role="tabpanel" aria-labelledby="tab-1">
+    첫 번째 콘텐츠
+  </div>
+  <div id="panel-2" class="tab-panel" role="tabpanel" aria-labelledby="tab-2" hidden>
+    두 번째 콘텐츠
+  </div>
+  <div id="panel-3" class="tab-panel" role="tabpanel" aria-labelledby="tab-3" hidden>
+    세 번째 콘텐츠
+  </div>
+  <div id="panel-4" class="tab-panel" role="tabpanel" aria-labelledby="tab-4" hidden>
+    네 번째 콘텐츠
+  </div>
+</div>
+
+<script>
+const tabs = document.querySelectorAll('[role="tab"]');
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => activateTab(tab));
+
+  tab.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      tabs[(index + 1) % tabs.length].focus();
+    }
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      tabs[(index - 1 + tabs.length) % tabs.length].focus();
+    }
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      activateTab(tab);
+    }
+  });
+});
+
+function activateTab(selected) {
+  tabs.forEach(tab => {
+    const panel = document.getElementById(tab.getAttribute("aria-controls"));
+    const isActive = tab === selected;
+    tab.setAttribute("aria-selected", isActive);
+    panel.hidden = !isActive;
+  });
+}
+</script>
+
+</body>
+</html>

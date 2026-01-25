@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Tabs Test</title>
+  <style>
+    /* reset */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Noto Sans KR", sans-serif;
+    }
+
+    /* 탭 래퍼 */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;              /* ✅ 문제 1: 작은 화면에서도 안 가려짐 */
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 스크롤바 숨김 (모바일 느낌) */
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 개별 탭 */
+    .tab {
+      position: relative;
+      padding: 0 14px;
+      font-size: 14px;
+      color: #666;
+      background: none;
+      border: 0;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    /* ON 상태 → 텍스트 색만 변경 */
+    .tab.is-active {
+      color: #111;
+      font-weight: 500;
+    }
+
+    /* 구분선: 탭 사이에만 */
+    .tab + .tab::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1px;
+      height: 12px;
+      background-color: #ccc;
+      transform: translateY(-50%);
+    }
+
+    /* 포커스 파란선 제거 */
+    .tab:focus,
+    .tab:focus-visible {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 제목 없음, 탭만 -->
+  <div class="tabs">
+    <button class="tab is-active">전체</button>
+    <button class="tab">국내</button>
+    <button class="tab">해외</button>
+    <button class="tab">ETF</button>
+    <button class="tab">채권</button>
+    <button class="tab">기타</button>
+  </div>
+
+</body>
+</html>
