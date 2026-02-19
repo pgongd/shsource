@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>카드 리스트</title>
+
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f5f6f8;
+    padding: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-btn {
+    width: 100%;
+    border: 1px solid #e2e4e8;
+    border-radius: 12px;
+    background: #fff;
+    padding: 16px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .card-btn:focus-visible {
+    outline: 2px solid #4d6fff;
+    outline-offset: 2px;
+  }
+
+  .card-btn:disabled {
+    background: #e9eaed;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .label-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .label-group {
+    display: flex;
+    gap: 6px;
+  }
+
+  .label {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .label-danger {
+    background: #ffe5e5;
+    color: #d32f2f;
+  }
+
+  .label-gray {
+    background: #f0f0f0;
+    color: #666;
+  }
+
+  .label-dark {
+    background: #4a4a4a;
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 4px 0 12px;
+  }
+
+  .card-bottom {
+    text-align: right;
+    font-size: 13px;
+  }
+
+  .expiry-label {
+    color: #777;
+    margin-right: 4px;
+  }
+
+  .expiry-date {
+    font-weight: 700;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+<h2>여러 개 담을래요</h2>
+
+<ul class="card-list">
+  <!-- 활성 카드 -->
+  <li>
+    <button type="button" class="card-btn">
+      <div class="label-area">
+        <div class="label-group">
+          <span class="label label-danger">매우높은위험</span>
+          <span class="label label-gray">임의식</span>
+        </div>
+      </div>
+
+      <div class="card-title">
+        TIGER 코스닥150
+      </div>
+
+      <div class="card-bottom">
+        <span class="expiry-label">유효기간</span>
+        <span class="expiry-date">2025.03.18</span>
+      </div>
+    </button>
+  </li>
+
+  <!-- 비활성 카드 -->
+  <li>
+    <button type="button" class="card-btn" disabled>
+      <div class="label-area">
+        <div class="label-group">
+          <span class="label label-danger">매우높은위험</span>
+          <span class="label label-gray">임의식</span>
+        </div>
+        <span class="label label-dark">판매종료</span>
+      </div>
+
+      <div class="card-title">
+        TIGER 코스닥150
+      </div>
+
+      <div class="card-bottom">
+        <span class="expiry-label">유효기간</span>
+        <span class="expiry-date">2025.03.18</span>
+      </div>
+    </button>
+  </li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>카드 리스트 접근성 예시</title>
+
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f5f6f8;
+    padding: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-item {}
+
+  .card-button {
+    width: 100%;
+    border: 1px solid #e2e4e8;
+    border-radius: 12px;
+    background: #fff;
+    padding: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card-button:hover:not(:disabled),
+  .card-button:focus-visible:not(:disabled) {
+    box-shadow: 0 0 0 3px #cdd6ff;
+    outline: none;
+  }
+
+  .card-button:disabled {
+    background: #e9eaed;
+    cursor: not-allowed;
+  }
+
+  .card-button:disabled .card-content {
+    opacity: 0.7;
+  }
+
+  .label-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .label-group {
+    display: flex;
+    gap: 6px;
+  }
+
+  .label {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .label-danger {
+    background: #ffe5e5;
+    color: #d32f2f;
+  }
+
+  .label-gray {
+    background: #f0f0f0;
+    color: #666;
+  }
+
+  .label-dark {
+    background: #4a4a4a;
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 4px 0 12px;
+  }
+
+  .card-bottom {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 13px;
+  }
+
+  .expiry-label {
+    color: #777;
+    margin-right: 4px;
+  }
+
+  .expiry-date {
+    font-weight: 700;
+    color: #333;
+  }
+
+  /* 스크린리더 전용 */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+</style>
+</head>
+<body>
+
+<h2>여러 개 담을래요</h2>
+
+<ul class="card-list">
+  <!-- 활성 카드 -->
+  <li class="card-item">
+    <button type="button" class="card-button">
+      <div class="card-content">
+        <div class="label-area">
+          <div class="label-group">
+            <span class="label label-danger">매우높은위험</span>
+            <span class="label label-gray">임의식</span>
+          </div>
+        </div>
+
+        <div class="card-title">
+          TIGER 코스닥150
+        </div>
+
+        <div class="card-bottom">
+          <span class="expiry-label">유효기간</span>
+          <time class="expiry-date" datetime="2025-03-18">
+            2025.03.18
+          </time>
+        </div>
+      </div>
+    </button>
+  </li>
+
+  <!-- 비활성 카드 -->
+  <li class="card-item">
+    <button type="button"
+            class="card-button"
+            disabled
+            aria-disabled="true">
+      <div class="card-content">
+        <div class="label-area">
+          <div class="label-group">
+            <span class="label label-danger">매우높은위험</span>
+            <span class="label label-gray">임의식</span>
+          </div>
+
+          <span class="label label-dark">판매종료</span>
+        </div>
+
+        <div class="card-title">
+          TIGER 코스닥150
+        </div>
+
+        <div class="card-bottom">
+          <span class="expiry-label">유효기간</span>
+          <time class="expiry-date" datetime="2025-03-18">
+            2025.03.18
+          </time>
+        </div>
+      </div>
+    </button>
+  </li>
+</ul>
+
+</body>
+</html>
