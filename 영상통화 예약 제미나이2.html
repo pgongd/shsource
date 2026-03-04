@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영상통화 예약 - 접근성 강화 버전</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', -apple-system, sans-serif; }
+        body { background-color: #f5f6f8; display: flex; justify-content: center; }
+
+        .full-popup {
+            width: 100%; max-width: 400px; height: 100vh;
+            background: #fff; position: relative;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        /* 헤더 */
+        .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 18px; font-weight: bold; }
+        .close-btn { font-size: 28px; cursor: pointer; border: none; background: none; padding: 5px; }
+
+        /* 컨텐츠 */
+        .content { flex: 1; padding: 0 20px; overflow-y: auto; }
+        .guide-text { font-size: 16px; margin-bottom: 30px; color: #333; line-height: 1.4; }
+        .section-title { font-size: 14px; color: #666; margin-bottom: 12px; font-weight: 600; }
+
+        /* 그리드 대신 Flexbox 사용 (4열 배치) */
+        .time-group { display: flex; flex-wrap: wrap; margin: 0 -5px 30px -5px; list-style: none; }
+        .time-item { width: 25%; padding: 5px; }
+
+        /* 라디오 버튼 숨기기 (접근성 유지) */
+        .time-item input[type="radio"] {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0); border: 0;
+        }
+
+        .time-label {
+            display: block; height: 45px; line-height: 43px; text-align: center;
+            border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px;
+            color: #333; cursor: pointer; background-color: #fff;
+        }
+
+        /* 상태별 스타일 */
+        .time-item input[type="radio"]:disabled + .time-label {
+            background-color: #f2f4f7; color: #b0b8c1; border-color: transparent; cursor: not-allowed;
+        }
+        .time-item input[type="radio"]:checked + .time-label {
+            border: 2px solid #3e82f7; color: #3e82f7; font-weight: bold; line-height: 41px;
+        }
+        .time-item input[type="radio"]:focus-visible + .time-label {
+            outline: 2px solid #000; outline-offset: 2px;
+        }
+
+        /* 하단 결과 박스 */
+        .selection-info {
+            background-color: #eff4ff; padding: 18px 20px; border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center; margin: 20px 0 40px;
+        }
+        .selection-info .label { font-size: 14px; color: #4e5968; }
+        .selection-info .value { font-size: 14px; color: #333; font-weight: 600; }
+
+        /* 바텀시트 & 레이어 */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; z-index: 100;
+        }
+        .bottom-sheet {
+            position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 400px; background: #fff;
+            border-radius: 20px 20px 0 0; padding: 30px 20px;
+            transition: bottom 0.3s ease-out; z-index: 101;
+        }
+        .bottom-sheet.active { bottom: 0; }
+        .sheet-title { font-size: 18px; margin-bottom: 15px; }
+        .sheet-desc { color: #666; margin-bottom: 25px; line-height: 1.5; }
+        .btn-group { display: flex; gap: 10px; }
+        .btn-group button {
+            flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer;
+        }
+        .btn-confirm { background: #3e82f7; color: #fff; }
+        .btn-cancel { background: #eee; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="full-popup">
+    <header class="header">
+        <h1>영상통화 예약</h1>
+        <button class="close-btn" aria-label="닫기">&times;</button>
+    </header>
+
+    <main class="content">
+        <p class="guide-text">영상통화 가능한 시간을 선택해 주세요.</p>
+
+        <section aria-labelledby="today-title">
+            <h2 id="today-title" class="section-title">오늘 / 2026.08.28</h2>
+            <ul class="time-group">
+                <li class="time-item">
+                    <input type="radio" name="time" id="t11" disabled>
+                    <label for="t11" class="time-label">11시</label>
+                </li>
+                <li class="time-item">
+                    <input type="radio" name="time" id="t12" value="2026.08.28 12시" aria-haspopup="dialog">
+                    <label for="t12" class="time-label">12시</label>
+                </li>
+                <li class="time-item">
+                    <input type="radio" name="time" id="t13" value="2026.08.28 13시" aria-haspopup="dialog">
+                    <label for="t13" class="time-label">13시</label>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="next-title">
+            <h2 id="next-title" class="section-title">다음 영업일 / 2026.08.29</h2>
+            <ul class="time-group">
+                <li class="time-item">
+                    <input type="radio" name="time" id="n15" value="2026.08.29 15시" aria-haspopup="dialog">
+                    <label for="n15" class="time-label">15시</label>
+                </li>
+                <li class="time-item">
+                    <input type="radio" name="time" id="n16" value="2026.08.29 16시" aria-haspopup="dialog">
+                    <label for="n16" class="time-label">16시</label>
+                </li>
+            </ul>
+        </section>
+
+        <div class="selection-info" aria-live="polite">
+            <span class="label">고객님 선택 예약 시간</span>
+            <span class="value" id="selected-display">시간을 선택해주세요</span>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay" onclick="closeSheet()"></div>
+    <div id="bottomSheet" class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-header">
+        <h3 id="sheet-header" class="sheet-title">예약 확인</h3>
+        <p id="sheet-desc" class="sheet-desc">선택하신 시간으로 예약을 확정하시겠습니까?</p>
+        <div class="btn-group">
+            <button type="button" class="btn-cancel" onclick="closeSheet()">취소</button>
+            <button type="button" class="btn-confirm" id="confirm-btn">확인</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const radios = document.querySelectorAll('input[name="time"]');
+    const display = document.getElementById('selected-display');
+    const sheet = document.getElementById('bottomSheet');
+    const overlay = document.getElementById('overlay');
+    const confirmBtn = document.getElementById('confirm-btn');
+    
+    let lastFocusedElement; // 시트 닫힌 후 돌아갈 위치 저장용
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                lastFocusedElement = e.target; // 현재 클릭한 라디오 저장
+                openSheet(e.target.value);
+            }
+        });
+    });
+
+    function openSheet(value) {
+        display.textContent = value + " 00분";
+        document.getElementById('sheet-desc').textContent = `${value} 00분으로 예약을 진행할까요?`;
+        
+        overlay.style.display = 'block';
+        sheet.classList.add('active');
+        
+        // 접근성 핵심: 초점을 시트 내부 확인 버튼으로 이동
+        setTimeout(() => confirmBtn.focus(), 100);
+    }
+
+    function closeSheet() {
+        overlay.style.display = 'none';
+        sheet.classList.remove('active');
+
+        // 접근성 핵심: 예약을 확정하지 않고 닫으면 체크 해제 및 포커스 복구
+        if (lastFocusedElement) {
+            lastFocusedElement.checked = false;
+            display.textContent = "시간을 선택해주세요";
+            lastFocusedElement.focus();
+        }
+    }
+
+    // 확인 버튼 클릭 시 (실제 예약 로직)
+    confirmBtn.addEventListener('click', () => {
+        alert("예약이 완료되었습니다.");
+        // 여기서는 체크 상태 유지
+        overlay.style.display = 'none';
+        sheet.classList.remove('active');
+    });
+
+    // ESC 키로 시트 닫기 지원
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sheet.classList.contains('active')) closeSheet();
+    });
+</script>
+
+</body>
+</html>

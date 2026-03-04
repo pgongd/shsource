@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>영상통화 예약</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:#f2f3f7;
+}
+
+/* dim */
+.dim{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* popup */
+.popup{
+  width:100%;
+  max-width:420px;
+  height:100%;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  padding:20px;
+  box-sizing:border-box;
+  overflow-y:auto;
+}
+
+/* header */
+.popup-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.popup-header h1{
+  font-size:18px;
+  margin:0;
+}
+
+.close-btn{
+  background:none;
+  border:0;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* title */
+.main-title{
+  font-size:16px;
+  margin-bottom:20px;
+}
+
+/* section */
+.time-section{
+  margin-bottom:24px;
+}
+
+.time-section-title{
+  font-size:14px;
+  color:#555;
+  margin-bottom:12px;
+}
+
+/* 버튼 그룹 (flex-wrap 사용, grid 금지) */
+.time-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* 시간 버튼 */
+.time-btn{
+  flex:1 0 calc(25% - 8px);
+  padding:12px 0;
+  border-radius:10px;
+  border:1px solid #dcdfe6;
+  background:#f4f5f7;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.time-btn[aria-pressed="true"]{
+  border:2px solid #2f6df6;
+  background:#fff;
+  color:#2f6df6;
+  font-weight:600;
+}
+
+.time-btn:disabled{
+  background:#e9eaee;
+  color:#aaa;
+  border:1px solid #e0e0e0;
+  cursor:not-allowed;
+}
+
+/* 선택박스 */
+.selected-box{
+  margin-top:auto;
+  background:#eef1f7;
+  padding:16px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+}
+
+.selected-box strong{
+  font-weight:600;
+}
+
+/* 접근성 포커스 */
+button:focus{
+  outline:2px solid #000;
+  outline-offset:2px;
+}
+</style>
+</head>
+<body>
+
+<div class="dim">
+
+<div class="popup"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="dialogTitle">
+
+  <!-- header -->
+  <div class="popup-header">
+    <h1 id="dialogTitle">영상통화 예약</h1>
+    <button class="close-btn" aria-label="닫기">×</button>
+  </div>
+
+  <div class="main-title">
+    영상통화 가능한 시간을 선택해 주세요.
+  </div>
+
+  <!-- 오늘 -->
+  <section class="time-section" aria-labelledby="todayTitle">
+    <div id="todayTitle" class="time-section-title">
+      오늘 / 2026.08.29
+    </div>
+
+    <div class="time-list" role="group" aria-label="오늘 시간 선택">
+      <button type="button" class="time-btn" disabled>09시</button>
+      <button type="button" class="time-btn" disabled>10시</button>
+      <button type="button" class="time-btn" disabled>11시</button>
+      <button type="button" class="time-btn" aria-pressed="true">12시</button>
+
+      <button type="button" class="time-btn" disabled>13시</button>
+      <button type="button" class="time-btn" disabled>14시</button>
+      <button type="button" class="time-btn" disabled>15시</button>
+      <button type="button" class="time-btn" disabled>16시</button>
+    </div>
+  </section>
+
+  <!-- 다음 영업일 -->
+  <section class="time-section" aria-labelledby="nextTitle">
+    <div id="nextTitle" class="time-section-title">
+      다음 영업일 / YYY.MM.DD
+    </div>
+
+    <div class="time-list" role="group" aria-label="다음 영업일 시간 선택">
+      <button type="button" class="time-btn">09시</button>
+      <button type="button" class="time-btn">10시</button>
+      <button type="button" class="time-btn">11시</button>
+      <button type="button" class="time-btn">12시</button>
+
+      <button type="button" class="time-btn">13시</button>
+      <button type="button" class="time-btn">14시</button>
+      <button type="button" class="time-btn">15시</button>
+      <button type="button" class="time-btn">16시</button>
+    </div>
+  </section>
+
+  <!-- 선택시간 표시 -->
+  <div class="selected-box" aria-live="polite">
+    <span>고객님 선택 예약 시간</span>
+    <strong id="selectedTime">2026.08.29 12시</strong>
+  </div>
+
+</div>
+</div>
+
+<script>
+const buttons = document.querySelectorAll('.time-btn');
+const selectedTime = document.getElementById('selectedTime');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    if(btn.disabled) return;
+
+    // 전체 해제
+    buttons.forEach(b => b.setAttribute('aria-pressed','false'));
+
+    // 현재 선택
+    btn.setAttribute('aria-pressed','true');
+
+    const section = btn.closest('.time-section');
+    const dateText = section.querySelector('.time-section-title').textContent.split('/')[1].trim();
+    const timeText = btn.textContent.trim();
+
+    selectedTime.textContent = dateText + ' ' + timeText;
+  });
+});
+</script>
+
+</body>
+</html>

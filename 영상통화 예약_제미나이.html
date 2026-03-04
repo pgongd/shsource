@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영상통화 예약</title>
+    <style>
+        /* 기본 스타일 리셋 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        body { background-color: #f5f6f8; display: flex; justify-content: center; }
+
+        /* 풀팝업 컨테이너 */
+        .full-popup {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 헤더 */
+        .header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-size: 18px; font-weight: bold; }
+        .close-btn { font-size: 24px; cursor: pointer; border: none; background: none; }
+
+        /* 컨텐츠 영역 */
+        .content {
+            flex: 1;
+            padding: 0 20px;
+            overflow-y: auto;
+        }
+        .title-text { font-size: 16px; margin-bottom: 30px; color: #333; }
+        .section-title { font-size: 14px; color: #666; margin-bottom: 12px; font-weight: 600; }
+
+        /* 시간 선택 그룹 (Flexbox 사용) */
+        .time-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+        .time-item {
+            width: 25%; /* 4개씩 배치 */
+            padding: 5px;
+        }
+
+        /* 라디오 버튼 커스텀 */
+        .time-item input[type="radio"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .time-label {
+            display: block;
+            height: 45px;
+            line-height: 43px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        /* 상태별 스타일 */
+        /* 1. 비활성화 상태 */
+        .time-item input[type="radio"]:disabled + .time-label {
+            background-color: #f2f4f7;
+            color: #b0b8c1;
+            border-color: transparent;
+            cursor: not-allowed;
+        }
+
+        /* 2. 선택된 상태 */
+        .time-item input[type="radio"]:checked + .time-label {
+            border: 2px solid #3e82f7;
+            color: #3e82f7;
+            font-weight: bold;
+            line-height: 41px; /* 테두리 두께 보정 */
+        }
+
+        /* 하단 선택 결과 박스 */
+        .selection-info {
+            background-color: #eff4ff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .selection-info .label { font-size: 14px; color: #4e5968; }
+        .selection-info .value { font-size: 14px; color: #333; font-weight: 600; }
+
+        /* 바텀시트 스타일 */
+        .bottom-sheet {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            transition: bottom 0.3s ease-out;
+            padding: 30px 20px;
+            z-index: 10;
+        }
+        .bottom-sheet.active { bottom: 0; }
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 5;
+        }
+        .overlay.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="full-popup">
+    <header class="header">
+        <h1>영상통화 예약</h1>
+        <button class="close-btn" aria-label="닫기">&times;</button>
+    </header>
+
+    <main class="content">
+        <p class="title-text">영상통화 가능한 시간을 선택해 주세요.</p>
+
+        <h2 class="section-title">오늘 / 2026.08.28</h2>
+        <div class="time-group">
+            <div class="time-item">
+                <input type="radio" name="time" id="t09" disabled>
+                <label for="t09" class="time-label">09시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t10" disabled>
+                <label for="t10" class="time-label">10시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t11" disabled>
+                <label for="t11" class="time-label">11시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t12" value="2026.08.28 12시 00분">
+                <label for="t12" class="time-label">12시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t13" value="2026.08.28 13시 00분">
+                <label for="t13" class="time-label">13시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t14" value="2026.08.28 14시 00분">
+                <label for="t14" class="time-label">14시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t15" value="2026.08.28 15시 00분">
+                <label for="t15" class="time-label">15시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="t16" value="2026.08.28 16시 00분">
+                <label for="t16" class="time-label">16시</label>
+            </div>
+        </div>
+
+        <h2 class="section-title">다음 영업일 / 2026.08.29</h2>
+        <div class="time-group">
+            <div class="time-item">
+                <input type="radio" name="time" id="n09" value="2026.08.29 09시 00분">
+                <label for="n09" class="time-label">09시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n10" value="2026.08.29 10시 00분">
+                <label for="n10" class="time-label">10시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n11" value="2026.08.29 11시 00분">
+                <label for="n11" class="time-label">11시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n12" value="2026.08.29 12시 00분">
+                <label for="n12" class="time-label">12시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n13" value="2026.08.29 13시 00분">
+                <label for="n13" class="time-label">13시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n14" value="2026.08.29 14시 00분">
+                <label for="n14" class="time-label">14시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n15" value="2026.08.29 15시 00분">
+                <label for="n15" class="time-label">15시</label>
+            </div>
+            <div class="time-item">
+                <input type="radio" name="time" id="n16" value="2026.08.29 16시 00분">
+                <label for="n16" class="time-label">16시</label>
+            </div>
+        </div>
+
+        <div class="selection-info">
+            <span class="label">고객님 선택 예약 시간</span>
+            <span class="value" id="selected-time-display">시간을 선택해주세요</span>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="bottom-sheet" id="bottomSheet">
+        <h3 style="margin-bottom: 20px;">예약 확인</h3>
+        <p id="sheet-content" style="margin-bottom: 30px; color: #666;"></p>
+        <button onclick="closeSheet()" style="width: 100%; padding: 15px; background: #3e82f7; color: #fff; border: none; border-radius: 12px; font-weight: bold; cursor: pointer;">확인</button>
+    </div>
+</div>
+
+<script>
+    const radios = document.querySelectorAll('input[name="time"]');
+    const display = document.getElementById('selected-time-display');
+    const bottomSheet = document.getElementById('bottomSheet');
+    const overlay = document.getElementById('overlay');
+    const sheetContent = document.getElementById('sheet-content');
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const val = e.target.value;
+            // 하단 텍스트 변경
+            display.textContent = val;
+            
+            // 바텀시트 노출
+            sheetContent.textContent = `${val}에 예약을 진행할까요?`;
+            bottomSheet.classList.add('active');
+            overlay.classList.add('active');
+        });
+    });
+
+    function closeSheet() {
+        bottomSheet.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+
+    // 배경 클릭 시 닫기
+    overlay.addEventListener('click', closeSheet);
+</script>
+
+</body>
+</html>
